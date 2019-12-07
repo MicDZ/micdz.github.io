@@ -8,7 +8,7 @@
       <link href="/article/weekly/"/>
       <url>/article/weekly/</url>
       
-        <content type="html"><![CDATA[<p>每周学习总结</p><a id="more"></a><h1 id="20191130-2019126"><a class="markdownIt-Anchor" href="#20191130-2019126"></a> 2019.11.30-2019.12.6</h1><h2 id="sat"><a class="markdownIt-Anchor" href="#sat"></a> Sat</h2><ol><li>准备月考</li><li>思考了CSP2019没有做出来的题目，因为时间有限，没有来得及落实</li></ol><h2 id="sun"><a class="markdownIt-Anchor" href="#sun"></a> Sun</h2><p>写周末作业</p><h2 id="mon"><a class="markdownIt-Anchor" href="#mon"></a> Mon</h2><p>准备月考</p><h2 id="tue"><a class="markdownIt-Anchor" href="#tue"></a> Tue</h2><ol><li>准备月考</li><li>学习了换根DP，还未完成<a href="http://poj.org/problem?id=3585" target="_blank" rel="noopener">POJ3585</a>，准备重写</li></ol><h2 id="wed"><a class="markdownIt-Anchor" href="#wed"></a> Wed</h2><p>准备月考</p><h2 id="thu"><a class="markdownIt-Anchor" href="#thu"></a> Thu</h2><p>准备月考</p><h2 id="fri"><a class="markdownIt-Anchor" href="#fri"></a> Fri</h2><ol><li>月考</li><li>写周末作业</li></ol><h1 id="2019127-20191213"><a class="markdownIt-Anchor" href="#2019127-20191213"></a> 2019.12.7-2019.12.13</h1><h2 id="sat-2"><a class="markdownIt-Anchor" href="#sat-2"></a> Sat</h2><ol><li>完成<a href="http://poj.org/problem?id=3585" target="_blank" rel="noopener">POJ3585</a></li><li>还未完成<a href="http://acm.hdu.edu.cn/showproblem.php?pid=2196" target="_blank" rel="noopener">HDU2196</a></li></ol>]]></content>
+        <content type="html"><![CDATA[<p>每周学习总结</p><a id="more"></a><h1 id="20191130-2019126"><a class="markdownIt-Anchor" href="#20191130-2019126"></a> 2019.11.30-2019.12.6</h1><h2 id="sat"><a class="markdownIt-Anchor" href="#sat"></a> Sat</h2><ol><li>准备月考</li><li>思考了CSP2019没有做出来的题目，因为时间有限，没有来得及落实</li></ol><h2 id="sun"><a class="markdownIt-Anchor" href="#sun"></a> Sun</h2><p>写周末作业</p><h2 id="mon"><a class="markdownIt-Anchor" href="#mon"></a> Mon</h2><p>准备月考</p><h2 id="tue"><a class="markdownIt-Anchor" href="#tue"></a> Tue</h2><ol><li>准备月考</li><li>学习了换根DP，还未完成<a href="http://poj.org/problem?id=3585" target="_blank" rel="noopener">POJ3585</a>，准备重写</li></ol><h2 id="wed"><a class="markdownIt-Anchor" href="#wed"></a> Wed</h2><p>准备月考</p><h2 id="thu"><a class="markdownIt-Anchor" href="#thu"></a> Thu</h2><p>准备月考</p><h2 id="fri"><a class="markdownIt-Anchor" href="#fri"></a> Fri</h2><ol><li>月考</li><li>写周末作业</li></ol><h1 id="2019127-20191213"><a class="markdownIt-Anchor" href="#2019127-20191213"></a> 2019.12.7-2019.12.13</h1><h2 id="sat-2"><a class="markdownIt-Anchor" href="#sat-2"></a> Sat</h2><ol><li>完成<a href="http://poj.org/problem?id=3585" target="_blank" rel="noopener">POJ3585</a></li><li>完成<a href="http://acm.hdu.edu.cn/showproblem.php?pid=2196" target="_blank" rel="noopener">HDU2196</a></li><li>完成<a href="https://www.luogu.com.cn/problem/P1854" target="_blank" rel="noopener">花店橱窗布置</a></li></ol>]]></content>
       
       
       <categories>
@@ -40,6 +40,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -66,6 +68,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -94,6 +98,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -120,6 +126,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -150,6 +158,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -174,6 +184,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -201,6 +213,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -231,6 +245,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -258,6 +274,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -282,6 +300,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -335,6 +355,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -364,6 +386,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -391,6 +415,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -417,6 +443,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -449,6 +477,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -476,10 +506,14 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
         <tags>
+            
+            <tag> 题解 </tag>
             
             <tag> 数学 </tag>
             
@@ -500,6 +534,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -553,6 +589,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -579,6 +617,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -609,6 +649,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -636,6 +678,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -643,9 +687,9 @@
             
             <tag> 题解 </tag>
             
-            <tag> 图论 </tag>
-            
             <tag> 最小生成树 </tag>
+            
+            <tag> 图论 </tag>
             
         </tags>
       
@@ -690,6 +734,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -721,6 +767,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -750,6 +798,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -776,6 +826,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -848,6 +900,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -876,6 +930,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -906,6 +962,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -933,6 +991,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -959,6 +1019,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -1036,38 +1098,11 @@
       
         <tags>
             
-            <tag> 图论 </tag>
-            
             <tag> 最小生成树 </tag>
             
-            <tag> 最短路 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>最近公共祖先的倍增求法总结</title>
-      <link href="/article/LCA-new/"/>
-      <url>/article/LCA-new/</url>
-      
-        <content type="html"><![CDATA[<p>高效求解最近公共祖先的价值是巨大的。其中最简单的应用就是求解树任意两点之间的距离。</p><p>本文递交已结束。</p>  <a id="more"></a><p><img src="https://www.micdz.cn/img/2019-10-02-21.png" alt="" /></p><p>对于要求解节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>与节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>的最近公共祖先，朴素的思想是将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span> 与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span> 同时向上跳，并标记跳到过的点如果当任意一个点第一次跳到某一个被标记过的点时即为这两点的最近公共祖先。当树退化成链时求解的复杂度变为了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span> 。利用倍增思想优化是十分简单的，“即将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>成倍地向上跳”。但是为了方便从上向下跳更为简单。首先将两点调至同一高度，由于知道高度差，这一步只需要对高度差进行二进制拆分即可。然后，将两点向上跳<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mi>log</mi><mo>⁡</mo><mi>n</mi></mrow></msup></mrow><annotation encoding="application/x-tex">2^{\log n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span></span></span></span>（即为一个极大的值，超过根就记为根）步，此时两点所到之处一定是相同，那么则说明跳多了，则将两点向上跳<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mi>log</mi><mo>⁡</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{\log n-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span> 步，此时如果两节点不在同一位置这说明它们的公共祖先在它们原来位置的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mi>log</mi><mo>⁡</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{\log n-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span> 与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mi>log</mi><mo>⁡</mo><mi>n</mi></mrow></msup></mrow><annotation encoding="application/x-tex">2^{\log n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span></span></span></span>之间。重复上述过程则可以在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\Theta(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>的级别下求出最近公共祖先。考虑上述算法的过程，只有在所到之点不同时两点才会向上跳即更新起点的位置，那么算法最后一定会停留在两点起点不相同但向上跳<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>0</mn></msup></mrow><annotation encoding="application/x-tex">2^0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span></span></span></span></span></span></span></span>所到之点就相同的位置，即为最近公共祖先的儿子，最后返回答案时返回其父亲即可。</p><p>还有一种效率极高但空间复杂度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>的最近公共祖先的算法。大概的思路是从叶子节点开始灌水，但空间复杂度极高几乎没用。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> OI </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
             <tag> 图论 </tag>
             
-            <tag> LCA </tag>
+            <tag> 最短路 </tag>
             
         </tags>
       
@@ -1095,6 +1130,33 @@
             <tag> 图论 </tag>
             
             <tag> tarjan </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>最近公共祖先的倍增求法总结</title>
+      <link href="/article/LCA-new/"/>
+      <url>/article/LCA-new/</url>
+      
+        <content type="html"><![CDATA[<p>高效求解最近公共祖先的价值是巨大的。其中最简单的应用就是求解树任意两点之间的距离。</p><p>本文递交已结束。</p>  <a id="more"></a><p><img src="https://www.micdz.cn/img/2019-10-02-21.png" alt="" /></p><p>对于要求解节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>与节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>的最近公共祖先，朴素的思想是将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span> 与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span> 同时向上跳，并标记跳到过的点如果当任意一个点第一次跳到某一个被标记过的点时即为这两点的最近公共祖先。当树退化成链时求解的复杂度变为了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span> 。利用倍增思想优化是十分简单的，“即将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>成倍地向上跳”。但是为了方便从上向下跳更为简单。首先将两点调至同一高度，由于知道高度差，这一步只需要对高度差进行二进制拆分即可。然后，将两点向上跳<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mi>log</mi><mo>⁡</mo><mi>n</mi></mrow></msup></mrow><annotation encoding="application/x-tex">2^{\log n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span></span></span></span>（即为一个极大的值，超过根就记为根）步，此时两点所到之处一定是相同，那么则说明跳多了，则将两点向上跳<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mi>log</mi><mo>⁡</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{\log n-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span> 步，此时如果两节点不在同一位置这说明它们的公共祖先在它们原来位置的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mi>log</mi><mo>⁡</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">2^{\log n-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span> 与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mrow><mi>log</mi><mo>⁡</mo><mi>n</mi></mrow></msup></mrow><annotation encoding="application/x-tex">2^{\log n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace mtight" style="margin-right:0.19516666666666668em;"></span><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span></span></span></span>之间。重复上述过程则可以在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Θ</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\Theta(\log n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Θ</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>的级别下求出最近公共祖先。考虑上述算法的过程，只有在所到之点不同时两点才会向上跳即更新起点的位置，那么算法最后一定会停留在两点起点不相同但向上跳<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>0</mn></msup></mrow><annotation encoding="application/x-tex">2^0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span></span></span></span></span></span></span></span>所到之点就相同的位置，即为最近公共祖先的儿子，最后返回答案时返回其父亲即可。</p><p>还有一种效率极高但空间复杂度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>的最近公共祖先的算法。大概的思路是从叶子节点开始灌水，但空间复杂度极高几乎没用。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> OI </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 图论 </tag>
+            
+            <tag> LCA </tag>
             
         </tags>
       
@@ -1220,6 +1282,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -1248,6 +1312,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -1538,6 +1604,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -1597,6 +1665,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -1708,6 +1778,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -1738,6 +1810,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -1818,6 +1892,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -1874,6 +1950,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -1896,12 +1974,6 @@
       
         <content type="html"><![CDATA[<p>这是一道四维DP的模版题，思维难度也不大，题目链接<a href="https://www.luogu.org/problemnew/show/P1004" target="_blank" rel="noopener">here</a></p><a id="more"></a><h1 id="核心思路"><a class="markdownIt-Anchor" href="#核心思路"></a> 核心思路</h1><p>定义<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>k</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>l</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[i][j][k][l]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">]</span></span></span></span>为第一次走到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(i,j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span>第二次走到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mi>k</mi><mo separator="true">,</mo><mi>l</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(k,l)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">)</span></span></span></span>的最优方案，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">a[i][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span>为放在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(i,j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span>处的数字。</p><p>由于每一步只能从<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">j-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">l-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>转移</p><p>状态转移方程就很好推出了：</p><p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>k</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>l</mi><mo stretchy="false">]</mo><mo>=</mo><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>k</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>l</mi><mo stretchy="false">]</mo><mo separator="true">,</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo stretchy="false">(</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>k</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>l</mi><mo stretchy="false">]</mo><mo separator="true">,</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>k</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>l</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo separator="true">,</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>k</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>l</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">)</mo><mo>+</mo><mo>+</mo><mi>a</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo><mo>+</mo><mi>a</mi><mo stretchy="false">[</mo><mi>k</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>l</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[i][j][k][l]=\max(dp[i-1][j][k-1][l],max(dp[i][j-1][k-1][l],dp[i][j-1][k][l-1],dp[i-1][j][k][l-1])++a[i][j]+a[k][l]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">+</span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">]</span></span></span></span></p><p>要尤其注意<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(i,j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mi>k</mi><mo separator="true">,</mo><mi>l</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(k,l)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">)</span></span></span></span>相同的情况</p><h1 id="完整代码"><a class="markdownIt-Anchor" href="#完整代码"></a> 完整代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 10+5</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">char</span> ch=getchar();</span><br><span class="line">    <span class="keyword">while</span>(ch&gt;<span class="string">'9'</span>||ch&lt;<span class="string">'0'</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">'-'</span>)f=<span class="number">-1</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">while</span>(ch&lt;=<span class="string">'9'</span>&amp;&amp;ch&gt;=<span class="string">'0'</span>)&#123;x=x*<span class="number">10</span>+ch-<span class="string">'0'</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">return</span> x*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> dp[MAXN][MAXN][MAXN][MAXN],a[MAXN][MAXN];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n=read();</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> x,y,s;</span><br><span class="line">        x=read(),y=read(),s=read();</span><br><span class="line">        <span class="keyword">if</span>(x==<span class="number">0</span>&amp;&amp;y==<span class="number">0</span>&amp;&amp;s==<span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">        a[x][y]=s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=n; i++)</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>; j&lt;=n; j++)</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">1</span>; k&lt;=n; k++)</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> l=<span class="number">1</span>; l&lt;=n; l++) &#123;</span><br><span class="line">                    dp[i][j][k][l]=max(dp[i<span class="number">-1</span>][j][k<span class="number">-1</span>][l],max(dp[i][j<span class="number">-1</span>][k<span class="number">-1</span>][l],max(dp[i][j<span class="number">-1</span>][k][l<span class="number">-1</span>],dp[i<span class="number">-1</span>][j][k][l<span class="number">-1</span>])))+a[i][j]+a[k][l];</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span>(i==k&amp;&amp;j==l) dp[i][j][k][l]-=a[i][j];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>,dp[n][n][n][n]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       
-      
-      <categories>
-          
-          <category> OI </category>
-          
-      </categories>
       
       
         <tags>
@@ -1981,6 +2053,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -2179,6 +2253,8 @@
           
           <category> OI </category>
           
+          <category> 题解 </category>
+          
       </categories>
       
       
@@ -2205,6 +2281,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -2259,6 +2337,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
@@ -2317,6 +2397,8 @@
       <categories>
           
           <category> OI </category>
+          
+          <category> 题解 </category>
           
       </categories>
       
