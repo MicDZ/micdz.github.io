@@ -2,16 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
 
 @font-face {
-    font-family: 'LXGW WenKai';
-    font-style: normal;
-    font-weight: 400;
-    src: url("../fonts/LXGWWenKai-Regular.ttf") format('ttf');
-    font-display: swap; /* Add font-display */
-    /* 限制仅中文使用该字体 */
-    unicode-range: U+4E00-9FA5;
-}
-
-@font-face {
     font-family: 'Noto Serif SC';
     src: url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap');  
    /* 限制仅中文使用该字体 */
@@ -110,7 +100,7 @@
     margin-bottom: 0px;
     }
     .info {
-    font-family: 'Inter';
+
 
     margin-block-start: 0px;
     margin-block-end: 0px;
