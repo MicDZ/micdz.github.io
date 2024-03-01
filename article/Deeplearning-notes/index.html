@@ -38,6 +38,10 @@
   <!-- KaTeX support -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.css" integrity="sha384-OH8qNTHoMMVNVcKdKewlipV4SErXqccxxlg6HC9Cwjr5oZu2AdBej1TndeCirael" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.js" integrity="sha384-ImWHyYvDPlRzwFnvLhG9Jcpm/7qL4SVIuJK0C6Rj+Mf7fpeNJCLCynC+EVz4kCSA" crossorigin="anonymous"></script>
+<!-- Prism support ./js/prism.js-->
+  
+<link rel="stylesheet" href="/css/prism.css">
+
 <meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="MicDZ's Blog" type="application/atom+xml">
 </head>
 
@@ -199,6 +203,9 @@ Loss:L=\frac{1}{N}\sum_ne_n
                 var titleLevel = parseInt(heading.tagName.charAt(1)-1);
                 if (!isNaN(titleLevel)) {
                   levelCount[titleLevel - 1]++;
+                  for (var i = titleLevel; i < levelCount.length; i++) {
+                    levelCount[i] = 0;
+                  }
                   heading.innerHTML = levelCount.slice(0, titleLevel).join('.') + '&nbsp;' + heading.innerHTML;
                 }
               });
