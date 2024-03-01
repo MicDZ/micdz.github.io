@@ -499,8 +499,8 @@
   }
   
   li {
-    font-family: 'Noto Serif SC', 'Times New Roman', sans-serif;
-    font-weight: bold;
+    font-family:  'Times New Roman','Noto Serif SC', sans-serif;
+    /* font-weight: bold; */
     margin-bottom: 1rem;
   }
   
