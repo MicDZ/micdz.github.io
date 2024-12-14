@@ -286,13 +286,12 @@
 
   /* Links
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
-  a:not(.icon) {
-    font-family: 'Times New Roman','Noto Serif SC',  sans-serif;
+  a:not(.icon):not(.clustrmaps-map-control) {
+    font-family: 'Times New Roman','Noto Serif SC', sans-serif;
     color: inherit;
 
     background-size: 100% 200%;
-    transition:
-      background-position .2s ease-in-out
+    transition: background-position .2s ease-in-out;
   }
   
   a:hover:not(.icon),
@@ -630,6 +629,3 @@
   /* Larger than Desktop HD */
   @media (min-width: 1200px) {}
 
-  #clustrmaps-widget-v2 {
-    pointer-events: none;
-  }
