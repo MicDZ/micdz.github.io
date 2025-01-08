@@ -6,7 +6,7 @@
   <link href="https://www.micdz.cn/atom.xml" rel="self"/>
   
   <link href="https://www.micdz.cn/"/>
-  <updated>2024-12-28T06:22:12.617Z</updated>
+  <updated>2025-01-05T14:12:27.351Z</updated>
   <id>https://www.micdz.cn/</id>
   
   <author>
@@ -15,6 +15,23 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>The Math Behind Bach&#39;s Crab Canon</title>
+    <link href="https://www.micdz.cn/article/The-Math-Behind-Bach-s-Crab-Canon/"/>
+    <id>https://www.micdz.cn/article/The-Math-Behind-Bach-s-Crab-Canon/</id>
+    <published>2025-01-05T13:27:01.000Z</published>
+    <updated>2025-01-05T14:12:27.351Z</updated>
+    
+    
+    
+    
+    
+    <category term="Math" scheme="https://www.micdz.cn/tags/Math/"/>
+    
+    <category term="Music" scheme="https://www.micdz.cn/tags/Music/"/>
+    
+  </entry>
   
   <entry>
     <title>Guide to Gödel’s Incompleteness Theorems</title>
