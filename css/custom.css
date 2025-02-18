@@ -127,6 +127,7 @@
     margin-block-start: 0px;
     margin-block-end: 0px;
     margin-bottom: 0px;
+    min-width: 140px;
     }
     .site-title {
         font-family: 'Times New Roman','Noto Serif SC', sans-serif;  
@@ -203,6 +204,7 @@
         align-items: center;
 
     }
+    
     .site-card p {
         font-family: 'Times New Roman', Times, serif;
     }
@@ -372,7 +374,7 @@
     }
 
     #copyright {
-    font-family: 'Times New Roman';
+    font-family: "Times New Roman", "Noto Serif SC", sans-serif;
     text-align: center;
     font-size: 1.5rem;
     }

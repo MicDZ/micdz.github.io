@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Posts Related to Math</title>
+  <title>Embedded Chip and System Design Competition - MicDZ</title>
 
   
 <link rel="stylesheet" href="/css/custom.css">
@@ -104,30 +104,56 @@
               
 
 
-   <h3>Posts to — Math</h3>
+<title>Embedded Chip and System Design Competition</title>
+
+<h1>Embedded Chip and System Design Competition</h1>
+
+<div class="right">
+  
+    <p class="info">Aug 1, 2024</p>
+  
+</div>
+
+<hr> 
+
+<div class="article">
+
+</div>
+<p class="right info">
+    
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+              var levelCount = [0, 0, 0, 0, 0];
+              var headings = document.querySelectorAll('h2, h3, h4, h5, h6');
+          
+              headings.forEach(function(heading) {
+                var titleLevel = parseInt(heading.tagName.charAt(1)-1);
+                if (!isNaN(titleLevel)) {
+                  levelCount[titleLevel - 1]++;
+                  for (var i = titleLevel; i < levelCount.length; i++) {
+                    levelCount[i] = 0;
+                  }
+                  heading.innerHTML = levelCount.slice(0, titleLevel).join('.') + '&nbsp;' + heading.innerHTML;
+                }
+              });
+            });
+        </script>
+        
+
+        
+    
+</p>
 
 
 
-  <article>
-    <div class="row">
-        <div class="article-list mb-3">
-            <p class="info left">Jan 8, 2025</p>
-            <a href="/article/Formal-System-%E2%80%93-G-E-B-Book-Review-of-Chapter-1-2/">
-                
-                  Formal System – G.E.B Review of Chapter 1,2
-                
-              </a>
+    <aside id="article-toc" role="navigation" class="fixed">
+        <div id="article-toc-inner">
+            
         </div>
-    </div>
-  </article>
+    </aside>
+ 
 
 
-<div class="pagination-bar">
-    <ul class="pagination">
-      
-      
-    </ul>
-  </div>
             <!-- </div> -->
             <div class="row mt-2">
     

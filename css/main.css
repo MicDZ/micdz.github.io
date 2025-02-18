@@ -27,7 +27,7 @@
 .container {
     position: relative;
     width: 100%;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 20px;
     box-sizing: border-box;
@@ -214,12 +214,12 @@
   }
   
   h1 {
-    font-size: 3.2rem;
+    font-size: 3.8rem;
     line-height: 1.2;
   }
   
   h2 {
-    font-size: 3.0rem;
+    font-size: 2.8rem;
     line-height: 1.25;
   }
   
@@ -273,12 +273,15 @@
   
   p {
     font-family:  'Times New Roman','Noto Serif SC', sans-serif; 
-    font-size: 1.8rem;
+    font-size: 1.6rem;
 
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    
   }
-
+  p {
+    hyphens: auto;
+  }
   b {
     font-family:  'Times New Roman','Noto Serif SC', sans-serif; 
     font-weight: 500;
