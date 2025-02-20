@@ -139,11 +139,7 @@
         font-size: 1.6rem;
         font-weight: 300;
     }
-    .avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    }
+
 
     .mb-1 {
     margin-bottom: 0px;
@@ -192,7 +188,7 @@
         border-radius: 50%;
     }
     .site-card {
-        width: 20%;
+        max-width: 20%;
         height: 10%;
         padding: 10px;
         margin-bottom: 1%;
@@ -204,7 +200,7 @@
         align-items: center;
 
     }
-    
+
     .site-card p {
         font-family: 'Times New Roman', Times, serif;
     }
@@ -461,3 +457,15 @@
     /* 取消下划线 */
     text-decoration: none;
 }
+img {
+    max-width: 100%;
+
+    margin: 0 auto;
+    display: block;
+}
+.site-list {
+    max-width: 100%;
+    /* 如果太多了可以换行 */
+    flex-wrap: wrap;
+}
+
