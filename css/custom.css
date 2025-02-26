@@ -468,4 +468,10 @@ img {
     /* 如果太多了可以换行 */
     flex-wrap: wrap;
 }
-
+.avatar {
+    /* 右上角 */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 100%;
+}
