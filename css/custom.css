@@ -468,7 +468,7 @@ img {
     /* 如果太多了可以换行 */
     flex-wrap: wrap;
 }
-.avatar {
+.myavatar {
     /* 右上角 */
     position: absolute;
     top: 20px;
