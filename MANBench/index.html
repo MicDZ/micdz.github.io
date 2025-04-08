@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="MANBench: Is Your Multimodal Model Smarter than Human?">
+
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="Multimodal Benchmark, Multimodal Learning, Vision and Language Dataset, Vision Language Model, LLM, VLM">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>MANBench</title>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({
+      'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', 'GTM-MFCT45H');</script>
+  <!-- End Google Tag Manager -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/dataTables.bulma.css">
+  <link rel="icon" href="./static/images/logo.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  </head>
+  <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MFCT45H" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+
+ 
+
+  </div>
+  </nav>
+
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://yushi-hu.github.io">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://finegrainedrlhf.github.io/">
+            Fine-Grained RLHF (NeurIPS 2023)
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav> -->
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title" style="white-space: nowrap;"><span class="rainbow_text_animated">MANBench</span><img src="static/images/logo.png" width="60" style="margin-top: 10px;"/><br> <div style="font-size:2rem">Is Your Multimodal Model Smarter than Human?</div></h1>
+
+                  <div class="content has-text-centered">
+                    <div class="publication-links">
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/MicDZ/MANBench" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <!-- Hugging face link -->
+                 <span class="link-block">
+                  <a href="https://huggingface.co/datasets/MANBench/MANBench" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <!-- 插入svgicon            -->
+                     <i class="fa fa-database"></i>
+                  </span>
+                  <span>Dataset</span>
+                </a>
+              </span>
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span> 
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser image-->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="title is-3 has-text-centered">What is MANBench?</h2>
+      <h2 class="subtitle has-text-justified">
+        <span style="font-weight:bold;"><b>MANBench</b>  </span>
+        a comprehensive benchmark designed to evaluate the multimodal capabilities of both humans and MLLMs. <b>MANBench</b> consists of 9 tasks, each containing more than 110 questions, with a total of 1,314 questions and 2,231 images. <b>MANBench</b> aims to provide a fair and rigorous assessment framework, ensuring that comparisons between human and machine performance are conducted on an equitable basis.</h2>
+      <img src="static/images/teaser.jpg" height="100%"/>
+
+      <h2 class="hero-body has-text-centered">
+        <br>
+        Qualitative results on <span style="font-weight:bold;">MANBench</span>. For each task, we display the selections made by GPT-4o, Qwen2.5-VL-72B-Instruct, and Gemini-1.5 Pro, with the red-highlighted choice indicating the ground truth.
+      </h2>
+    </div>
+  </div>
+</section>
+<!-- End teaser image -->
+
+
+
+<!-- Leaderboard -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-3" id="leaderboard">
+        <span class="fancy_text_color">
+        Leaderboard
+      </span>
+      </h2>
+    </div>
+    
+    <div class="columns is-centered has-text-centered">
+      <div class="content has-text-justified">
+        <div class="has-text-centered">
+        <p>
+          We provide a leaderboard on the <b>validation</b> set for the community to track progress. All models are evaluated in a zero-shot setting using promts provided in the dataset.
+        </p>
+          <div style="overflow-x: auto; white-space: nowrap;">
+            <div id="table-container" style="max-width: 900px;"></div>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-sixths">
+        <h2 class="title is-3">Charateristic and Statistics</h2>
+
+        <h2 class="content has-text-justified">
+          <ul>
+          <li><b>MANBench</b> separates questions requiring prior knowledge from those that do not</li>
+          <li><b>MANBench</b> ensures that all questions demand reasoning rather than simple retrieval</li>
+        <li><b>MANBench</b> mandates the integration of textual and visual information</li>
+      <li><b>MANBench</b> includes a wide range of reasoning difficulties to challenge both humans and MLLMs.</li>
+    </ul>
+
+        </h2>
+        <img src="static/images/4issues.jpg" height="100%"/>
+        <h2 class="content has-text-centered">
+          <b>MANBench</b> has several novel features different from previous benchmarks.
+        </h2>
+        <h2 class="content has-text-justified">
+        
+          </h2>
+        <div class="myrow">
+          <div class="mycolumn">
+            <img src="static/images/bar.jpg" style="max-height: 450px;">
+          </div>
+          <div class="mycolumn">
+            <img src="static/images/radar.jpg" style="max-height: 450px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Paper abstract -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-sixths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            The rapid advancement of Multimodal Large Language Models (MLLMs) has ignited discussions regarding their potential to surpass human performance in multimodal tasks. In response, we introduce <b>MANBench</b> (Multimodal Ability Norms Benchmark), a bilingual benchmark (English and Chinese) comprising 1,314 questions across nine tasks, spanning knowledge-based and non-knowledge-based domains. <b>MANBench</b> emphasizes intuitive reasoning, seamless cross-modal integration, and real-world complexity, providing a rigorous evaluation framework.
+  
+  Through extensive human experiments involving diverse participants, we compared human performance against state-of-the-art MLLMs. The results indicate that while MLLMs excel in tasks like Knowledge and Text-Image Understanding, they struggle with deeper cross-modal reasoning tasks such as Transmorphic Understanding, Image Consistency, and Multi-image Understanding. Moreover, both humans and MLLMs face challenges in highly complex tasks like Puzzles and Spatial Imagination.
+  
+  <b>MANBench</b> highlights the strengths and limitations of MLLMs, revealing that even advanced models fall short of achieving human-level performance across many domains. We hope <b>MANBench</b> will inspire efforts to bridge the gap between MLLMs and human multimodal capabilities.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+
+
+
+
+
+<!-- Paper Analysis -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-3">Experiment Analysis</h2> <br>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-five-sixths">
+        <h2 class="title is-5">
+        1. Is prior knowledge crucial?
+        <h2 class="content has-text-justified">
+          Children under the age of fourteen perform comparably to adults on <b>MANBench</b>, despite likely possessing less prior knowledge. This indicates that prior knowledge is not crucial for task performance in <b>MANBench</b>, emphasizing the dataset’s focus on reasoning rather than domain-specific expertise.
+
+        </h2>
+        <div class="columns is-centered has-text-centered">
+        <img src="static/images/box_figure.jpg" width="60%"/> </div>
+        <h2 class="content has-text-centered">
+          Performance comparison across different age groups.
+        </h2>
+        <br>
+        <h2 class="title is-5">2. Is the visual contents necessary?</h2>
+        <h2 class="content has-text-justified">
+          To investigate the necessity of visual content in the tasks, we conducted an ablation study on GPT-4o by removing the images from the questions. GPT-4o demonstrated performance divergence across 9 task categories. In the Image Consistency task, due to the lack of images, GPT-4o refused to answer most questions, which confirmed strong visual dependency. And in the Transmorphic Understanding task, the model’s accuracy slightly exceeded random baseline. A further manual review revealed that this higher accuracy resulted from the model’s preference for positive emotions, such as “joy”, which appear more frequently as correct answers in the task. For other task types, the model’s performance showed no statistically significant deviation from random chance.
+        </h2>
+        <div class="columns is-centered has-text-centered">
+        <img src="static/images/ablation.jpg" width="60%"/>
+        </div>
+        <h2 class="content has-text-centered">
+          Performance of GPT-4o with and without images on MANBench English subset.
+        </h2>
+
+
+        <h2 class="title is-5">3. Is the reasoning difficulty sufficient? </h2>
+        <h2 class="content has-text-justified">
+          To assess the reasoning difficulty of the tasks, we measured the response time of participants for each question. The results reveal a wide range of reasoning response times among humans on MANBench, which correlates with varying levels of accuracy. This indicates that MANBench encompasses a diverse spectrum of question difficulties, effectively evaluating the reasoning capabilities of both humans and MLLMs.
+        </h2>
+        <div class="columns is-centered has-text-centered">
+        <img src="static/images/response_time_question.jpg" width="60%"/>
+        </div>
+        <h2 class="content has-text-centered">
+          Average human response time for all questions in MANBench. Different colors indicate distinct categories within MANBench. Each point represents the average response time and accuracy for a specific question.
+        </h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Paper Qualitative -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-sixths">
+        <h2 class="title is-3">Human Experiment Analysis</h2>
+      </div>
+    </div>
+
+        <p>We conducted a large-scale human evaluation using the MANBench dataset, systematically comparing the performance of humans and MLLMs across a variety of multimodal tasks.</p>
+  
+        <div class="content has-text-centered">
+          <div class="is-flex is-justify-content-center">
+            <table style="max-width: 600px;">
+          <thead>
+            <tr>
+              <th>Education</th>
+              <th>Number</th>
+              <th>Percentage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bachelor</td>
+              <td>233</td>
+              <td>40.5%</td>
+            </tr>
+            <tr>
+              <td>Associate</td>
+              <td>106</td>
+              <td>18.4%</td>
+            </tr>
+            <tr>
+              <td>High School</td>
+              <td>74</td>
+              <td>12.9%</td>
+            </tr>
+            <tr>
+              <td>Underage</td>
+              <td>61</td>
+              <td>10.6%</td>
+            </tr>
+            <tr>
+              <td>Master or above</td>
+              <td>58</td>
+              <td>10.1%</td>
+            </tr>
+            <tr>
+              <td>Junior High School</td>
+              <td>35</td>
+              <td>6.1%</td>
+            </tr>
+            <tr>
+              <td>Primary School</td>
+              <td>8</td>
+              <td>1.4%</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>575</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Education background of the participants.</p>
+
+        </div>
+      <p>The best human performance sample was selected from the first stage of the human experiments. The individual is a 21-year-old Chinese student, with a strong background in mathematics and computer science.</p> 
+      <div class="content has-text-centered">
+        <div class="is-flex is-justify-content-center">
+          <table style="max-width: 600px;">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Correct/Total</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Text-image Understanding</td>
+              <td>89/100</td>
+              <td>89.00</td>
+            </tr>
+            <tr>
+              <td>Image Consistency</td>
+              <td>158/158</td>
+              <td>100.00</td>
+            </tr>
+            <tr>
+              <td>Numbers Pattern</td>
+              <td>123/134</td>
+              <td>91.79</td>
+            </tr>
+            <tr>
+              <td>Spatial Imagination</td>
+              <td>174/184</td>
+              <td>94.57</td>
+            </tr>
+            <tr>
+              <td>Text Locating</td>
+              <td>101/107</td>
+              <td>94.39</td>
+            </tr>
+            <tr>
+              <td>Multi-image Understanding</td>
+              <td>78/84</td>
+              <td>92.86</td>
+            </tr>
+            <tr>
+              <td>Knowledge</td>
+              <td>74/99</td>
+              <td>74.75</td>
+            </tr>
+            <tr>
+              <td>Puzzles</td>
+              <td>70/81</td>
+              <td>86.42</td>
+            </tr>
+            <tr>
+              <td>Transmorphic Understanding</td>
+              <td>67/74</td>
+              <td>90.54</td>
+            </tr>
+            <tr>
+              <td>Average</td>
+              <td></td>
+              <td>90.48</td>
+            </tr>
+          </table>
+        </div>
+        <p>Best human performance on each category.</p>
+      </div>
+      </div>
+
+        </div>
+</section>
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-3"><b>MANBench</b> Examples with GPT-4o Outputs</h2> <br></div>
+      <div class="columns is-centered">
+        <div class="column is-five-sixths">
+      <h2 class="content has-text-justified">
+        We show random selected data for the 9 tasks from <b>MANBench</b>, with GPT-4o predictions attached.
+      </h2>
+    </div></div>
+  </div></section>
+<section class="hero is-small">
+  <div class="hero-body">
+        <div class="container" style="background-color: transparent;">
+          <div id="results-carousel" class="carousel results-carousel" style="background-color: transparent;">
+           <div class="item">
+            <!-- Your image here -->
+            <img src="static/images/example1.jpg" width="100%"/>
+
+          </div>
+    
+          <div class="item">
+            <!-- Your image here -->
+            <img src="static/images/example2.jpg" width="100%"/>
+    
+          </div>
+    
+          <div class="item">
+            <!-- Your image here -->
+            <img src="static/images/example3.jpg" width="100%"/>
+                    
+          </div>
+    
+          <div class="item">
+            <!-- Your image here -->
+            <img src="static/images/example4.jpg" width="100%"/>
+                       
+          </div>
+    
+          <div class="item">
+            <!-- Your image here -->
+            <img src="static/images/example5.jpg" width="100%"/>
+                        
+          </div>
+    
+          <div class="item">
+            <!-- Your image here -->
+            <img src="static/images/example6.jpg" width="100%"/>
+      
+          </div>
+    
+          <div class="item">
+            <!-- Your image here -->
+            <img src="static/images/example7.jpg" width="100%"/>
+                       
+          </div>
+    
+          <div class="item">
+            <!-- Your image here -->
+            <img src="static/images/example8.jpg" width="100%"/>
+                      
+          </div>
+    
+          <div class="item">
+            <!-- Your image here -->
+            <img src="static/images/example9.jpg" width="100%"/>
+                       
+          </div>
+    
+          </div>
+        </div>
+  </div>
+</section>
+<!-- End image carousel -->
+
+
+<!--BibTex citation -->
+  <section class="section  is-light is-small" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><bibtexcode>
+        @article{2025<b>MANBench</b>,
+          title={MANBench: Is Your Multimodal Model Smarter than Human?},
+          author={},
+          journal={},
+          year={2025}
+        }
+      </bibtexcode></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+  
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.bundle.min.js"></script>
+    <script src="./static/js/jquery.csv.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bulma.min.js"></script>
+    <script>
+      CsvToHtmlTable.init({
+        csv_path: 'static/val_result.csv', 
+        element: 'table-container', 
+        allow_download: true,
+        csv_options: {separator: ',', delimiter: '"'},
+        datatables_options: {
+          "paging": false, 
+          "order": [[1, 'desc']],
+          "columnDefs": [
+          {targets: [0], className: 'dt-left', className: 'dt-head-left'},
+          ]
+        }
+      });
+    </script>
+  
+  </body>
+  </html>
