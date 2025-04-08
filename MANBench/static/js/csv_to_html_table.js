@@ -77,7 +77,7 @@ CsvToHtmlTable = {
                             $tableBodyRowTd.css("text-align", "left");
                             // click to see more info
                             var cellValue = csvData[rowIdx][colIdx];
-                            var url = 'https://github.com/zeyofu/BLINK_Benchmark/tree/main/eval/saved_outputs';
+                            var url = 'https://github.com/MicDZ/MANBench/tree/main/eval/saved_mllms_results';
                             $tableBodyRowTd.html('<a href="' + url + '">' + cellValue + '</a>');
                         }
                         if (colIdx == 1 || colIdx == 0) {

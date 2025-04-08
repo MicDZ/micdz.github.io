@@ -2,7 +2,6 @@
 <html>
 <head>
   <meta charset="utf-8">
-    <base href="/MANBench/">
   <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
   <!-- Replace the content tag with appropriate information -->
   <meta name="description" content="MANBench: Is Your Multimodal Model Smarter than Human?">
@@ -14,43 +13,27 @@
 
 
   <title>MANBench</title>
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
-    w[l] = w[l] || []; w[l].push({
-      'gtm.start':
-        new Date().getTime(), event: 'gtm.js'
-    }); var f = d.getElementsByTagName(s)[0],
-      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'dataLayer', 'GTM-MFCT45H');</script>
-  <!-- End Google Tag Manager -->
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet"> -->
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+        href="./static/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="stylesheet" href="./static/css/dataTables.bulma.css">
   <link rel="icon" href="./static/images/logo.png">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="./static/js/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
-  <script src="./static/js/csv_to_html_table.js"></script>
   </head>
   <body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MFCT45H" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
 
  
 
@@ -93,7 +76,7 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title" ><span class="rainbow_text_animated">MANBench</span><img src="static/images/logo.png" width="60" style="margin-top: 10px;"/><br> <div style="font-size:2rem">Is Your Multimodal Model Smarter than Human?</div></h1>
+            <h1 class="title is-1 publication-title" ><span class="rainbow_text_animated">MANBench</span>&nbsp;<img src="static/images/logo.png" width="60"/><br> <div style="font-size:2rem">Is Your Multimodal Model Smarter than Human?</div></h1>
 
                   <div class="content has-text-centered">
                     <div class="publication-links">
@@ -569,6 +552,7 @@
     <script src="./static/js/jquery.csv.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bulma.min.js"></script>
+    <script src="./static/js/csv_to_html_table.js"></script>
     <script>
       CsvToHtmlTable.init({
         csv_path: 'static/val_result.csv', 
