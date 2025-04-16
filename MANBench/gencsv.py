@@ -32,7 +32,9 @@ if os.path.exists(save_file):
 with open(save_file, 'w', newline='') as csvfile:
     fieldnames = ['Model', 'Overall', 'Text-image Understanding', 'Image Consistency', 'Numbers Pattern', 'Spatial Imagination', 'Text Locating', 'Multi-image Understanding', 'Knowledge', 'Puzzles', 'Transmorphic Understanding']
     for field in fieldnames:
-        csvfile.write(f'{field},')
+        csvfile.write(f'{field}')
+        if field != fieldnames[-1]:
+            csvfile.write(',')
     csvfile.write('\n')
     for model in data:
         for key, value in model.items():
@@ -43,7 +45,9 @@ with open(save_file, 'w', newline='') as csvfile:
             overall /= len(value)
             csvfile.write(f'{round(overall,2)},')
             for k, v in value.items():
-                csvfile.write(f'{round(v,2)},')
+                csvfile.write(f'{round(v,2)}')
+                if k != list(value.keys())[-1]:
+                    csvfile.write(',')
             csvfile.write('\n')
     
 

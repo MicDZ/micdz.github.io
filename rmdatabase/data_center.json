@@ -1,0 +1,3215 @@
+[
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C1",
+        "red": "南方科技大学 ARTINX战队",
+        "blue": "燕山大学 燕鹰战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4989",
+                    "money": "1268",
+                    "damage": "2349",
+                    "kill": "2",
+                    "bullet": "29/1658",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4996",
+                    "money": "800",
+                    "damage": "2166",
+                    "kill": "5",
+                    "bullet": "13/798",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "4996",
+                    "money": "1345",
+                    "damage": "2054",
+                    "kill": "6",
+                    "bullet": "33/1356",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4987",
+                    "money": "800",
+                    "damage": "1755",
+                    "kill": "1",
+                    "bullet": "24/173",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "4987",
+                    "money": "1040",
+                    "damage": "2489",
+                    "kill": "2",
+                    "bullet": "20/1549",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4914",
+                    "money": "917",
+                    "damage": "2144",
+                    "kill": "3",
+                    "bullet": "16/619",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C2",
+        "red": "华中科技大学 狼牙战队",
+        "blue": "青岛大学 未来战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4600",
+                    "money": "800",
+                    "damage": "4158",
+                    "kill": "9",
+                    "bullet": "20/1228",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4400",
+                    "money": "925",
+                    "damage": "2808",
+                    "kill": "1",
+                    "bullet": "35/255",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "800",
+                    "damage": "4401",
+                    "kill": "11",
+                    "bullet": "15/1154",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "3999",
+                    "money": "1028",
+                    "damage": "1562",
+                    "kill": "0",
+                    "bullet": "14/294",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C3",
+        "red": "南昌大学 Passion战队",
+        "blue": "河北科技大学 Actor&Thinker战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4995",
+                    "money": "1553",
+                    "damage": "5683",
+                    "kill": "12",
+                    "bullet": "28/1387",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4090",
+                    "money": "1002",
+                    "damage": "2198",
+                    "kill": "1",
+                    "bullet": "28/267",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1575",
+                    "damage": "5451",
+                    "kill": "12",
+                    "bullet": "34/1574",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "3939",
+                    "money": "905",
+                    "damage": "2060",
+                    "kill": "1",
+                    "bullet": "22/193",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C4",
+        "red": "合肥工业大学 苍穹战队",
+        "blue": "太原工业学院 火线战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "2123",
+                    "damage": "3718",
+                    "kill": "4",
+                    "bullet": "52/963",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4615",
+                    "money": "800",
+                    "damage": "2389",
+                    "kill": "3",
+                    "bullet": "25/735",
+                    "duff": "2"
+                }
+            },
+            {
+                "red": {
+                    "base": "4582",
+                    "money": "1831",
+                    "damage": "4777",
+                    "kill": "3",
+                    "bullet": "28/1081",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "3399",
+                    "money": "800",
+                    "damage": "3230",
+                    "kill": "5",
+                    "bullet": "35/826",
+                    "duff": "1"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C5",
+        "red": "哈尔滨工程大学 创梦之翼战队",
+        "blue": "北京理工大学 追梦战队",
+        "data": [
+            {
+                "red": {
+                    "base": "2998",
+                    "money": "985",
+                    "damage": "3039",
+                    "kill": "3",
+                    "bullet": "14/1121",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1075",
+                    "damage": "5080",
+                    "kill": "5",
+                    "bullet": "37/547",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "2595",
+                    "money": "1004",
+                    "damage": "2861",
+                    "kill": "2",
+                    "bullet": "16/866",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1900",
+                    "damage": "5332",
+                    "kill": "4",
+                    "bullet": "54/425",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C6",
+        "red": "桂林信息科技学院 GIRT战队",
+        "blue": "西安理工大学 NEXT E战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1259",
+                    "damage": "3909",
+                    "kill": "7",
+                    "bullet": "10/802",
+                    "duff": "3"
+                },
+                "blue": {
+                    "base": "4674",
+                    "money": "800",
+                    "damage": "1092",
+                    "kill": "0",
+                    "bullet": "30/718",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1332",
+                    "damage": "4538",
+                    "kill": "8",
+                    "bullet": "32/897",
+                    "duff": "4"
+                },
+                "blue": {
+                    "base": "3796",
+                    "money": "800",
+                    "damage": "1536",
+                    "kill": "0",
+                    "bullet": "20/903",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C7",
+        "red": "东北林业大学 Ares战队",
+        "blue": "山东科技大学 SmartRobot战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1243",
+                    "damage": "3211",
+                    "kill": "4",
+                    "bullet": "35/1171",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4600",
+                    "money": "1397",
+                    "damage": "2810",
+                    "kill": "6",
+                    "bullet": "26/398",
+                    "duff": "2"
+                }
+            },
+            {
+                "red": {
+                    "base": "4196",
+                    "money": "1526",
+                    "damage": "3289",
+                    "kill": "3",
+                    "bullet": "37/1616",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4820",
+                    "money": "1711",
+                    "damage": "3666",
+                    "kill": "3",
+                    "bullet": "59/572",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "3998",
+                    "money": "1271",
+                    "damage": "3637",
+                    "kill": "2",
+                    "bullet": "41/1892",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4598",
+                    "money": "1337",
+                    "damage": "4207",
+                    "kill": "6",
+                    "bullet": "48/665",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C8",
+        "red": "沈阳航天航空大学 TUP战队",
+        "blue": "长安大学 VCG战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1025",
+                    "damage": "3690",
+                    "kill": "2",
+                    "bullet": "43/548",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "4200",
+                    "money": "800",
+                    "damage": "2271",
+                    "kill": "1",
+                    "bullet": "32/479",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "905",
+                    "damage": "6090",
+                    "kill": "3",
+                    "bullet": "41/366",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "1119",
+                    "money": "800",
+                    "damage": "572/1",
+                    "kill": "1",
+                    "bullet": "26/494",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C9",
+        "red": "哈尔滨工业大学 I Hiter战队",
+        "blue": "中国石油大学（华东）  RPS战队",
+        "data": [
+            {
+                "red": {
+                    "base": "2995",
+                    "money": "1583",
+                    "damage": "8673",
+                    "kill": "5",
+                    "bullet": "66/726",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "398",
+                    "money": "937",
+                    "damage": "5403",
+                    "kill": "3",
+                    "bullet": "28/1651",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "2476",
+                    "money": "1650",
+                    "damage": "3404",
+                    "kill": "4",
+                    "bullet": "16/520",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4400",
+                    "money": "1501",
+                    "damage": "5345",
+                    "kill": "4",
+                    "bullet": "0/2446",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "2036",
+                    "damage": "5657",
+                    "kill": "1",
+                    "bullet": "71/592",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "1572",
+                    "money": "1572",
+                    "damage": "2537",
+                    "kill": "4",
+                    "bullet": "4/1080",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C10",
+        "red": "福建理工大学 苍侠战队",
+        "blue": "东莞理工学院 ACE战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4199",
+                    "money": "1002",
+                    "damage": "1995",
+                    "kill": "0",
+                    "bullet": "23/1074",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1286",
+                    "damage": "4127",
+                    "kill": "8",
+                    "bullet": "29/1133",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "3999",
+                    "money": "973",
+                    "damage": "2298",
+                    "kill": "1",
+                    "bullet": "24/826",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4992",
+                    "money": "1110",
+                    "damage": "4197",
+                    "kill": "9",
+                    "bullet": "32/1119",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C11",
+        "red": "华南理工大学 华南虎战队",
+        "blue": "四川大学 火锅战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4399",
+                    "money": "1141",
+                    "damage": "6039",
+                    "kill": "4",
+                    "bullet": "40/1712",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "1415",
+                    "money": "1953",
+                    "damage": "3311",
+                    "kill": "2",
+                    "bullet": "35/624",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "3981",
+                    "money": "800",
+                    "damage": "5273",
+                    "kill": "5",
+                    "bullet": "36/1124",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "2389",
+                    "money": "975",
+                    "damage": "3695",
+                    "kill": "1",
+                    "bullet": "37/428",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C12",
+        "red": "厦门大学嘉庚学院 TCR战队",
+        "blue": "重庆三峡学院 LionHeart战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1264",
+                    "damage": "2537",
+                    "kill": "1",
+                    "bullet": "35/548",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "99/2",
+                    "money": "900",
+                    "damage": "2180",
+                    "kill": "0",
+                    "bullet": "1/793",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1341",
+                    "damage": "2490",
+                    "kill": "1",
+                    "bullet": "42/374",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4400",
+                    "money": "1077",
+                    "damage": "470",
+                    "kill": "0",
+                    "bullet": "0/288",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C13",
+        "red": "武汉工程大学 Nautilus战队",
+        "blue": "西安电子科技大学 IRobot战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4795",
+                    "money": "920",
+                    "damage": "2052",
+                    "kill": "2",
+                    "bullet": "42/1115",
+                    "duff": "4"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1070",
+                    "damage": "2982",
+                    "kill": "1",
+                    "bullet": "30/1270",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "4800",
+                    "money": "1678",
+                    "damage": "3348",
+                    "kill": "2",
+                    "bullet": "41/1382",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1150",
+                    "damage": "3279",
+                    "kill": "3",
+                    "bullet": "26/1188",
+                    "duff": "1"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C14",
+        "red": "华北科技学院 风暴战队",
+        "blue": "西南石油大学 铁人战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1094",
+                    "damage": "2961",
+                    "kill": "2",
+                    "bullet": "7/1316",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4415",
+                    "money": "800",
+                    "damage": "1467",
+                    "kill": "0",
+                    "bullet": "26/303",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "936",
+                    "damage": "2763",
+                    "kill": "3",
+                    "bullet": "5/1550",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4804",
+                    "money": "800",
+                    "damage": "1300",
+                    "kill": "1",
+                    "bullet": "0/481",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C15",
+        "red": "南京理工大学 Alliance战队",
+        "blue": "内蒙古科技大学 雷霆战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "925",
+                    "damage": "1958",
+                    "kill": "1",
+                    "bullet": "29/621",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "800",
+                    "damage": "1388",
+                    "kill": "0",
+                    "bullet": "27/143",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1015",
+                    "damage": "3426",
+                    "kill": "10",
+                    "bullet": "22/395",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4391",
+                    "money": "800",
+                    "damage": "1646",
+                    "kill": "1",
+                    "bullet": "27/41",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C16",
+        "red": "太原科技大学 NewMaker战队",
+        "blue": "成都大学大学 Ultra战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1217",
+                    "damage": "3474",
+                    "kill": "8",
+                    "bullet": "35/825",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4600",
+                    "money": "800",
+                    "damage": "1471",
+                    "kill": "0",
+                    "bullet": "24/307",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1234",
+                    "damage": "3427",
+                    "kill": "10",
+                    "bullet": "8/1185",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "931",
+                    "damage": "2098",
+                    "kill": "1",
+                    "bullet": "21/293",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C17",
+        "red": "山东科技大学 SmartRobot战队",
+        "blue": "南方科技大学 ARTINX战队",
+        "data": [
+            {
+                "red": {
+                    "base": "1156",
+                    "money": "1540",
+                    "damage": "5854",
+                    "kill": "5",
+                    "bullet": "51/644",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "2198",
+                    "money": "2037",
+                    "damage": "7305",
+                    "kill": "5",
+                    "bullet": "61/2264",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "4993",
+                    "money": "1214",
+                    "damage": "2378",
+                    "kill": "3",
+                    "bullet": "27/796",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1593",
+                    "damage": "2985",
+                    "kill": "5",
+                    "bullet": "21/1881",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C18",
+        "red": "沈阳航天航空大学 TUP战队",
+        "blue": "北京理工大学 追梦战队",
+        "data": [
+            {
+                "red": {
+                    "base": "1799",
+                    "money": "1404",
+                    "damage": "1625",
+                    "kill": "0",
+                    "bullet": "15/416",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1299",
+                    "damage": "7486",
+                    "kill": "8",
+                    "bullet": "42/942",
+                    "duff": "3"
+                }
+            },
+            {
+                "red": {
+                    "base": "196",
+                    "money": "2025",
+                    "damage": "5020",
+                    "kill": "2",
+                    "bullet": "48/803",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "3594",
+                    "money": "1330",
+                    "damage": "8654",
+                    "kill": "6",
+                    "bullet": "48/1040",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C19",
+        "red": "南昌大学 Passion战队",
+        "blue": "合肥工业大学 苍穹战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1575",
+                    "damage": "7557",
+                    "kill": "15",
+                    "bullet": "40/1737",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "2399",
+                    "money": "1418",
+                    "damage": "3094",
+                    "kill": "2",
+                    "bullet": "22/980",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "3815",
+                    "money": "1567",
+                    "damage": "6843",
+                    "kill": "9",
+                    "bullet": "65/1411",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "2400",
+                    "money": "1493",
+                    "damage": "3824",
+                    "kill": "4",
+                    "bullet": "14/1151",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C20",
+        "red": "桂林信息科技学院 GIRT战队",
+        "blue": "华中科技大学 狼牙战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1505",
+                    "damage": "5290",
+                    "kill": "6",
+                    "bullet": "47/1821",
+                    "duff": "3"
+                },
+                "blue": {
+                    "base": "2962",
+                    "money": "1025",
+                    "damage": "3128",
+                    "kill": "2",
+                    "bullet": "7/1640",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1338",
+                    "damage": "8221",
+                    "kill": "6",
+                    "bullet": "42/1559",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "0",
+                    "money": "810",
+                    "damage": "2617",
+                    "kill": "3",
+                    "bullet": "9/1441",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C21",
+        "red": "青岛大学 未来战队",
+        "blue": "西安理工大学 NEXT E战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "850",
+                    "damage": "2681",
+                    "kill": "5",
+                    "bullet": "29/672",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4800",
+                    "money": "800",
+                    "damage": "1051",
+                    "kill": "1",
+                    "bullet": "18/816",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "850",
+                    "damage": "2329",
+                    "kill": "3",
+                    "bullet": "10/641",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "800",
+                    "damage": "1604",
+                    "kill": "3",
+                    "bullet": "14/509",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C22",
+        "red": "太原工业学院 火线战队 ",
+        "blue": "河北科技大学 Actor&Thinker战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "950",
+                    "damage": "4911",
+                    "kill": "9",
+                    "bullet": "29/487",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "3565",
+                    "money": "800",
+                    "damage": "2165",
+                    "kill": "1",
+                    "bullet": "24/374",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1226",
+                    "damage": "3969",
+                    "kill": "8",
+                    "bullet": "12/553",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "4800",
+                    "money": "950",
+                    "damage": "992",
+                    "kill": "1",
+                    "bullet": "13/292",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C23",
+        "red": "哈尔滨工程大学 创梦之翼战队",
+        "blue": "长安大学 VGD战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1417",
+                    "damage": "2628",
+                    "kill": "4",
+                    "bullet": "12/1582",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1175",
+                    "damage": "1650",
+                    "kill": "0",
+                    "bullet": "24/597",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C24",
+        "red": "燕山大学 燕鹰战队",
+        "blue": "东北林业大学 Ares战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1034",
+                    "damage": "2336",
+                    "kill": "4",
+                    "bullet": "4/1302",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1275",
+                    "damage": "2676",
+                    "kill": "2",
+                    "bullet": "37/576",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "4200",
+                    "money": "931",
+                    "damage": "1834",
+                    "kill": "3",
+                    "bullet": "23/605",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1286",
+                    "damage": "3706",
+                    "kill": "2",
+                    "bullet": "40/706",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "4977",
+                    "money": "1084",
+                    "damage": "1642",
+                    "kill": "0",
+                    "bullet": "25/993",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1338",
+                    "damage": "2824",
+                    "kill": "3",
+                    "bullet": "28/587",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C25",
+        "red": "南京理工大学 Alliance战队",
+        "blue": "厦门大学嘉庚学院 TCR战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "995",
+                    "damage": "2218",
+                    "kill": "2",
+                    "bullet": "32/926",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1236",
+                    "damage": "2224",
+                    "kill": "4",
+                    "bullet": "12/911",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1236",
+                    "damage": "3713",
+                    "kill": "4",
+                    "bullet": "34/1471",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4399",
+                    "money": "1010",
+                    "damage": "1564",
+                    "kill": "2",
+                    "bullet": "0/743",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C26",
+        "red": "西安电子科技大学 IRobot战队",
+        "blue": "太原科技大学 NewMaker战队",
+        "data": [
+            {
+                "red": {
+                    "base": "2325",
+                    "money": "1200",
+                    "damage": "3831",
+                    "kill": "3",
+                    "bullet": "31/1057",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "4395",
+                    "money": "1013",
+                    "damage": "5749",
+                    "kill": "4",
+                    "bullet": "42/810",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1724",
+                    "damage": "8254",
+                    "kill": "6",
+                    "bullet": "52/1297",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "0",
+                    "money": "985",
+                    "damage": "2710",
+                    "kill": "2",
+                    "bullet": "12/305",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1724",
+                    "damage": "8254",
+                    "kill": "6",
+                    "bullet": "52/1297",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "0",
+                    "money": "985",
+                    "damage": "2710",
+                    "kill": "2",
+                    "bullet": "12/305",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "4393",
+                    "money": "1520",
+                    "damage": "5822",
+                    "kill": "4",
+                    "bullet": "34/1669",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "2038",
+                    "money": "1381",
+                    "damage": "3579",
+                    "kill": "4",
+                    "bullet": "27/355",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C27",
+        "red": "哈尔滨工业大学 I Hiter战队",
+        "blue": "华南理工大学 华南虎战队",
+        "data": [
+            {
+                "red": {
+                    "base": "0",
+                    "money": "1936",
+                    "damage": "5570",
+                    "kill": "7",
+                    "bullet": "35/1245",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "3030",
+                    "money": "1478",
+                    "damage": "7927",
+                    "kill": "6",
+                    "bullet": "34/1036",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "2874",
+                    "money": "1953",
+                    "damage": "6365",
+                    "kill": "8",
+                    "bullet": "62/957",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "2000",
+                    "money": "1424",
+                    "damage": "4581",
+                    "kill": "2",
+                    "bullet": "6/1517",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "0",
+                    "money": "2073",
+                    "damage": "4442",
+                    "kill": "4",
+                    "bullet": "17/1615",
+                    "duff": "3"
+                },
+                "blue": {
+                    "base": "4210",
+                    "money": "1188",
+                    "damage": "7253",
+                    "kill": "2",
+                    "bullet": "27/1152",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C28",
+        "red": "东莞理工学院 ACE战队",
+        "blue": "华北科技学院 风暴战队",
+        "data": [
+            {
+                "red": {
+                    "base": "2972",
+                    "money": "1369",
+                    "damage": "2625",
+                    "kill": "2",
+                    "bullet": "18/1748",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "4988",
+                    "money": "1246",
+                    "damage": "4696",
+                    "kill": "2",
+                    "bullet": "27/1339",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "405",
+                    "money": "1241",
+                    "damage": "1904",
+                    "kill": "2",
+                    "bullet": "17/1039",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1186",
+                    "damage": "8249",
+                    "kill": "6",
+                    "bullet": "46/1506",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C29",
+        "red": "武汉工程大学 Nautilus战队",
+        "blue": "成都大学大学 Ultra战队",
+        "data": [
+            {
+                "red": {
+                    "base": "3776",
+                    "money": "800",
+                    "damage": "1834",
+                    "kill": "0",
+                    "bullet": "20/416",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1789",
+                    "damage": "5019",
+                    "kill": "6",
+                    "bullet": "27/1578",
+                    "duff": "2"
+                }
+            },
+            {
+                "red": {
+                    "base": "2197",
+                    "money": "1401",
+                    "damage": "2167",
+                    "kill": "0",
+                    "bullet": "13/557",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1754",
+                    "damage": "6725",
+                    "kill": "9",
+                    "bullet": "35/1166",
+                    "duff": "1"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C30",
+        "red": "重庆三峡学院 LionHeart战队",
+        "blue": "内蒙古科技大学 雷霆战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "937",
+                    "damage": "3653",
+                    "kill": "4",
+                    "bullet": "30/548",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4600",
+                    "money": "800",
+                    "damage": "2385",
+                    "kill": "2",
+                    "bullet": "24/293",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "4000",
+                    "money": "1080",
+                    "damage": "2554",
+                    "kill": "4",
+                    "bullet": "26/531",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "800",
+                    "damage": "3170",
+                    "kill": "1",
+                    "bullet": "16/325",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C31",
+        "red": "西南石油大学 铁人战队",
+        "blue": "福建理工大学 苍侠战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4800",
+                    "money": "1125",
+                    "damage": "3032",
+                    "kill": "4",
+                    "bullet": "19/523",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4480",
+                    "money": "1191",
+                    "damage": "2981",
+                    "kill": "1",
+                    "bullet": "30/867",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1626",
+                    "damage": "4287",
+                    "kill": "4",
+                    "bullet": "41/378",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "3000",
+                    "money": "1907",
+                    "damage": "2820",
+                    "kill": "1",
+                    "bullet": "15/1199",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C32",
+        "red": "四川大学 火锅战队",
+        "blue": "中国石油大学（华东）RPS战队",
+        "data": [
+            {
+                "red": {
+                    "base": "0",
+                    "money": "1909",
+                    "damage": "2343",
+                    "kill": "1",
+                    "bullet": "19/678",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "800",
+                    "damage": "7761",
+                    "kill": "6",
+                    "bullet": "30/824",
+                    "duff": "3"
+                }
+            },
+            {
+                "red": {
+                    "base": "4530",
+                    "money": "1917",
+                    "damage": "1899",
+                    "kill": "1",
+                    "bullet": "7/1024",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "800",
+                    "damage": "3712",
+                    "kill": "7",
+                    "bullet": "4/1517",
+                    "duff": "2"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C33",
+        "red": "南方科技大学 ARTINX战队",
+        "blue": "北京理工大学 追梦战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4399",
+                    "money": "1020",
+                    "damage": "5277",
+                    "kill": "4",
+                    "bullet": "29/1554",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "2845",
+                    "money": "800",
+                    "damage": "3792",
+                    "kill": "8",
+                    "bullet": "23/611",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1804",
+                    "damage": "5310",
+                    "kill": "4",
+                    "bullet": "37/1254",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "2790",
+                    "money": "1318",
+                    "damage": "1569",
+                    "kill": "4",
+                    "bullet": "0/602",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C34",
+        "red": "南昌大学 Passion战队",
+        "blue": "桂林信息科技学院 GIRT战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1700",
+                    "damage": "5967",
+                    "kill": "6",
+                    "bullet": "54/1493",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "2998",
+                    "money": "1420",
+                    "damage": "2993",
+                    "kill": "3",
+                    "bullet": "34/1302",
+                    "duff": "3"
+                }
+            },
+            {
+                "red": {
+                    "base": "2385",
+                    "money": "1925",
+                    "damage": "4336",
+                    "kill": "4",
+                    "bullet": "32/1463",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4798",
+                    "money": "1500",
+                    "damage": "6043",
+                    "kill": "6",
+                    "bullet": "60/1012",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C35",
+        "red": "华中科技大学 狼牙战队",
+        "blue": "合肥工业大学 苍穹战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4399",
+                    "money": "950",
+                    "damage": "5790",
+                    "kill": "9",
+                    "bullet": "20/1885",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "3077",
+                    "money": "1803",
+                    "damage": "3530",
+                    "kill": "3",
+                    "bullet": "44/840",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "2885",
+                    "money": "800",
+                    "damage": "3131",
+                    "kill": "6",
+                    "bullet": "16/1472",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1484",
+                    "damage": "5005",
+                    "kill": "2",
+                    "bullet": "29/1157",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C36",
+        "red": "沈阳航天航空大学 TUP战队",
+        "blue": "山东科技大学 SmartRobot战队",
+        "data": [
+            {
+                "red": {
+                    "base": "1097",
+                    "money": "1639",
+                    "damage": "7005",
+                    "kill": "2",
+                    "bullet": "65/850",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "800",
+                    "money": "1337",
+                    "damage": "7567",
+                    "kill": "6",
+                    "bullet": "47/942",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "3600",
+                    "money": "1985",
+                    "damage": "5056",
+                    "kill": "4",
+                    "bullet": "44/536",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "3000",
+                    "money": "1260",
+                    "damage": "4589",
+                    "kill": "5",
+                    "bullet": "51/574",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C37",
+        "red": "东北林业大学 Ares战队",
+        "blue": "哈尔滨工程大学 创梦之翼战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4597",
+                    "money": "1089",
+                    "damage": "2837",
+                    "kill": "2",
+                    "bullet": "20/1760",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4473",
+                    "money": "1213",
+                    "damage": "4345",
+                    "kill": "7",
+                    "bullet": "0/2427",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "3574",
+                    "money": "1134",
+                    "damage": "3962",
+                    "kill": "1",
+                    "bullet": "28/721",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "3600",
+                    "money": "1163",
+                    "damage": "5134",
+                    "kill": "5",
+                    "bullet": "0/2733",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C38",
+        "red": "青岛大学 未来战队",
+        "blue": "太原工业学院 火线战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4015",
+                    "money": "850",
+                    "damage": "2086",
+                    "kill": "2",
+                    "bullet": "16/182",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1324",
+                    "damage": "4765",
+                    "kill": "10",
+                    "bullet": "37/1118",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "2399",
+                    "money": "1038",
+                    "damage": "2445",
+                    "kill": "0",
+                    "bullet": "21/734",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1100",
+                    "damage": "6572",
+                    "kill": "6",
+                    "bullet": "36/857",
+                    "duff": "2"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C39",
+        "red": "西安电子科技大学 IRobot战队",
+        "blue": "华北科技学院 风暴战队",
+        "data": [
+            {
+                "red": {
+                    "base": "1531",
+                    "money": "1231",
+                    "damage": "4570",
+                    "kill": "2",
+                    "bullet": "52/539",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "3599",
+                    "money": "1370",
+                    "damage": "6638",
+                    "kill": "2",
+                    "bullet": "52/1219",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "0",
+                    "money": "825",
+                    "damage": "2584",
+                    "kill": "5",
+                    "bullet": "16/710",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1885",
+                    "damage": "8181",
+                    "kill": "5",
+                    "bullet": "59/1008",
+                    "duff": "2"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C40",
+        "red": "华南理工大学 华南虎战队",
+        "blue": "南京理工大学 Alliance战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1429",
+                    "damage": "3989",
+                    "kill": "2",
+                    "bullet": "25/1782",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "3390",
+                    "money": "895",
+                    "damage": "1744",
+                    "kill": "1",
+                    "bullet": "28/1268",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "830",
+                    "damage": "3432",
+                    "kill": "6",
+                    "bullet": "7/1787",
+                    "duff": "4"
+                },
+                "blue": {
+                    "base": "4136",
+                    "money": "925",
+                    "damage": "2436",
+                    "kill": "1",
+                    "bullet": "16/1624",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C41",
+        "red": "厦门大学嘉庚学院 TCR战队",
+        "blue": "哈尔滨工业大学 I Hiter战队",
+        "data": [
+            {
+                "red": {
+                    "base": "3396",
+                    "money": "1113",
+                    "damage": "1137",
+                    "kill": "1",
+                    "bullet": "15/837",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1716",
+                    "damage": "4696",
+                    "kill": "7",
+                    "bullet": "41/713",
+                    "duff": "3"
+                }
+            },
+            {
+                "red": {
+                    "base": "0",
+                    "money": "817",
+                    "damage": "1441",
+                    "kill": "0",
+                    "bullet": "13/677",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1422",
+                    "damage": "9051",
+                    "kill": "9",
+                    "bullet": "45/1460",
+                    "duff": "3"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C42",
+        "red": "东莞理工学院 ACE战队",
+        "blue": "西南石油大学 铁人战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1515",
+                    "damage": "4997",
+                    "kill": "5",
+                    "bullet": "27/1580",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "3250",
+                    "money": "1162",
+                    "damage": "1940",
+                    "kill": "1",
+                    "bullet": "2/1051",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "4799",
+                    "money": "1791",
+                    "damage": "5885",
+                    "kill": "6",
+                    "bullet": "36/1576",
+                    "duff": "3"
+                },
+                "blue": {
+                    "base": "2427",
+                    "money": "1415",
+                    "damage": "2467",
+                    "kill": "1",
+                    "bullet": "43/488",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C43",
+        "red": "太原科技大学 NewMaker战队",
+        "blue": "武汉工程大学 Nautilus战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4993",
+                    "money": "1533",
+                    "damage": "4258",
+                    "kill": "8",
+                    "bullet": "14/900",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4985",
+                    "money": "3596",
+                    "damage": "2890",
+                    "kill": "3",
+                    "bullet": "21/572",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "4790",
+                    "money": "1406",
+                    "damage": "6832",
+                    "kill": "5",
+                    "bullet": "28/787",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "1618",
+                    "money": "3491",
+                    "damage": "4059",
+                    "kill": "4",
+                    "bullet": "26/861",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C44",
+        "red": "中国石油大学（华东）  RPS战队",
+        "blue": " 重庆三峡学院 LionHeart战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "2106",
+                    "damage": "5419",
+                    "kill": "6",
+                    "bullet": "34/1641",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "2519",
+                    "money": "950",
+                    "damage": "2208",
+                    "kill": "2",
+                    "bullet": "6/906",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "2043",
+                    "damage": "4775",
+                    "kill": "6",
+                    "bullet": "44/1880",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "3474",
+                    "money": "800",
+                    "damage": "2188",
+                    "kill": "0",
+                    "bullet": "0/657",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C45",
+        "red": "西安电子科技大学 IRobot战队",
+        "blue": "太原工业学院 火线战队",
+        "data": [
+            {
+                "red": {
+                    "base": "729",
+                    "money": "1360",
+                    "damage": "5526",
+                    "kill": "2",
+                    "bullet": "28/1619",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "2891",
+                    "money": "1357",
+                    "damage": "8364",
+                    "kill": "7",
+                    "bullet": "33/1432",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "2565",
+                    "money": "1290",
+                    "damage": "5051",
+                    "kill": "1",
+                    "bullet": "21/1828",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "3430",
+                    "money": "1384",
+                    "damage": "6786",
+                    "kill": "8",
+                    "bullet": "28/1198",
+                    "duff": "2"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C46",
+        "red": "桂林信息科技学院 GIRT战队",
+        "blue": "南京理工大学 Alliance战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1375",
+                    "damage": "5932",
+                    "kill": "4",
+                    "bullet": "53/1422",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "1699",
+                    "money": "925",
+                    "damage": "3026",
+                    "kill": "3",
+                    "bullet": "15/1744",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1786",
+                    "damage": "7497",
+                    "kill": "3",
+                    "bullet": "61/1497",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "266",
+                    "money": "925",
+                    "damage": "3047",
+                    "kill": "2",
+                    "bullet": "1/1614",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C47",
+        "red": "沈阳航天航空大学 TUP战队",
+        "blue": "华南理工大学 华南虎战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4777",
+                    "money": "2082",
+                    "damage": "3880",
+                    "kill": "4",
+                    "bullet": "33/754",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4200",
+                    "money": "1492",
+                    "damage": "3652",
+                    "kill": "5",
+                    "bullet": "24/1710",
+                    "duff": "2"
+                }
+            },
+            {
+                "red": {
+                    "base": "2547",
+                    "money": "1570",
+                    "damage": "3235",
+                    "kill": "4",
+                    "bullet": "20/889",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4999",
+                    "money": "1009",
+                    "damage": "5739",
+                    "kill": "3",
+                    "bullet": "21/1962",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C48",
+        "red": "太原科技大学 NewMaker战队",
+        "blue": "北京理工大学 追梦战队",
+        "data": [
+            {
+                "red": {
+                    "base": "597",
+                    "money": "1180",
+                    "damage": "3169",
+                    "kill": "4",
+                    "bullet": "16/438",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1877",
+                    "damage": "9201",
+                    "kill": "13",
+                    "bullet": "54/1668",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "49",
+                    "money": "800",
+                    "damage": "2516",
+                    "kill": "2",
+                    "bullet": "18/470",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "2595",
+                    "damage": "9682",
+                    "kill": "16",
+                    "bullet": "53/2147",
+                    "duff": "1"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C49",
+        "red": "南方科技大学 ARTINX战队",
+        "blue": "东莞理工学院 ACE战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1665",
+                    "damage": "5825",
+                    "kill": "4",
+                    "bullet": "38/1812",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "2500",
+                    "money": "1509",
+                    "damage": "2126",
+                    "kill": "1",
+                    "bullet": "25/1491",
+                    "duff": "2"
+                }
+            },
+            {
+                "red": {
+                    "base": "4000",
+                    "money": "2080",
+                    "damage": "6734",
+                    "kill": "3",
+                    "bullet": "58/1282",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "914",
+                    "money": "1379",
+                    "damage": "3982",
+                    "kill": "3",
+                    "bullet": "20/1592",
+                    "duff": "3"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C50",
+        "red": "哈尔滨工业大学 I Hiter战队",
+        "blue": "哈尔滨工程大学 创梦之翼战队",
+        "data": [
+            {
+                "red": {
+                    "base": "3145",
+                    "money": "2417",
+                    "damage": "2752",
+                    "kill": "1",
+                    "bullet": "17/96",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "3800",
+                    "money": "1165",
+                    "damage": "4781",
+                    "kill": "4",
+                    "bullet": "8/2014",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "4225",
+                    "money": "2077",
+                    "damage": "6055",
+                    "kill": "6",
+                    "bullet": "33/642",
+                    "duff": "3"
+                },
+                "blue": {
+                    "base": "2398",
+                    "money": "1437",
+                    "damage": "4665",
+                    "kill": "2",
+                    "bullet": "1/2658",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C51",
+        "red": "中国石油大学（华东）  RPS战队",
+        "blue": "南昌大学 Passion战队",
+        "data": [
+            {
+                "red": {
+                    "base": "360",
+                    "money": "1150",
+                    "damage": "3156",
+                    "kill": "4",
+                    "bullet": "11/640",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1574",
+                    "damage": "8435",
+                    "kill": "8",
+                    "bullet": "61/1023",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1307",
+                    "damage": "5171",
+                    "kill": "5",
+                    "bullet": "29/1011",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "3795",
+                    "money": "1348",
+                    "damage": "3512",
+                    "kill": "6",
+                    "bullet": "19/2007",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C52",
+        "red": "华中科技大学 狼牙战队",
+        "blue": "华北科技学院 风暴战队",
+        "data": [
+            {
+                "red": {
+                    "base": "3799",
+                    "money": "1280",
+                    "damage": "5790",
+                    "kill": "4",
+                    "bullet": "21/1563",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "3325",
+                    "money": "1198",
+                    "damage": "4505",
+                    "kill": "4",
+                    "bullet": "29/1700",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "359",
+                    "money": "1502",
+                    "damage": "6715",
+                    "kill": "2",
+                    "bullet": "41/1561",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "2000",
+                    "money": "1370",
+                    "damage": "8483",
+                    "kill": "3",
+                    "bullet": "43/1463",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C54",
+        "red": "北京理工大学 追梦战队",
+        "blue": "华南理工大学 华南虎战队",
+        "data": [
+            {
+                "red": {
+                    "base": "196",
+                    "money": "1514",
+                    "damage": "3591",
+                    "kill": "2",
+                    "bullet": "9/2119",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "4999",
+                    "money": "1807",
+                    "damage": "8735",
+                    "kill": "8",
+                    "bullet": "51/1426",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "0",
+                    "money": "837",
+                    "damage": "2653",
+                    "kill": "0",
+                    "bullet": "7/902",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1633",
+                    "damage": "7671",
+                    "kill": "7",
+                    "bullet": "46/860",
+                    "duff": "2"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C53",
+        "red": "桂林信息科技学院 GIRT战队",
+        "blue": "太原工业学院 火线战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4815",
+                    "money": "1564",
+                    "damage": "4708",
+                    "kill": "7",
+                    "bullet": "38/1641",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "3955",
+                    "money": "1337",
+                    "damage": "4206",
+                    "kill": "7",
+                    "bullet": "18/1961",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "4999",
+                    "money": "1823",
+                    "damage": "7034",
+                    "kill": "12",
+                    "bullet": "57/1563",
+                    "duff": "3"
+                },
+                "blue": {
+                    "base": "1799",
+                    "money": "1440",
+                    "damage": "3357",
+                    "kill": "3",
+                    "bullet": "30/1275",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C55",
+        "red": "哈尔滨工业大学 I Hiter战队",
+        "blue": "南方科技大学 ARTINX战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "2085",
+                    "damage": "8092",
+                    "kill": "6",
+                    "bullet": "39/1382",
+                    "duff": "4"
+                },
+                "blue": {
+                    "base": "393",
+                    "money": "1266",
+                    "damage": "3363",
+                    "kill": "3",
+                    "bullet": "13/2036",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "3981",
+                    "money": "1613",
+                    "damage": "7084",
+                    "kill": "2",
+                    "bullet": "49/1336",
+                    "duff": "3"
+                },
+                "blue": {
+                    "base": "982",
+                    "money": "1528",
+                    "damage": "3719",
+                    "kill": "4",
+                    "bullet": "33/1713",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C56",
+        "red": "南昌大学 Passion战队",
+        "blue": "华中科技大学 狼牙战队",
+        "data": [
+            {
+                "red": {
+                    "base": "3062",
+                    "money": "1568",
+                    "damage": "4186",
+                    "kill": "8",
+                    "bullet": "26/1179",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4999",
+                    "money": "1377",
+                    "damage": "6811",
+                    "kill": "8",
+                    "bullet": "28/2048",
+                    "duff": "2"
+                }
+            },
+            {
+                "red": {
+                    "base": "1742",
+                    "money": "1557",
+                    "damage": "5295",
+                    "kill": "7",
+                    "bullet": "45/886",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "2999",
+                    "money": "1301",
+                    "damage": "6640",
+                    "kill": "4",
+                    "bullet": "44/1566",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C57",
+        "red": "西安电子科技大学 IRobot战队",
+        "blue": "南京理工大学 Alliance战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1200",
+                    "damage": "6242",
+                    "kill": "4",
+                    "bullet": "42/1447",
+                    "duff": "3"
+                },
+                "blue": {
+                    "base": "2194",
+                    "money": "975",
+                    "damage": "2510",
+                    "kill": "2",
+                    "bullet": "18/1259",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "4971",
+                    "money": "940",
+                    "damage": "7395",
+                    "kill": "3",
+                    "bullet": "35/759",
+                    "duff": "3"
+                },
+                "blue": {
+                    "base": "0",
+                    "money": "1021",
+                    "damage": "2906",
+                    "kill": "2",
+                    "bullet": "8/1590",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C58",
+        "red": "太原科技大学 NewMaker战队",
+        "blue": "沈阳航空航天大学 TUP战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4819",
+                    "money": "1278",
+                    "damage": "3881",
+                    "kill": "7",
+                    "bullet": "20/922",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4799",
+                    "money": "1065",
+                    "damage": "2533",
+                    "kill": "2",
+                    "bullet": "22/533",
+                    "duff": "2"
+                }
+            },
+            {
+                "red": {
+                    "base": "2600",
+                    "money": "1472",
+                    "damage": "4201",
+                    "kill": "8",
+                    "bullet": "31/611",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4198",
+                    "money": "1115",
+                    "damage": "6079",
+                    "kill": "4",
+                    "bullet": "37/983",
+                    "duff": "2"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C59",
+        "red": "东莞理工学院 ACE战队",
+        "blue": "哈尔滨工程大学 创梦之翼战队",
+        "data": [
+            {
+                "red": {
+                    "base": "2400",
+                    "money": "1431",
+                    "damage": "2800",
+                    "kill": "3",
+                    "bullet": "31/1279",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4998",
+                    "money": "1512",
+                    "damage": "6758",
+                    "kill": "9",
+                    "bullet": "23/2281",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1458",
+                    "damage": "3118",
+                    "kill": "5",
+                    "bullet": "13/1813",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4926",
+                    "money": "885",
+                    "damage": "3147",
+                    "kill": "5",
+                    "bullet": "1/1671",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C60",
+        "red": "华北科技学院 风暴战队",
+        "blue": "中国石油大学（华东）  RPS战队",
+        "data": [
+            {
+                "red": {
+                    "base": "1046",
+                    "money": "1406",
+                    "damage": "4016",
+                    "kill": "3",
+                    "bullet": "17/1874",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4800",
+                    "money": "1633",
+                    "damage": "8745",
+                    "kill": "7",
+                    "bullet": "39/2094",
+                    "duff": "3"
+                }
+            },
+            {
+                "red": {
+                    "base": "4482",
+                    "money": "1391",
+                    "damage": "7049",
+                    "kill": "4",
+                    "bullet": "49/1373",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "1080",
+                    "money": "1653",
+                    "damage": "4879",
+                    "kill": "7",
+                    "bullet": "12/1005",
+                    "duff": "3"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C61",
+        "red": "桂林信息科技学院 GIRT战队",
+        "blue": "哈尔滨工业大学 I Hiter战队",
+        "data": [
+            {
+                "red": {
+                    "base": "2398",
+                    "money": "1144",
+                    "damage": "4174",
+                    "kill": "2",
+                    "bullet": "33/1012",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "3595",
+                    "money": "1738",
+                    "damage": "6403",
+                    "kill": "6",
+                    "bullet": "43/1100",
+                    "duff": "4"
+                }
+            },
+            {
+                "red": {
+                    "base": "4999",
+                    "money": "1318",
+                    "damage": "5484",
+                    "kill": "6",
+                    "bullet": "43/1252",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "3444",
+                    "money": "1731",
+                    "damage": "3968",
+                    "kill": "3",
+                    "bullet": "45/1733",
+                    "duff": "1"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C62",
+        "red": "北京理工大学 追梦战队",
+        "blue": "华中科技大学 狼牙战队",
+        "data": [
+            {
+                "red": {
+                    "base": "3788",
+                    "money": "1757",
+                    "damage": "8608",
+                    "kill": "12",
+                    "bullet": "52/1921",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "1238",
+                    "money": "1307",
+                    "damage": "5333",
+                    "kill": "4",
+                    "bullet": "23/1621",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1459",
+                    "damage": "8812",
+                    "kill": "7",
+                    "bullet": "46/1788",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "198",
+                    "money": "800",
+                    "damage": "3029",
+                    "kill": "2",
+                    "bullet": "15/993",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C63",
+        "red": "南京理工大学 Alliance战队",
+        "blue": "哈尔滨工程大学 创梦之翼战队",
+        "data": [
+            {
+                "red": {
+                    "base": "2958",
+                    "money": "825",
+                    "damage": "4842",
+                    "kill": "3",
+                    "bullet": "15/1768",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "3390",
+                    "money": "1496",
+                    "damage": "5052",
+                    "kill": "4",
+                    "bullet": "28/2550",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "4920",
+                    "money": "975",
+                    "damage": "2771",
+                    "kill": "1",
+                    "bullet": "7/1690",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4961",
+                    "money": "1206",
+                    "damage": "3263",
+                    "kill": "3",
+                    "bullet": "0/2556",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C64",
+        "red": "沈阳航空航天大学 TUP战队",
+        "blue": "中国石油大学（华东）RPS战队",
+        "data": [
+            {
+                "red": {
+                    "base": "0",
+                    "money": "1741",
+                    "damage": "3396",
+                    "kill": "4",
+                    "bullet": "12/628",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4997",
+                    "money": "1262",
+                    "damage": "8321",
+                    "kill": "6",
+                    "bullet": "50/965",
+                    "duff": "2"
+                }
+            },
+            {
+                "red": {
+                    "base": "2446",
+                    "money": "1897",
+                    "damage": "3208",
+                    "kill": "1",
+                    "bullet": "13/900",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "5000",
+                    "money": "1347",
+                    "damage": "6412",
+                    "kill": "8",
+                    "bullet": "42/813",
+                    "duff": "1"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C65",
+        "red": "西安电子科技大学 IRobot战队",
+        "blue": "东莞理工学院 ACE战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4941",
+                    "money": "1630",
+                    "damage": "4110",
+                    "kill": "5",
+                    "bullet": "28/1593",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4577",
+                    "money": "1410",
+                    "damage": "3659",
+                    "kill": "7",
+                    "bullet": "24/1977",
+                    "duff": "1"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C66",
+        "red": "太原科技大学 NewMaker战队",
+        "blue": "华北科技学院 风暴战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4399",
+                    "money": "1041",
+                    "damage": "4991",
+                    "kill": "5",
+                    "bullet": "33/508",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "3198",
+                    "money": "1370",
+                    "damage": "3747",
+                    "kill": "11",
+                    "bullet": "28/1895",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "2986",
+                    "money": "1461",
+                    "damage": "3704",
+                    "kill": "6",
+                    "bullet": "28/396",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4600",
+                    "money": "1382",
+                    "damage": "5106",
+                    "kill": "6",
+                    "bullet": "41/1255",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C68",
+        "red": "南京理工大学 Alliance战队",
+        "blue": "沈阳航空航天大学 TUP战队",
+        "data": [
+            {
+                "red": {
+                    "base": "4599",
+                    "money": "1392",
+                    "damage": "5103",
+                    "kill": "8",
+                    "bullet": "36/1677",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "3600",
+                    "money": "875",
+                    "damage": "3088",
+                    "kill": "1",
+                    "bullet": "21/871",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "4931",
+                    "money": "1145",
+                    "damage": "3836",
+                    "kill": "7",
+                    "bullet": "19/2056",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4935",
+                    "money": "1100",
+                    "damage": "2748",
+                    "kill": "2",
+                    "bullet": "16/1049",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C67",
+        "red": "哈尔滨工业大学 I Hiter战队",
+        "blue": "华中科技大学 狼牙战队",
+        "data": [
+            {
+                "red": {
+                    "base": "5000",
+                    "money": "1950",
+                    "damage": "6276",
+                    "kill": "18",
+                    "bullet": "27/1661",
+                    "duff": "4"
+                },
+                "blue": {
+                    "base": "3506",
+                    "money": "800",
+                    "damage": "2319",
+                    "kill": "0",
+                    "bullet": "15/1317",
+                    "duff": "0"
+                }
+            },
+            {
+                "red": {
+                    "base": "4000",
+                    "money": "1963",
+                    "damage": "8918",
+                    "kill": "9",
+                    "bullet": "57/1185",
+                    "duff": "2"
+                },
+                "blue": {
+                    "base": "0",
+                    "money": "800",
+                    "damage": "4052",
+                    "kill": "1",
+                    "bullet": "19/1217",
+                    "duff": "1"
+                }
+            },
+            {
+                "red": {
+                    "base": "3660",
+                    "money": "1936",
+                    "damage": "6083",
+                    "kill": "13",
+                    "bullet": "37/1908",
+                    "duff": "3"
+                },
+                "blue": {
+                    "base": "3534",
+                    "money": "800",
+                    "damage": "5478",
+                    "kill": "5",
+                    "bullet": "19/1770",
+                    "duff": "0"
+                }
+            }
+        ]
+    },
+    {
+        "season": "2024",
+        "type": "超级对抗赛·中部赛区",
+        "id": "2024C69",
+        "red": "北京理工大学 追梦战队",
+        "blue": "桂林信息科技学院 GIRT战队",
+        "data": [
+            {
+                "red": {
+                    "base": "468",
+                    "money": "1265",
+                    "damage": "2998",
+                    "kill": "1",
+                    "bullet": "34/1040",
+                    "duff": "1"
+                },
+                "blue": {
+                    "base": "4799",
+                    "money": "2084",
+                    "damage": "9336",
+                    "kill": "8",
+                    "bullet": "46/1867",
+                    "duff": "2"
+                }
+            },
+            {
+                "red": {
+                    "base": "3549",
+                    "money": "1344",
+                    "damage": "4108",
+                    "kill": "3",
+                    "bullet": "52/1330",
+                    "duff": "0"
+                },
+                "blue": {
+                    "base": "4600",
+                    "money": "2773",
+                    "damage": "6847",
+                    "kill": "9",
+                    "bullet": "37/2159",
+                    "duff": "2"
+                }
+            }
+        ]
+    }
+]
