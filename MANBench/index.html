@@ -77,19 +77,43 @@
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <h1 class="title is-1 publication-title" ><span class="rainbow_text_animated">MANBench</span>&nbsp;<img src="static/images/logo.png" width="60"/><br> <div style="font-size:2rem">Is Your Multimodal Model Smarter than Human?</div></h1>
-
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://www.micdz.cn" target="_blank">Han Zhou</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://orcid.org/0009-0009-5836-9090" target="_blank">Qitong Xu</a><sup>2</sup>,</span>
+              <span class="author-block">
+                <a href="https://scholar.google.cz/citations?user=oySH6yIAAAAJ" target="_blank">Yiheng Dong</a><sup>1</sup>,</span>
+                
+                <span class="author-block">
+                  <a href="https://scholar.google.com/citations?user=v6xQjnUAAAAJ" target="_blank">Xin Yang</a><sup>1*</sup></span>
+                  
+                  </div>
+            <span class="author-block">
+                        {micdz, esoox, yiheng, xinyang2014}@hust.edu.cn
+                      </span>
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block"><sup>1</sup>School of Electronic Information and Communications, Huazhong University of Science and Technology<br>
+                      <sup>2</sup>School of Basic Medicine, Huazhong University of Science and Technology<br>
+                      
+                      Accepted to ACL'25 Findings.</span>
+                      
+                    <span class="eql-cntrb"><small><br><sup>*</sup>Corresponding author</small></span>
+                    </small></span>
+                  </div>
 
                   <div class="content has-text-centered">
                     <div class="publication-links">
-                      <span class="link-block">
-                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
+                      <!-- <span class="link-block">
+                        <a href="/" target="_blank"
                         class="external-link button is-normal is-rounded is-dark">
                         <span class="icon">
                           <i class="fas fa-file-pdf"></i>
                         </span>
                         <span>Paper</span>
                       </a>
-                    </span>
+                    </span> -->
 
                   <!-- Github link -->
                   <span class="link-block">
@@ -114,15 +138,15 @@
               </span>
 
                 <!-- ArXiv abstract Link -->
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
+                <!-- <span class="link-block">
+                  <a href="/" target="_blank"
                   class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <i class="ai ai-arxiv"></i>
                   </span>
                   <span>arXiv</span>
                 </a>
-              </span> 
+              </span>  -->
               </div>
           </div>
         </div>
@@ -167,7 +191,7 @@
       <div class="content has-text-justified">
         <div class="has-text-centered">
         <p>
-          We provide a leaderboard on the <b>validation</b> set for the community to track progress. All models are evaluated in a zero-shot setting using promts provided in the dataset. Results of different models on the <b>MANBench</b> English subset. The best performance in each task is in <b>bold</b>. Values exceeding human average performance are <u>underlined</u>.
+          We provide a leaderboard on the <b>validation</b> set for the community to track progress. All models are evaluated in a zero-shot setting using promts provided in the dataset. Results of different models on the <b>MANBench</b> English subset. The best performance in each task is in <b>bold</b>. Values exceeding human average performance are <u>underlined</u>. <yellow>Yellow</yellow> indicates the model is closed-source, and <blue>Blue</blue> indicates the model is open-sourced.<br> The table shows the performance of different models on various tasks.
         </p>
           <div style="overflow-x: auto; white-space: nowrap;">
             <div id="table-container" style="max-width: 900px;"></div>
