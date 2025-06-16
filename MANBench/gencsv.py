@@ -24,6 +24,18 @@ data = [
 ]
 # Model,Overall,Text-image Understanding,Image Consistency,Numbers Pattern,Spatial Imagination,Text Locating,Multi-image Understanding,Knowledge,Puzzles,Transmorphic Understanding
 
+nums = {
+        "Text-image Understanding": 149,
+        "Image Consistency": 158,
+        "Numbers Pattern": 134,
+        "Spatial Imagination": 192,
+        "Text Locating": 140,
+        "Multi-image Understanding": 111,
+        "Knowledge": 120,
+        "Puzzles": 163,
+        "Transmorphic Understanding": 147
+    }
+
 import os
 
 save_file = 'results.csv'
@@ -41,8 +53,8 @@ with open(save_file, 'w', newline='') as csvfile:
             csvfile.write(f'{key},')
             overall = 0
             for k, v in value.items():
-                overall += v
-            overall /= len(value)
+                overall += v * nums[k] / sum(nums.values())
+
             csvfile.write(f'{round(overall,2)},')
             for k, v in value.items():
                 csvfile.write(f'{round(v,2)}')

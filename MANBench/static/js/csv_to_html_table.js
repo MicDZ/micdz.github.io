@@ -28,32 +28,16 @@ CsvToHtmlTable = {
 
 
                 var $tableHeadRow2 = $("<tr></tr>");
-                // Model,Overall,Visual Similarity,Counting,Relative Depth,
-                // Jigsaw,Art Style,Functional Correspondence,Semantic Correspondence,Spatial Relation,
-                // Object Localization,Visual Correspondence,Multi-view Reasoning,Relative Reflectance,Forensic Detection,IQ Test
-                const explanations = ["The name of the model", 
-                "Overall score for all tasks", 
-                "Score for Visual Similarity task", 
-                "Score for Counting task", 
-                "Score for Relative Depth task", 
-                "Score for Jigsaw task", 
-                "Score for Art Style task", 
-                "Score for Functional Correspondence task", 
-                "Score for Semantic Correspondence task", 
-                "Score for Spatial Relation task", 
-                "Score for Object Localization task", 
-                "Score for Visual Correspondence task", 
-                "Score for Multi-view Reasoning task", 
-                "Score for Relative Reflectance task", 
-                "Score for Forensic Detection task", 
-                "Score for IQ Test task"];
+                
 
                 const api_based_models = ['GPT-4o', 'Gemini-1.5-Pro', 'SenseNova', 'Step-1o', 'Claude-3.5-Sonnet']
     const open_source_models = ['Deepseek-VL2', 'Qwen2.5-VL-72B-Instruct', 'InternVL2-8B', 'InternVL2-26B', 'QVQ-72B-Preview', 'Qwen2-VL-72B-Instruct', 'InternVL2.5-26B-MPO', 'InternVL2.5-78B-MPO']
                 for (var headerIdx = 0; headerIdx < csvHeaderRow.length; headerIdx++) {
-                    var explanation = explanations[headerIdx];
-                    $tableHeadRow2Cell = $("<th class='tooltip'></th>").text(csvHeaderRow[headerIdx]);
-                    $tableHeadRow2Cell.append($("<span class='tooltiptext'></span>").text(explanation));
+                    var headerText = csvHeaderRow[headerIdx];
+                    // 将headerText里面的空格替换为换行
+                    headerText = headerText.replace(/ /g, "\n");
+                    console.log(headerText);
+                    $tableHeadRow2Cell = $("<th class='tooltip'></th>").text(headerText);
                     $tableHeadRow2.append($tableHeadRow2Cell);
                 }
                 $tableHeadRow2.css("background-color", "#f5f5f5");
@@ -77,7 +61,18 @@ CsvToHtmlTable = {
                             $tableBodyRowTd.css("text-align", "left");
                             // click to see more info
                             var cellValue = csvData[rowIdx][colIdx];
-                            var url = 'https://github.com/MicDZ/MANBench/tree/main/eval/saved_mllms_results';
+                            console.log(cellValue);
+                            // if ('Human' in cellValue) 
+                            var url = '';
+                            if (cellValue.indexOf("Human") > -1) {
+                                url =  'https://github.com/MicDZ/MANBench/tree/main/eval/saved_human_results'
+                            }
+                            else {
+                                url = 'https://github.com/MicDZ/MANBench/tree/main/eval/saved_mllms_results';
+                            }
+                            if (cellValue.indexOf("Random") > -1) {
+                                url = '/'
+                            }
                             $tableBodyRowTd.html('<a href="' + url + '">' + cellValue + '</a>');
                         }
                         if (colIdx == 1 || colIdx == 0) {
@@ -89,7 +84,7 @@ CsvToHtmlTable = {
                         }
                         // if open source model, then set the background color of the row to light green
                         if ($.inArray(csvData[rowIdx][0], open_source_models) > -1) {
-                            $tableBodyRow.css("background-color", "#F8FBFD");
+                            $tableBodyRow.css("background-color", "#e8f6ffba");
                         }
                         // if random, light blue
                         if (csvData[rowIdx][0] == "Random") {
@@ -142,7 +137,9 @@ CsvToHtmlTable = {
                 $table.append($tableBody);
                 $table.DataTable(datatables_options);
                 if (allow_download) {
-                    $containerElement.append("<p><a class='btn btn-info' href='" + csv_path + "'><i class='glyphicon glyphicon-download'></i> Download as CSV</a></p>");
+                    
+                    $containerElement.append("<p class='content has-text-justified'><a class='btn btn-info' href='" + csv_path + "'><i class='glyphicon glyphicon-download'></i> Download as CSV</a></p>");
+
                 }
             });
     }
