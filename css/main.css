@@ -207,8 +207,8 @@
   /* Typography
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
   h1, h2, h3, h4, h5, h6 {
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
     font-family: 'Times New Roman','Noto Serif SC' , sans-serif;
     font-weight: 400;
   }
@@ -633,3 +633,18 @@
   /* Larger than Desktop HD */
   @media (min-width: 1200px) {}
 
+
+.scrollableDiv {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+.selected {
+    background-color: #ffffe9;
+    padding: 10px;
+    border-radius: 5px;
+}
+.unselected {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+}
