@@ -208,9 +208,9 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
   h1, h2, h3, h4, h5, h6 {
     margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.0rem;
     font-family: 'Times New Roman','Noto Serif SC' , sans-serif;
-    font-weight: 400;
+    font-weight: 500;
   }
   
   h1 {
@@ -272,21 +272,23 @@
   } */
   
   p {
-    font-family:  'Times New Roman','Noto Serif SC', sans-serif; 
+    font-family: 'Times New Roman','Noto Serif SC', sans-serif; 
     font-size: 1.6rem;
-
     margin-top: 0rem;
     margin-bottom: 0rem;
-    
+    font-weight: 399;
   }
   p {
     hyphens: auto;
   }
   b {
-    font-family:  'Times New Roman','Noto Serif SC', sans-serif; 
-    font-weight: 500;
+    font-family: 'Times New Roman','Noto Serif SC', sans-serif; 
+    font-weight: 850;
   }
-
+  a {
+    font-family: 'Times New Roman','Noto Serif SC', sans-serif; 
+    font-weight: 399; 
+  }
   /* Links
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
   a:not(.icon):not(.clustrmaps-map-control) {
@@ -593,8 +595,8 @@
   /* Misc
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
   hr {
-    margin-top: 3rem;
-    margin-bottom: 3.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
     border-width: 0;
     border-top: 1px solid #E1E1E1;
   }

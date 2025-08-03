@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
 
 @font-face {
     font-family: 'Noto Serif SC';
-    src: url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC&display=swap');  
+    src: url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap');  
    /* 限制仅中文使用该字体 */
    unicode-range: U+4E00-9FA5; 
 }
@@ -201,9 +201,6 @@
 
     }
 
-    .site-card p {
-        font-family: 'Times New Roman', Times, serif;
-    }
     .article p {
 
         text-indent: 2em;
