@@ -235,7 +235,8 @@
     </div>
     
         <h2>Research &amp; Visiting</h2>
-            <div class="article-list mb-3">
+      <div class="scrollableDiv">
+        <div class="article-list mb-3">
       <div style="display: flex; align-items: center; text-align: right; max-width: 80px; max-height: 80px;" class="mr-2">
         <img src="/img/icons/maple.png" style="max-height: 100%; border: none; box-shadow: none; background: none;">
       </div>
@@ -270,9 +271,27 @@
         </div>
       </div>
     </div>
+    </div>
     <hr>
-    <h2>Awards (Selected)</h2>
-    
+    <h2>Awards</h2>
+    <div id="selectedAwards">
+      
+      <div class="article-list mb-2">
+        
+          <p class="info left">
+            Sep. 2024
+          </p>
+          <p>
+          <a href="/news/qs.html" >
+              
+              Embedded Chip and System Design Competition
+              
+          </a>-
+          <b><i>National First Prize</i></b>
+          </p>
+        
+      </div>
+      
       <div class="article-list mb-2">
         
           <p class="info left">
@@ -292,7 +311,24 @@
       <div class="article-list mb-2">
         
           <p class="info left">
-            Aug. 2024
+            Oct. 2023
+          </p></p>
+          <p>
+              
+              DIGIX Global AI Challenge
+              -
+              <b><i>National First Prize</i></b></p>
+        
+      </div>
+      
+      </div>
+
+      <div class="scrollableDiv" id="expandDiv" style="display: none;">
+       
+      <div class="article-list mb-2">
+        
+          <p class="info left">
+            Sep. 2024
           </p>
           <p>
           <a href="/news/qs.html" >
@@ -301,6 +337,22 @@
               
           </a>-
           <b><i>National First Prize</i></b>
+          </p>
+        
+      </div>
+      
+      <div class="article-list mb-2">
+        
+          <p class="info left">
+            Sep. 2024
+          </p>
+          <p>
+          <a href="/news/rm.html" >
+              
+              RoboMaster University Championship
+              
+          </a>-
+          <b><i>National Second Prize</i></b>
           </p>
         
       </div>
@@ -318,15 +370,132 @@
         
       </div>
       
-
-    <h2>Honors</h2>
-    <div class="article-list mb-2">
       
-      <p class="info left">Oct. 2024</p>
-      <p >National Scholarship for Undergraduate Student</p>
-    
-  </div>
+      <div class="article-list mb-2">
+        
+          <p class="info left">
+            Aug. 2024
+          </p></p>
+          <p>
+              
+              RoboCom Robotics Developer Competition
+              -
+              <b><i>National Second Prize</i></b></p>
+        
+      </div>
+      
+      <div class="article-list mb-2">
+        
+          <p class="info left">
+            Aug. 2024
+          </p>
+          <p>
+          <a href="/news/rm3.html" >
+              
+              RoboMaster Open Source Award 
+              
+          </a>-
+          <b><i>Excellence Award, CNY 3000</i></b>
+          </p>
+        
+      </div>
+      
+      <div class="article-list mb-2">
+        
+          <p class="info left">
+            May 2024
+          </p></p>
+          <p>
+              
+              RoboMaster University Championship Regionals
+              -
+              <b><i>First Prize (Advanced to Quarterfinals)</i></b></p>
+        
+      </div>
+      
+      <div class="article-list mb-2">
+        
+          <p class="info left">
+            Apr. 2024
+          </p></p>
+          <p>
+              
+              RoboMaster University League
+              -
+              <b><i>National Second Prize</i></b></p>
+        
+      </div>
+       
+      </div>
+      <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 20px;">
 
+      <a id="toggleBtn" style="text-align: right; display: block; text-decoration: underline;">Click to view all</a>
+      </div>
+           <script>
+    const btn = document.getElementById('toggleBtn');
+    const expandDiv = document.getElementById('expandDiv');
+    const selectedAwards = document.getElementById('selectedAwards');
+    let expanded = false;
+
+    btn.onclick = function() {
+      expanded = !expanded;
+      expandDiv.style.display = expanded ? 'block' : 'none';
+      selectedAwards.style.display = expanded ? 'none' : 'block';
+      btn.textContent = expanded ? 'Close' : 'Click to view all';
+    }
+    // 初始化隐藏
+    expandDiv.style.display = 'none';
+  </script>
+     <h2>Honors</h2>
+
+  <div id="selectedHonors">
+
+    <div class="article-list mb-2">
+      <p class="info left">Oct. 2024</p>
+      <p >National Scholarship for Undergraduate Student - <b><i>CNY 10,000</i></b></p>
+  </div>
+    <div class="article-list mb-2">
+      <p class="info left">Oct. 2024</p>
+      <p >Outstanding Student Award - <b><i>CNY 2,000</i></b></p>
+  </div>
+  </div>
+  <div id="allHonors" style="display: none;" class="scrollableDiv">
+      <div class="article-list mb-2">
+      <p class="info left">Oct. 2024</p>
+      <p >National Scholarship for Undergraduate Student - <b><i>CNY 10,000</i></b></p>
+  </div>
+    <div class="article-list mb-2">
+      <p class="info left">Oct. 2024</p>
+      <p >Outstanding Student Award - <b><i>CNY 2,000</i></b></p>
+  </div>
+  <div class="article-list mb-2">
+      <p class="info left">Oct. 2023</p>
+      <p >Outstanding Student Award - <b><i>CNY 2,000</i></b></p>
+  </div>
+  <div class="article-list mb-2">
+          <p class="info left">May 2022</p> 
+      <p> Academic Excellence Scholarship - <b><i>CNY 800</i></b></p>  
+  </div>
+</div>
+      <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 20px;">
+
+      <a id="toggleHonorsBtn" style="text-align: right; display: block; text-decoration: underline;">Click to view all</a>
+      </div>
+      <script>
+          const honorsBtn = document.getElementById('toggleHonorsBtn');
+          const allHonors = document.getElementById('allHonors');
+          const selectedHonors = document.getElementById('selectedHonors');
+          let expandedHonors = false;
+
+          honorsBtn.onclick = function() {
+            expandedHonors = !expandedHonors;
+            allHonors.style.display = expandedHonors ? 'block' : 'none';
+            selectedHonors.style.display = expandedHonors ? 'none' : 'block';
+            honorsBtn.textContent = expandedHonors ? 'Close' : 'Click to view all';
+          }
+          // 初始化隐藏
+          allHonors.style.display = 'none';
+      </script>
     <hr>
 
     <h2>Blog</h2>
