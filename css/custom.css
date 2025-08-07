@@ -57,11 +57,14 @@
     }
 
     table {
-        /* width: 95%; */
         border-collapse: collapse;
         margin: 0 auto; /* 居中 */
         /* 居中 */
         text-align: center;
+        max-width: 100%;
+        overflow-x: auto;
+        display: block;
+        white-space: nowrap;
       }
       /* 论文三线表风格 */
         table th, table td {
