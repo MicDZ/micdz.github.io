@@ -472,3 +472,7 @@ img {
     right: 20px;
     width: 100%;
 }
+.katex {
+    font-size: 1.6rem !important;
+    line-height: 1.5;
+}
