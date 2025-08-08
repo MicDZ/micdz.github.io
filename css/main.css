@@ -641,6 +641,11 @@
     max-height: 200px;
     overflow-y: scroll;
 }
+@media (max-width: 550px) {
+    .scrollableDiv {
+        max-height: 350px;
+    }
+}
 .katex-html {
   max-width: 100%;
   overflow-x: scroll;
