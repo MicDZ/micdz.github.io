@@ -138,7 +138,7 @@
 
     <!-- <aside id="article-toc" role="navigation" class="fixed"> -->
         <div id="article-toc-inner">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#the-big-picture"><span class="toc-text"> The Big Picture</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ordinary-differential-equations-odes"><span class="toc-text"> Ordinary Differential Equations (ODEs)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#a-simple-example"><span class="toc-text"> A Simple Example</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#euler-method"><span class="toc-text"> Euler Method</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flow-model"><span class="toc-text"> Flow Model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stochastic-differential-equations-sdes"><span class="toc-text"> Stochastic Differential Equations (SDEs)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#diffusion-model"><span class="toc-text"> Diffusion Model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#training-flow-matching-and-diffusion-models"><span class="toc-text"> Training Flow Matching and Diffusion Models</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#conditional-and-marginal-probability-paths"><span class="toc-text"> Conditional and Marginal Probability Paths</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#conditional-and-marginal-vector-fields"><span class="toc-text"> Conditional and Marginal Vector Fields</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#conditional-and-marginal-score-function"><span class="toc-text"> Conditional and Marginal Score Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#summary-of-key-concepts"><span class="toc-text"> Summary of Key Concepts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#from-odes-to-sdes"><span class="toc-text"> From ODEs to SDEs</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#the-big-picture"><span class="toc-text"> The Big Picture</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ordinary-differential-equations-odes"><span class="toc-text"> Ordinary Differential Equations (ODEs)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#a-simple-example"><span class="toc-text"> A Simple Example</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#euler-method"><span class="toc-text"> Euler Method</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flow-model"><span class="toc-text"> Flow Model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stochastic-differential-equations-sdes"><span class="toc-text"> Stochastic Differential Equations (SDEs)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#diffusion-model"><span class="toc-text"> Diffusion Model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#training-target-of-flow-matching-and-diffusion-models"><span class="toc-text"> Training Target of Flow Matching and Diffusion Models</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#conditional-and-marginal-probability-paths"><span class="toc-text"> Conditional and Marginal Probability Paths</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#conditional-and-marginal-vector-fields"><span class="toc-text"> Conditional and Marginal Vector Fields</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#conditional-and-marginal-score-function"><span class="toc-text"> Conditional and Marginal Score Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#summary-of-key-concepts"><span class="toc-text"> Summary of Key Concepts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#from-odes-to-sdes"><span class="toc-text"> From ODEs to SDEs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#train-flow-matching-and-diffusion-models"><span class="toc-text"> Train Flow Matching and Diffusion Models</span></a></li></ol>
         </div>
     <!-- </aside> -->
  
@@ -337,9 +337,10 @@ M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">�
 <!-- markdownlint-disable MD033 -->
 <style>
 
-input {
-    width: 100%;
-    margin-top: 10px;
+label {
+    display: flex;
+    justify-content: space-start;
+    align-items: left;
 }
 .container-sde {
     display: flex;
@@ -373,8 +374,7 @@ input {
 canvas {
     width: 100%;
     height: 500px;
-    max-height: 60vh;
-}
+ }
 .slider-value {
     font-weight: bold;
     color: #0066cc;
@@ -415,7 +415,6 @@ label{
     }
     canvas {
         height: 100%;
-        max-height: 55vh;
     }
     label {
         font-size: 12px;
@@ -443,19 +442,19 @@ label{
 <div class="container-sde">
 <div class="controls">
 <div class="control-group">
-    <label for="theta">θ (drift parameter): <span id="thetaValue" class="slider-value">1.0</span></label>
+    <label for="theta">θ (drift parameter): <p style="text-indent: 0em;" id="thetaValue" class="slider-value">1.0</p></label>
     <input type="range" id="theta" min="-0.0" max="5.0" step="0.1" value="1.0">
 </div>
 <div class="control-group">
-    <label for="sigma">σ (diffusion coefficient): <span id="sigmaValue" class="slider-value">0.5</span></label>
+    <label for="sigma">σ (diffusion coefficient): <p style="text-indent: 0em;" id="sigmaValue" class="slider-value">0.5</p></label>
     <input type="range" id="sigma" min="0" max="1.0" step="0.01" value="0.5">
 </div>
 <div class="control-group">
-    <label for="x0">x₀ (initial condition): <span id="x0Value" class="slider-value">1.0</span></label>
+    <label for="x0">x₀ (initial condition): <p style="text-indent: 0em;" id="x0Value" class="slider-value">1.0</p></label>
     <input type="range" id="x0" min="-2.0" max="2.0" step="0.1" value="1.0">
 </div>
 <div class="control-group">
-    <label for="paths">Number of trajectories: <span id="pathsValue" class="slider-value">5</span></label>
+    <label for="paths">Number of trajectories: <p style="text-indent: 0em" id="pathsValue" class="slider-value">5</p></label>
     <input type="range" id="paths" min="1" max="20" step="1" value="5">
 </div>
 <div>
@@ -468,11 +467,11 @@ label{
 <div class="legend">
     <div class="legend-item">
         <div class="color-box" style="background-color: black;"></div>
-        <span>Deterministic solution</span>
+        <p style="text-indent: 0em;">Deterministic solution</p>
     </div>
     <div class="legend-item">
         <div class="color-box" style="background-color: #0FA0CE;"></div>
-        <span>Stochastic trajectories</span>
+        <p style="text-indent: 0em;">Stochastic trajectories</p>
     </div>
 </div>
 </div>
@@ -700,7 +699,7 @@ draw();
 <script>
     pseudocode.renderElement(document.getElementById("sample-Diffusion"));
 </script>
-<h2 id="training-flow-matching-and-diffusion-models"><a class="markdownIt-Anchor" href="#training-flow-matching-and-diffusion-models"></a> Training Flow Matching and Diffusion Models</h2>
+<h2 id="training-target-of-flow-matching-and-diffusion-models"><a class="markdownIt-Anchor" href="#training-target-of-flow-matching-and-diffusion-models"></a> Training Target of Flow Matching and Diffusion Models</h2>
 <h3 id="conditional-and-marginal-probability-paths"><a class="markdownIt-Anchor" href="#conditional-and-marginal-probability-paths"></a> Conditional and Marginal Probability Paths</h3>
 <p>Key terminology:</p>
 <ul>
@@ -729,6 +728,261 @@ draw();
 <li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>T</mi></msub><mo>=</mo><mn>1</mn><mo separator="true">,</mo><msub><mi>β</mi><mi>T</mi></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\alpha_T = 1, \beta_T = 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05278em;">β</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></li>
 </ol>
 </blockquote>
+<style>
+.slider-values{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 5px;
+}
+.slider-value {
+    font-weight: bold;
+    color: #0066cc;
+    align-self: flex-start;
+}
+.control-group-viz {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: auto;
+}
+.container-viz {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+input {
+    min-width: 100px;
+
+}
+</style>
+<div class="container-viz">
+    <div class="canvas-wrapper">
+            <div class="controls-viz">
+            <div class="control-group-viz">
+            <p style="text-indent: 0em;">Time: </p>
+            <input type="range" id="timeSlider" min="0" max="1" step="0.005" value="0">
+            </div>
+            <label for="timeSlider">
+                <div class="slider-values">
+                    <p style="text-indent: 0em;">t = <div id="timeValue" class="slider-value">0.00</div></p>
+                    <p style="text-indent: 0em;">α_t = <div id="alphaValue" class="slider-value">0.00</div></p>
+                    <p style="text-indent: 0em;">β_t = <div id="betaValue" class="slider-value">1.00</div></p>
+                </div>
+                </label>
+            <div class="control-group-viz">
+                <input type="checkbox" id="gridToggle" checked>
+                <label for="gridToggle" class="toggle-label">Show Transforming Grid Map</label>
+            </div>
+        </div>
+        <canvas id="gaussianPathCanvas"></canvas>
+    </div>
+</div>
+<script>
+const visualizationCanvas = document.getElementById('gaussianPathCanvas');
+const canvasContext = visualizationCanvas.getContext('2d');
+
+const timeSlider = document.getElementById('timeSlider');
+const timeValue = document.getElementById('timeValue');
+const alphaValue = document.getElementById('alphaValue');
+const betaValue = document.getElementById('betaValue');
+const gridToggle = document.getElementById('gridToggle');
+
+// High-DPI rendering
+const dpi = window.devicePixelRatio || 1;
+const canvasWrapper = document.querySelector('.canvas-wrapper');
+visualizationCanvas.width = canvasWrapper.offsetWidth * dpi;
+visualizationCanvas.height = canvasWrapper.offsetHeight * dpi;
+canvasContext.scale(dpi, dpi);
+const width = visualizationCanvas.width / dpi;
+const height = visualizationCanvas.height / dpi;
+
+// Visualization Parameters
+const LOGICAL_WIDTH = 8;
+const SCALE = width / LOGICAL_WIDTH;
+const NUM_SAMPLES = 200;
+const GRID_DENSITY = 20;
+const TARGET_Z = { x: 2.5, y: 1.8 };
+
+let epsilonSamples = [];
+let initialGrid = [];
+
+function gaussianPathBoxMullerTransform() {
+    let u = 0, v = 0;
+    while (u === 0) u = Math.random();
+    while (v === 0) v = Math.random();
+    const R = Math.sqrt(-2.0 * Math.log(u));
+    const theta = 2.0 * Math.PI * v;
+    return { x: R * Math.cos(theta), y: R * Math.sin(theta) };
+}
+
+function gaussianPathGenerateBaseSamples() {
+    epsilonSamples = [];
+    for (let i = 0; i < NUM_SAMPLES; i++) {
+        epsilonSamples.push(gaussianPathBoxMullerTransform());
+    }
+}
+
+function gaussianPathCreateInitialGrid() {
+    initialGrid = [];
+    const bounds = LOGICAL_WIDTH / 2;
+    const step = LOGICAL_WIDTH / GRID_DENSITY;
+    for (let i = 0; i <= GRID_DENSITY; i++) {
+        initialGrid[i] = [];
+        for (let j = 0; j <= GRID_DENSITY; j++) {
+            initialGrid[i][j] = {
+                x: -bounds + j * step,
+                y: -bounds + i * step
+            };
+        }
+    }
+}
+
+function gaussianPathMapCoords(point) {
+    return {
+        x: width / 2 + point.x * SCALE,
+        y: height / 2 - point.y * SCALE
+    };
+}
+
+function gaussianPathNoiseSchedule(t) {
+    return { alpha: t, beta: 1 - t };
+}
+
+function gaussianPathDrawAxes() {
+    canvasContext.strokeStyle = '#ddd';
+    canvasContext.lineWidth = 1;
+    canvasContext.beginPath();
+    canvasContext.moveTo(0, height / 2);
+    canvasContext.lineTo(width, height / 2);
+    canvasContext.stroke();
+    canvasContext.beginPath();
+    canvasContext.moveTo(width / 2, 0);
+    canvasContext.lineTo(width / 2, height);
+    canvasContext.stroke();
+}
+
+function gaussianPathDrawGrid(alpha, beta) {
+    canvasContext.strokeStyle = '#28a745';
+    canvasContext.lineWidth = 0.75;
+    canvasContext.globalAlpha = 0.7;
+
+    for (let i = 0; i <= GRID_DENSITY; i++) {
+        canvasContext.beginPath();
+        for (let j = 0; j <= GRID_DENSITY; j++) {
+            const x0 = initialGrid[i][j];
+            const xt = {
+                x: x0.x * beta + TARGET_Z.x * alpha,
+                y: x0.y * beta + TARGET_Z.y * alpha
+            };
+            const p = gaussianPathMapCoords(xt);
+            if (j === 0) canvasContext.moveTo(p.x, p.y);
+            else canvasContext.lineTo(p.x, p.y);
+        }
+        canvasContext.stroke();
+    }
+
+    for (let j = 0; j <= GRID_DENSITY; j++) {
+        canvasContext.beginPath();
+        for (let i = 0; i <= GRID_DENSITY; i++) {
+            const x0 = initialGrid[i][j];
+            const xt = {
+                x: x0.x * beta + TARGET_Z.x * alpha,
+                y: x0.y * beta + TARGET_Z.y * alpha
+            };
+            const p = gaussianPathMapCoords(xt);
+            if (i === 0) canvasContext.moveTo(p.x, p.y);
+            else canvasContext.lineTo(p.x, p.y);
+        }
+        canvasContext.stroke();
+    }
+    canvasContext.globalAlpha = 1.0;
+}
+
+function gaussianPathDrawTarget() {
+    const pos = gaussianPathMapCoords(TARGET_Z);
+    canvasContext.save();
+    canvasContext.font = 'bold 24px Arial';
+    canvasContext.fillStyle = '#d9534f';
+    canvasContext.textAlign = 'center';
+    canvasContext.textBaseline = 'middle';
+    canvasContext.fillText('+', pos.x, pos.y);
+    canvasContext.restore();
+}
+
+function gaussianPathDrawContours(mean, stdDev) {
+    if (stdDev < 0.001) return;
+    const meanPos = gaussianPathMapCoords(mean);
+    canvasContext.strokeStyle = '#337ab7';
+    canvasContext.lineWidth = 1.5;
+    for (let i = 1; i <= 3; i++) {
+        canvasContext.globalAlpha = 0.6 - i * 0.15;
+        canvasContext.beginPath();
+        const radius = i * stdDev * SCALE;
+        canvasContext.arc(meanPos.x, meanPos.y, radius, 0, 2 * Math.PI);
+        canvasContext.stroke();
+    }
+    canvasContext.globalAlpha = 1.0;
+}
+
+function gaussianPathDrawSamples(mean, stdDev) {
+    canvasContext.fillStyle = '#333';
+    epsilonSamples.forEach(eps => {
+        const sample = {
+            x: mean.x + stdDev * eps.x,
+            y: mean.y + stdDev * eps.y
+        };
+        const pos = gaussianPathMapCoords(sample);
+        canvasContext.beginPath();
+        canvasContext.arc(pos.x, pos.y, 2, 0, 2 * Math.PI);
+        canvasContext.fill();
+    });
+}
+
+function gaussianPathDraw() {
+    const t = parseFloat(timeSlider.value);
+    const { alpha, beta } = gaussianPathNoiseSchedule(t);
+
+    timeValue.textContent = t.toFixed(2);
+    alphaValue.textContent = alpha.toFixed(2);
+    betaValue.textContent = beta.toFixed(2);
+    
+    const mean = {
+        x: alpha * TARGET_Z.x,
+        y: alpha * TARGET_Z.y
+    };
+    const stdDev = beta;
+
+    canvasContext.clearRect(0, 0, width, height);
+
+    gaussianPathDrawAxes();
+
+    if (gridToggle.checked) {
+        gaussianPathDrawGrid(alpha, beta);
+    }
+    
+    gaussianPathDrawContours(mean, stdDev);
+    gaussianPathDrawSamples(mean, stdDev);
+    
+    gaussianPathDrawTarget();
+}
+
+timeSlider.addEventListener('input', gaussianPathDraw);
+gridToggle.addEventListener('change', gaussianPathDraw);
+
+gaussianPathGenerateBaseSamples();
+gaussianPathCreateInitialGrid();
+gaussianPathDraw();
+
+window.addEventListener('resize', () => {
+    visualizationCanvas.width = canvasWrapper.offsetWidth * dpi;
+    visualizationCanvas.height = canvasWrapper.offsetHeight * dpi;
+    canvasContext.scale(dpi, dpi);
+    gaussianPathCreateInitialGrid();
+    gaussianPathDraw();
+});
+</script>
 <ul>
 <li>Marginal Probability Path: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><msub><mo>∼</mo><mtext>data</mtext></msub><mo separator="true">,</mo><mi>x</mi><msub><mo>∼</mo><mi>t</mi></msub><mo stretchy="false">(</mo><mo>⋅</mo><mi mathvariant="normal">∣</mi><mi>z</mi><mo stretchy="false">)</mo><mo>⇒</mo><mi>x</mi><msub><mo>∼</mo><mi>t</mi></msub><mo stretchy="false">(</mo><mo>⋅</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">z\sim _{\text{data}}, x\sim _t(\cdot|z) \Rightarrow x\sim _t(\cdot)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel">∼</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">data</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel">∼</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">⋅</span><span class="mord">∣</span><span class="mord mathnormal" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">⇒</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel">∼</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">⋅</span><span class="mclose">)</span></span></span></span></li>
 </ul>
@@ -856,6 +1110,7 @@ p_0 &amp;= p_{\text{init}}
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.113em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathrm">d</span><span class="mord mathnormal">t</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathrm">d</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">−</span><span class="mord text"><span class="mord">div</span></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.177108em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.491108em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-2.4530000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord">Δ</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span></span></p>
 <p>The equation indicates that the change in probability density at point <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span> over time is equal to the inflow of probability mass from <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">u</span></span></span></span> plus the heat dispersion term <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msubsup><mi>σ</mi><mi>t</mi><mn>2</mn></msubsup><mn>2</mn></mfrac><mi mathvariant="normal">Δ</mi><msub><mi>p</mi><mi>t</mi></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\frac{\sigma_t^2}{2} \Delta p_t(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.4791199999999998em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1341199999999998em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.5102em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">σ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8913142857142857em;"><span style="top:-2.214em;margin-left:-0.03588em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight">t</span></span></span><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord">Δ</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span>.</p>
 </blockquote>
+<h2 id="train-flow-matching-and-diffusion-models"><a class="markdownIt-Anchor" href="#train-flow-matching-and-diffusion-models"></a> Train Flow Matching and Diffusion Models</h2>
 
 </div>
 <p class="right">
