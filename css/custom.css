@@ -98,7 +98,7 @@
       /* 论文三线表风格 */
         table th, table td {
             border: 1px solid #000;
-            padding: 8px 12px;
+            padding: 2px 2px;
             font-family: 'Times New Roman', 'Noto Serif SC', serif;
             white-space: nowrap; /* 防止单元格内容换行 */
             display: table-cell; /* 确保单元格正确显示 */
