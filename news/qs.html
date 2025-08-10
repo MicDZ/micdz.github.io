@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="/css/normalize.css">
 
   <style>
-  a:not(.icon):not(.clustrmaps-map-control) {
+  a:not(.icon):not(.clustrmaps-map-control):not(.formula-anchor) {
     text-decoration-color: #0FA0CE;
     background-image: linear-gradient(
       to bottom,
@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pseudocode@2.4.1/build/pseudocode.min.css">
 <script src="https://cdn.jsdelivr.net/npm/pseudocode@2.4.1/build/pseudocode.min.js">
 </script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/pcooksey/bibtex-js@1.0.0/src/bibtex_js.min.js"></script>
 <!-- Prism support ./js/prism.js-->
   
 <link rel="stylesheet" href="/css/prism.css">
@@ -144,6 +145,150 @@
     <img src="/img/news/24qiansai2.jpeg" style="max-width: 320px; width: 100%; border-radius: 6px;" alt="RMUC 2">
 </div>
 
+
+<!-- 公式高亮样式和脚本 -->
+<style>
+  @keyframes highlight-blink {
+    0%, 100% { background-color: #e6e6e6; }
+    50% { background-color: #d8d8d8; }
+  }
+  .katex-display {
+    transition: background-color 0.3s ease;
+    position: relative;
+  }
+  .katex-display:target {
+
+  }
+  .formula-anchor {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 1em;
+    text-decoration: none;
+    color: inherit;
+  }
+  .formula-number {
+    font-size: 0.8em;
+    color: #6c757d;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 选择所有行间公式并添加编号和锚点
+    const displays = document.querySelectorAll('.katex-display');
+    displays.forEach((el, idx) => {
+      // 寻找el的子元素katex-html
+      const katexHtml = el.querySelector('.katex-html');
+      if (!katexHtml) return; // 如果没有找到katex-html，跳过
+      
+      // 创建锚点链接
+      const anchor = document.createElement('a');
+      anchor.className = 'formula-anchor';
+      anchor.href = '#formula' + (idx + 1);
+      anchor.id = 'formula' + (idx + 1);
+      anchor.style.textDecoration = 'none';
+      anchor.style.color = 'inherit';
+      
+      // 创建编号元素
+      const number = document.createElement('span');
+      number.textContent = `(${idx + 1})`;
+      number.className = 'formula-number';
+      
+      // 将编号放入锚点中
+      anchor.appendChild(number);
+      
+      // 直接添加到公式容器中
+      katexHtml.appendChild(anchor);
+    });
+    
+    // 高亮函数（处理公式和引用）
+    function highlightReference(hash) {
+      // 清除之前的高亮
+      const allCitations = document.querySelectorAll('.bibtexentry');
+      allCitations.forEach(citation => {
+        citation.style.backgroundColor = '';
+        citation.style.animation = '';
+      });
+      
+      const allFormulas = document.querySelectorAll('.katex-html');
+      allFormulas.forEach(formula => {
+        formula.style.backgroundColor = '';
+        formula.style.animation = '';
+      });
+      
+      // 使用传入的hash或当前URL的hash
+      const targetHash = hash || window.location.hash;
+      
+      // 处理引用高亮
+      if (targetHash && targetHash.startsWith('#ref')) {
+        const targetElement = document.querySelector(targetHash);
+        if (targetElement) {
+          const citationElement = targetElement.closest('.bibtexentry');
+          if (citationElement) {
+            citationElement.style.backgroundColor = '#e6e6e6';
+            citationElement.style.animation = 'highlight-blink 2s ease-in-out 3';
+            citationElement.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }
+      
+      // 处理公式高亮
+      else if (targetHash && targetHash.startsWith('#formula')) {
+        const targetElement = document.querySelector(targetHash);
+        if (targetElement) {
+          const formulaScrollElement = targetElement.closest('.katex-block');
+          const formulaElement = targetElement.closest('.katex-html');
+          if (formulaElement && formulaScrollElement) {
+            formulaElement.style.backgroundColor = '#e6e6e6';
+            formulaElement.style.paddingTop = '0.6em';
+            formulaElement.style.animation = 'highlight-blink 2s ease-in-out 3';
+            formulaScrollElement.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }
+
+      else {
+        const targetElement = document.querySelector(targetHash);
+        const scrollElement = targetElement.closest('a');
+        if (scrollElement) {
+          scrollElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+    }
+    
+    // 延迟检查hash，确保所有内容都已渲染
+    setTimeout(function() {
+      highlightReference();
+    }, 600);
+    
+    // 监听hash变化
+    window.addEventListener('hashchange', function() {
+      highlightReference();
+    });
+    
+    // 拦截页面内的链接点击
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('a');
+      if (link && link.getAttribute('href')) {
+        const href = link.getAttribute('href');
+        if (href.startsWith('#ref') || href.startsWith('#formula') || href.startsWith('#algorithm')) {
+          e.preventDefault();
+          const hash = href;
+          // 更新URL但不触发默认跳转
+          history.pushState(null, null, hash);
+          // 执行平滑滚动和高亮
+          highlightReference(hash);
+        }
+      }
+    });
+  });
+</script>
+
+
+
 </div>
 <p class="right">
     
@@ -164,6 +309,7 @@
               });
             });
         </script>
+
         
 
         

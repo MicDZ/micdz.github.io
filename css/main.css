@@ -650,14 +650,7 @@
   max-width: 100%;
   overflow-x: scroll;
   overflow-y: hidden;
+  padding-top: 0.6em;
 }
-.selected {
-    background-color: #ffffe9;
-    padding: 10px;
-    border-radius: 5px;
-}
-.unselected {
-    background-color: #ffffff;
-    padding: 10px;
-    border-radius: 5px;
-}
+
+
