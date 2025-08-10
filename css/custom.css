@@ -547,3 +547,20 @@ img {
     font-size: 1.6rem !important;
     line-height: 1.5;
 }
+grayquote {
+        font-family: 'Times New Roman', 'Noto Serif SC', serif;
+        background-color: rgba(148, 148, 149, 0.08) ;
+        margin: 1.5em 0px;
+        padding: 10px 40px 10px;
+}
+span {
+    font-family: inherit;
+}
+.bibtexentry {
+    font-family: 'Times New Roman', 'Noto Serif SC', serif;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    margin-bottom: 2px;
+    padding-left: 5px;
+    border-radius: 1px;
+}
