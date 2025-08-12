@@ -215,17 +215,20 @@
     transition: background-color 0.3s ease;
     position: relative;
   }
+  .katex-display .katex-html {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .katex-display:target {
 
   }
   .formula-anchor {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-left: 1em;
+    margin-left: auto;
+    padding-left: 1em;
     text-decoration: none;
     color: inherit;
+    flex-shrink: 0;
   }
   .formula-number {
     font-size: 0.8em;
