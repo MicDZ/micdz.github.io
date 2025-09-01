@@ -157,7 +157,7 @@
     <div class="hero-body">
       <h2 class="title is-3 has-text-centered">What is MANBench?</h2>
       <h2 class="subtitle has-text-justified">
-        <span style="font-weight:bold;"><b>MANBench</b>  </span>
+        <span style="font-weight:bold;"><b>MANBench</b></span> is
         a comprehensive benchmark designed to evaluate the multimodal capabilities of both humans and MLLMs. <b>MANBench</b> consists of 9 tasks, each containing more than 110 questions, with a total of 1,314 questions and 2,231 images. <b>MANBench</b> aims to provide a fair and rigorous assessment framework, ensuring that comparisons between human and machine performance are conducted on an equitable basis.</h2>
       <img src="static/images/teaser.jpg" height="100%"/>
 
@@ -530,14 +530,26 @@
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
       <pre><bibtexcode>
-@misc{zhou2025manbenchmultimodalmodelsmarter,
-      title={MANBench: Is Your Multimodal Model Smarter than Human?}, 
-      author={Han Zhou and Qitong Xu and Yiheng Dong and Xin Yang},
-      year={2025},
-      eprint={2506.11080},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2506.11080}, 
+@inproceedings{zhou-etal-2025-manbench,
+    title = "{MANB}ench: Is Your Multimodal Model Smarter than Human?",
+    author = "Zhou, Han  and
+      Xu, Qitong  and
+      Dong, Yiheng  and
+      Yang, Xin",
+    editor = "Che, Wanxiang  and
+      Nabende, Joyce  and
+      Shutova, Ekaterina  and
+      Pilehvar, Mohammad Taher",
+    booktitle = "Findings of the Association for Computational Linguistics: ACL 2025",
+    month = jul,
+    year = "2025",
+    address = "Vienna, Austria",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2025.findings-acl.178/",
+    doi = "10.18653/v1/2025.findings-acl.178",
+    pages = "3423--3449",
+    ISBN = "979-8-89176-256-5",
+    abstract = "The rapid advancement of Multimodal Large Language Models (MLLMs) has ignited discussions regarding their potential to surpass human performance in multimodal tasks. In response, we introduce MANBench (Multimodal Ability Norms Benchmark), a bilingual benchmark (English and Chinese) comprising 1,314 questions across nine tasks, spanning knowledge-based and non-knowledge-based domains. MANBench emphasizes intuitive reasoning, seamless cross-modal integration, and real-world complexity, providing a rigorous evaluation framework.Through extensive human experiments involving diverse participants, we compared human performance against state-of-the-art MLLMs. The results indicate that while MLLMs excel in tasks like Knowledge and Text-Image Understanding, they struggle with deeper cross-modal reasoning tasks such as Transmorphic Understanding, Image Consistency, and Multi-image Understanding. Moreover, both humans and MLLMs face challenges in highly complex tasks like Puzzles and Spatial Imagination.MANBench highlights the strengths and limitations of MLLMs, revealing that even advanced models fall short of achieving human-level performance across many domains. We hope MANBench will inspire efforts to bridge the gap between MLLMs and human multimodal capabilities. The code and dataset are available at https://github.com/micdz/MANBench/."
 }
       </bibtexcode></pre>
     </div>
