@@ -33,19 +33,25 @@
 </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="/img/h.jpeg">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css" />
-
+  <link rel="stylesheet" href="https://cdn.jsdmirror.com
+/npm/lxgw-wenkai-webfont@1.1.0/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <!-- KaTeX support -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.css" integrity="sha384-OH8qNTHoMMVNVcKdKewlipV4SErXqccxxlg6HC9Cwjr5oZu2AdBej1TndeCirael" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.js" integrity="sha384-ImWHyYvDPlRzwFnvLhG9Jcpm/7qL4SVIuJK0C6Rj+Mf7fpeNJCLCynC+EVz4kCSA" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdmirror.com
+/npm/katex@0.16.9/dist/katex.css" integrity="sha384-OH8qNTHoMMVNVcKdKewlipV4SErXqccxxlg6HC9Cwjr5oZu2AdBej1TndeCirael" crossorigin="anonymous">
+<script defer src="https://cdn.jsdmirror.com
+/npm/katex@0.16.9/dist/katex.js" integrity="sha384-ImWHyYvDPlRzwFnvLhG9Jcpm/7qL4SVIuJK0C6Rj+Mf7fpeNJCLCynC+EVz4kCSA" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"
         integrity="sha512-EKW5YvKU3hpyyOcN6jQnAxO/L8gts+YdYV6Yymtl8pk9YlYFtqJgihORuRoBXK8/cOIlappdU6Ms8KdK6yBCgA=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
 </script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pseudocode@2.4.1/build/pseudocode.min.css">
-<script src="https://cdn.jsdelivr.net/npm/pseudocode@2.4.1/build/pseudocode.min.js">
+<link rel="stylesheet" href="https://cdn.jsdmirror.com
+/npm/pseudocode@2.4.1/build/pseudocode.min.css">
+<script src="https://cdn.jsdmirror.com
+/npm/pseudocode@2.4.1/build/pseudocode.min.js">
 </script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/pcooksey/bibtex-js@1.0.0/src/bibtex_js.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdmirror.com
+/gh/pcooksey/bibtex-js@1.0.0/src/bibtex_js.min.js"></script>
 <!-- Prism support ./js/prism.js-->
   
 <link rel="stylesheet" href="/css/prism.css">
@@ -1490,30 +1496,94 @@ The conditional score <span class="katex"><span class="katex-mathml"><math xmlns
     </div>
     </div>
     <script>
-          // 等待 bibtex 渲染完成后添加序号
-      document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-          const citations = document.querySelectorAll('.bibtexentry');
-          citations.forEach((citation, index) => {
-            const numberElement = citation.querySelector('.citation-number');
-            if (numberElement) {
-              // 创建锚点链接
-              const anchor = document.createElement('a');
-              anchor.className = 'markdownIt-Anchor';
-              anchor.href = '#ref' + (index + 1);
-              anchor.id = 'ref' + (index + 1);
-              anchor.style.textDecoration = 'none';
-              anchor.style.color = 'inherit';
-              anchor.textContent = String(index + 1) + '. ';
-              
-              // 清空原来的内容，插入锚点
-              numberElement.textContent = '';
-              numberElement.appendChild(anchor);
+      // 等待 bibtex 渲染完成后添加序号
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // 创建一个观察器来监听 bibtex_display 的变化
+    function waitForBibtexRender() {
+      const bibtexDisplay = document.getElementById('bibtex_display');
+      if (!bibtexDisplay) return;
+      
+      // 检查是否已经渲染完成
+      function checkBibtexReady() {
+        const citations = document.querySelectorAll('.bibtexentry');
+        // 检查是否有引用条目，并且第一个条目是否有实际内容
+        if (citations.length > 0) {
+          const firstCitation = citations[0];
+          const titleElement = firstCitation.querySelector('.title');
+          const authorElement = firstCitation.querySelector('.author');
+          
+          // 检查是否有标题或作者内容（表示已经渲染完成）
+          if ((titleElement && titleElement.textContent.trim()) || 
+              (authorElement && authorElement.textContent.trim())) {
+            return true;
+          }
+        }
+        return false;
+      }
+      
+      // 如果已经渲染完成，直接添加锚点
+      if (checkBibtexReady()) {
+        addCitationAnchors();
+        return;
+      }
+      
+      // 使用 MutationObserver 监听 DOM 变化
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'childList' || mutation.type === 'characterData') {
+            if (checkBibtexReady()) {
+              addCitationAnchors();
+              observer.disconnect(); // 停止观察
             }
-          });
-        }, 500); // 给 bibtex-js 一些时间来渲染
+          }
+        });
       });
-    </script>
+      
+      // 开始观察 bibtex_display 及其子元素的变化
+      observer.observe(bibtexDisplay, {
+        childList: true,
+        subtree: true,
+        characterData: true
+      });
+      
+      // 设置超时，防止无限等待
+      setTimeout(function() {
+        observer.disconnect();
+        // 如果超时后仍有引用条目，强制添加锚点
+        const citations = document.querySelectorAll('.bibtexentry');
+        if (citations.length > 0) {
+          addCitationAnchors();
+        }
+      }, 5000); // 5秒超时
+    }
+    
+    // 添加引用锚点的函数
+    function addCitationAnchors() {
+      const citations = document.querySelectorAll('.bibtexentry');
+      citations.forEach((citation, index) => {
+        const numberElement = citation.querySelector('.citation-number');
+        if (numberElement && !numberElement.querySelector('a')) { // 避免重复添加
+          // 创建锚点链接
+          const anchor = document.createElement('a');
+          anchor.className = 'markdownIt-Anchor';
+          anchor.href = '#ref' + (index + 1);
+          anchor.id = 'ref' + (index + 1);
+          anchor.style.textDecoration = 'none';
+          anchor.style.color = 'inherit';
+          anchor.textContent = String(index + 1) + '. ';
+          
+          // 清空原来的内容，插入锚点
+          numberElement.textContent = '';
+          numberElement.appendChild(anchor);
+        }
+      });
+    }
+    
+    // 开始等待和监听
+    waitForBibtexRender();
+  });
+</script>
 
 
 </div>
