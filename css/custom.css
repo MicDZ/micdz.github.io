@@ -532,6 +532,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%); */
+    padding-left: 20px;
 }
 
 #article-toc-inner .toc {
