@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="en,zh_cn,default">
-
-<head>
+<!DOCTYPE html><html lang="en,zh_cn,default"><head>
   <meta charset="utf-8">
   
   <title>About Me - MicDZ</title>
@@ -34,24 +31,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="/img/h.jpeg">
   <link rel="stylesheet" href="https://cdn.jsdmirror.com
-/npm/lxgw-wenkai-webfont@1.1.0/style.css" />
+/npm/lxgw-wenkai-webfont@1.1.0/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <!-- KaTeX support -->
   <link rel="stylesheet" href="https://cdn.jsdmirror.com
 /npm/katex@0.16.9/dist/katex.css" integrity="sha384-OH8qNTHoMMVNVcKdKewlipV4SErXqccxxlg6HC9Cwjr5oZu2AdBej1TndeCirael" crossorigin="anonymous">
-<script defer src="https://cdn.jsdmirror.com
+<script defer="" src="https://cdn.jsdmirror.com
 /npm/katex@0.16.9/dist/katex.js" integrity="sha384-ImWHyYvDPlRzwFnvLhG9Jcpm/7qL4SVIuJK0C6Rj+Mf7fpeNJCLCynC+EVz4kCSA" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"
-        integrity="sha512-EKW5YvKU3hpyyOcN6jQnAxO/L8gts+YdYV6Yymtl8pk9YlYFtqJgihORuRoBXK8/cOIlappdU6Ms8KdK6yBCgA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js" integrity="sha512-EKW5YvKU3hpyyOcN6jQnAxO/L8gts+YdYV6Yymtl8pk9YlYFtqJgihORuRoBXK8/cOIlappdU6Ms8KdK6yBCgA==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </script>
 <link rel="stylesheet" href="https://cdn.jsdmirror.com
 /npm/pseudocode@2.4.1/build/pseudocode.min.css">
 <script src="https://cdn.jsdmirror.com
 /npm/pseudocode@2.4.1/build/pseudocode.min.js">
 </script>
-<script type="text/javascript" src="https://cdn.jsdmirror.com
-/gh/pcooksey/bibtex-js@1.0.0/src/bibtex_js.min.js"></script>
+
 <!-- Prism support ./js/prism.js-->
   
 <link rel="stylesheet" href="/css/prism.css">
@@ -66,9 +60,9 @@
 
     <div class="two columns" style="max-width: 50px">
       <h1 class="mt-2 mode">
-        <div onclick=setDarkMode(true) id="darkBtn"></div>
-        <div onclick=setDarkMode(false) id="lightBtn" class=hidden></div>
-        <script >
+        <div onclick="setDarkMode(true)" id="darkBtn"></div>
+        <div onclick="setDarkMode(false)" id="lightBtn" class="hidden"></div>
+        <script>
           if (localStorage.getItem('preferredTheme') == 'dark') {
             setDarkMode(true)
           }
@@ -92,7 +86,7 @@
      
     <div class="six columns ml-1">
       <h1 class="mt-2 site-title">
-        MicDZ&#39;s Blog
+        MicDZ's Blog
       </h1>
     </div>
   
@@ -125,17 +119,17 @@
             <!-- <div class="trans"> -->
               
 
-
 <title>About Me</title>
 
 <div class="article">
   
   
+  
 <center>
 <img no-lazy="" class="avatar" src="/img/h.jpeg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';">
 </center>
-<h2 id="im-micdz"><a class="markdownIt-Anchor" href="#im-micdz"></a> I’m MicDZ</h2>
-<p>这里是我的博客， 自 2017 年运行至今，用于记录生活和学习。<br />
+<h2 id="im-micdz">1.&nbsp;<a class="markdownIt-Anchor" href="#im-micdz"></a> I’m MicDZ</h2>
+<p>这里是我的博客， 自 2017 年运行至今，用于记录生活和学习。<br>
 <a target="_blank" rel="noopener" href="https://hust.edu.cn">华中科技大学</a> - <a target="_blank" rel="noopener" href="https://eic.hust.edu.cn/">电子信息与通信学院</a> - 通信工程</p>
 <div>
 <b class="right">联系我</b>
@@ -144,7 +138,7 @@
 </div>
 </div>
 <hr>
-<p>Here is my blog, documenting my inspiration since 2017.<br />
+<p>Here is my blog, documenting my inspiration since 2017.<br>
 <a target="_blank" rel="noopener" href="http://english.hust.edu.cn/">HUST</a> - <a target="_blank" rel="noopener" href="http://english.eic.hust.edu.cn/">EIC</a> - B.Eng. in Communication Engineering</p>
 <p>Research interets: Natural Language Processing, Computer Vision, and Machine Learning</p>
 <div>
@@ -154,7 +148,6 @@
 </div>
 </div>
 
-<!-- 公式高亮样式和脚本 -->
 <style>
   @keyframes highlight-blink {
     0%, 100% { background-color: #e6e6e6; }
@@ -172,6 +165,7 @@
   .katex-display:target {
 
   }
+  /* 这些样式依然需要，因为服务器端生成了对应的class */
   .formula-anchor {
     margin-left: auto;
     padding-left: 1em;
@@ -187,34 +181,9 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // 选择所有行间公式并添加编号和锚点
-    const displays = document.querySelectorAll('.katex-display');
-    displays.forEach((el, idx) => {
-      // 寻找el的子元素katex-html
-      const katexHtml = el.querySelector('.katex-html');
-      if (!katexHtml) return; // 如果没有找到katex-html，跳过
-      
-      // 创建锚点链接
-      const anchor = document.createElement('a');
-      anchor.className = 'formula-anchor';
-      anchor.href = '#formula' + (idx + 1);
-      anchor.id = 'formula' + (idx + 1);
-      anchor.style.textDecoration = 'none';
-      anchor.style.color = 'inherit';
-      
-      // 创建编号元素
-      const number = document.createElement('span');
-      number.textContent = `(${idx + 1})`;
-      number.className = 'formula-number';
-      
-      // 将编号放入锚点中
-      anchor.appendChild(number);
-      
-      // 直接添加到公式容器中
-      katexHtml.appendChild(anchor);
-    });
+    // 【已移除】公式编号和锚点的添加逻辑已移至 EJS 后端渲染。
     
-    // 高亮函数（处理公式和引用）
+    // 高亮函数（处理公式和引用），此功能保留在前端
     function highlightReference(hash) {
       // 清除之前的高亮
       const allCitations = document.querySelectorAll('.bibtexentry');
@@ -249,7 +218,7 @@
       else if (targetHash && targetHash.startsWith('#formula')) {
         const targetElement = document.querySelector(targetHash);
         if (targetElement) {
-          const formulaScrollElement = targetElement.closest('.katex-block');
+          const formulaScrollElement = targetElement.closest('.katex-block, .katex-display'); // 适配两种可能的父容器
           const formulaElement = targetElement.closest('.katex-html');
           if (formulaElement && formulaScrollElement) {
             formulaElement.style.backgroundColor = '#e6e6e6';
@@ -261,13 +230,15 @@
       }
 
       else {
-        const targetElement = document.querySelector(targetHash);
-        const scrollElement = targetElement.closest('a');
-        if (scrollElement) {
-          scrollElement.scrollIntoView({ behavior: 'smooth' });
+        try {
+            const targetElement = document.querySelector(targetHash);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        } catch (e) {
+            console.error('Invalid selector for scroll:', targetHash);
         }
       }
-
     }
     
     // 延迟检查hash，确保所有内容都已渲染
@@ -285,7 +256,8 @@
       const link = e.target.closest('a');
       if (link && link.getAttribute('href')) {
         const href = link.getAttribute('href');
-        if (href.startsWith('#ref') || href.startsWith('#formula') || href.startsWith('#algorithm')) {
+        // 只拦截指向本文内锚点的链接
+        if (href.startsWith('#')) {
           e.preventDefault();
           const hash = href;
           // 更新URL但不触发默认跳转
@@ -299,13 +271,10 @@
 </script>
 
 
-
 </div>
 <p class="right">
     
 </p>
-
-
             <!-- </div> -->
             <div class="row mt-2">
     
@@ -330,11 +299,10 @@
         
     
 
+    </span></p>
 
-        
-
-    </p>
-    <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=250&t=n&d=tomGCTh1CxWc_-uuNllmA6Nl5mVnvkzy2svb86OrEyc&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff'></script>
+    <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&amp;w=250&amp;t=n&amp;d=tomGCTh1CxWc_-uuNllmA6Nl5mVnvkzy2svb86OrEyc&amp;co=2d78ad&amp;cmo=3acc3a&amp;cmn=ff5353&amp;ct=ffffff"></script>
+    
     
 </div> 
           </div>
@@ -342,6 +310,6 @@
         </div>
     
       </div>
-</body>
 
-</html>
+
+</body></html>
