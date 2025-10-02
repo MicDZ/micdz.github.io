@@ -1,0 +1,318 @@
+<!DOCTYPE html><html lang="en,zh_cn,default"><head>
+  <meta charset="utf-8">
+  
+  <title>From Human Hands to Robot Arms: Manipulation Skills Transfer via Trajectory Alignment - MicDZ</title>
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  <style>
+  a:not(.icon):not(.clustrmaps-map-control):not(.formula-anchor) {
+    text-decoration-color: #0FA0CE;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      #0FA0CE 50%
+    );
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="/img/h.jpeg">
+  <link rel="stylesheet" href="https://cdn.jsdmirror.com
+/npm/lxgw-wenkai-webfont@1.1.0/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <!-- KaTeX support -->
+  <link rel="stylesheet" href="https://cdn.jsdmirror.com
+/npm/katex@0.16.9/dist/katex.css" integrity="sha384-OH8qNTHoMMVNVcKdKewlipV4SErXqccxxlg6HC9Cwjr5oZu2AdBej1TndeCirael" crossorigin="anonymous">
+<script defer="" src="https://cdn.jsdmirror.com
+/npm/katex@0.16.9/dist/katex.js" integrity="sha384-ImWHyYvDPlRzwFnvLhG9Jcpm/7qL4SVIuJK0C6Rj+Mf7fpeNJCLCynC+EVz4kCSA" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js" integrity="sha512-EKW5YvKU3hpyyOcN6jQnAxO/L8gts+YdYV6Yymtl8pk9YlYFtqJgihORuRoBXK8/cOIlappdU6Ms8KdK6yBCgA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</script>
+<link rel="stylesheet" href="https://cdn.jsdmirror.com
+/npm/pseudocode@2.4.1/build/pseudocode.min.css">
+<script src="https://cdn.jsdmirror.com
+/npm/pseudocode@2.4.1/build/pseudocode.min.js">
+</script>
+
+<!-- Prism support ./js/prism.js-->
+  
+<link rel="stylesheet" href="/css/prism.css">
+
+<meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="MicDZ's Blog" type="application/atom+xml">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="row">
+
+    <div class="two columns" style="max-width: 50px">
+      <h1 class="mt-2 mode">
+        <div onclick="setDarkMode(true)" id="darkBtn"></div>
+        <div onclick="setDarkMode(false)" id="lightBtn" class="hidden"></div>
+        <script>
+          if (localStorage.getItem('preferredTheme') == 'dark') {
+            setDarkMode(true)
+          }
+          function setDarkMode(isDark) {
+            var darkBtn = document.getElementById('darkBtn')
+            var lightBtn = document.getElementById('lightBtn')
+            if (isDark) {
+              lightBtn.style.display = "block"
+              darkBtn.style.display = "none"
+              localStorage.setItem('preferredTheme', 'dark');
+            } else {
+              lightBtn.style.display = "none"
+              darkBtn.style.display = "block"
+              localStorage.removeItem('preferredTheme');
+            }
+            document.body.classList.toggle("darkmode");
+          }
+        </script>
+      </h1>
+    </div>
+     
+    <div class="six columns ml-1">
+      <h1 class="mt-2 site-title">
+        MicDZ's Blog
+      </h1>
+    </div>
+  
+    <div class="twelve columns">
+      <div class="row">
+        <div class="right">
+          
+            <a href="/" class="ml">Home</a>
+          
+          
+          
+            <a href="/archives" class="ml">Archives</a>
+             
+
+          <!-- <a href="/" class="ml">About</a> -->
+          
+            <a href="/friends" class="ml">Friends</a>
+           
+          
+          
+        </div>
+      </div>
+      <hr style="margin-bottom: 2.6rem">
+    </div>
+    
+
+
+  </div>
+          <div>
+            <!-- <div class="trans"> -->
+              
+
+<title>From Human Hands to Robot Arms: Manipulation Skills Transfer via Trajectory Alignment</title>
+
+<h1>From Human Hands to Robot Arms: Manipulation Skills Transfer via Trajectory Alignment</h1>
+
+<div class="right">
+  
+    <p class="info">      Sep. 28, 2025</p>
+  
+</div>
+
+<hr>
+
+
+
+
+
+
+<div class="article">
+  
+  
+    <blockquote>
+      <p>This article is written in Chinese. The English version is translated by GPT-4o. Please refer to the original <a href="/">Chinese version</a> for the original content.</p>
+    </blockquote>
+    <hr>
+  
+  
+
+
+<style>
+  @keyframes highlight-blink {
+    0%, 100% { background-color: #e6e6e6; }
+    50% { background-color: #d8d8d8; }
+  }
+  .katex-display {
+    transition: background-color 0.3s ease;
+    position: relative;
+  }
+  .katex-display .katex-html {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .katex-display:target {
+
+  }
+  /* 这些样式依然需要，因为服务器端生成了对应的class */
+  .formula-anchor {
+    margin-left: auto;
+    padding-left: 1em;
+    text-decoration: none;
+    color: inherit;
+    flex-shrink: 0;
+  }
+  .formula-number {
+    font-size: 0.8em;
+    color: #6c757d;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 【已移除】公式编号和锚点的添加逻辑已移至 EJS 后端渲染。
+    
+    // 高亮函数（处理公式和引用），此功能保留在前端
+    function highlightReference(hash) {
+      // 清除之前的高亮
+      const allCitations = document.querySelectorAll('.bibtexentry');
+      allCitations.forEach(citation => {
+        citation.style.backgroundColor = '';
+        citation.style.animation = '';
+      });
+      
+      const allFormulas = document.querySelectorAll('.katex-html');
+      allFormulas.forEach(formula => {
+        formula.style.backgroundColor = '';
+        formula.style.animation = '';
+      });
+      
+      // 使用传入的hash或当前URL的hash
+      const targetHash = hash || window.location.hash;
+      
+      // 处理引用高亮
+      if (targetHash && targetHash.startsWith('#ref')) {
+        const targetElement = document.querySelector(targetHash);
+        if (targetElement) {
+          const citationElement = targetElement.closest('.bibtexentry');
+          if (citationElement) {
+            citationElement.style.backgroundColor = '#e6e6e6';
+            citationElement.style.animation = 'highlight-blink 2s ease-in-out 3';
+            citationElement.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }
+      
+      // 处理公式高亮
+      else if (targetHash && targetHash.startsWith('#formula')) {
+        const targetElement = document.querySelector(targetHash);
+        if (targetElement) {
+          const formulaScrollElement = targetElement.closest('.katex-block, .katex-display'); // 适配两种可能的父容器
+          const formulaElement = targetElement.closest('.katex-html');
+          if (formulaElement && formulaScrollElement) {
+            formulaElement.style.backgroundColor = '#e6e6e6';
+            formulaElement.style.paddingTop = '0.6em';
+            formulaElement.style.animation = 'highlight-blink 2s ease-in-out 3';
+            formulaScrollElement.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }
+
+      else {
+        try {
+            const targetElement = document.querySelector(targetHash);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        } catch (e) {
+            console.error('Invalid selector for scroll:', targetHash);
+        }
+      }
+    }
+    
+    // 延迟检查hash，确保所有内容都已渲染
+    setTimeout(function() {
+      highlightReference();
+    }, 600);
+    
+    // 监听hash变化
+    window.addEventListener('hashchange', function() {
+      highlightReference();
+    });
+    
+    // 拦截页面内的链接点击
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('a');
+      if (link && link.getAttribute('href')) {
+        const href = link.getAttribute('href');
+        // 只拦截指向本文内锚点的链接
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          const hash = href;
+          // 更新URL但不触发默认跳转
+          history.pushState(null, null, hash);
+          // 执行平滑滚动和高亮
+          highlightReference(hash);
+        }
+      }
+    });
+  });
+</script>
+
+
+</div>
+<p class="right">
+    
+        
+
+        
+    
+</p>
+            <!-- </div> -->
+            <div class="row mt-2">
+    
+    <p id="copyright">
+        
+        Unless otherwise stated, all content on this blog is licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><span class="d-none d-sm-inline"> | </span>
+        <a href="/atom.xml" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm">RSS subscribe</a> <span class="d-none d-sm-inline"> | </span>
+        <a href="/friends">Friends</a>
+        <br>
+        
+        <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">鄂ICP备2025091178号</a> <span class="d-none d-sm-inline"> | </span>
+        <span class="d-none d-sm-inline"> 
+        
+
+
+        
+
+
+    
+        
+            对应的中文页面尚未上线
+        
+    
+
+    </span></p>
+
+    <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&amp;w=250&amp;t=n&amp;d=tomGCTh1CxWc_-uuNllmA6Nl5mVnvkzy2svb86OrEyc&amp;co=2d78ad&amp;cmo=3acc3a&amp;cmn=ff5353&amp;ct=ffffff"></script>
+    
+    
+</div> 
+          </div>
+    
+        </div>
+    
+      </div>
+
+
+</body></html>
