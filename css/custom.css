@@ -222,6 +222,20 @@
         flex-wrap: wrap;
         flex-direction: row;
     }
+    .publication-text {
+        flex: 1 1 24rem;
+        max-width: 100%;
+    }
+    .publication-figure {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        flex: 0 0 clamp(12.5rem, 32%, 14rem);
+        max-width: 100%;
+        max-height: 110px;
+        margin-bottom: 10px;
+        margin-left: auto;
+    }
     .line {
         display: flex;
         justify-content: space-between; 
@@ -255,6 +269,29 @@
             margin-left: 0px;
         }
     }
+    @media (max-width: 48em) {
+        .publication-text,
+        .publication-figure {
+            min-width: 100%;
+            max-width: 100%;
+        }
+        .publication-text {
+            flex: 0 1 auto;
+            width: 100%;
+        }
+        .publication-figure {
+            flex: 0 1 auto;
+            display: block;
+            justify-content: flex-start;
+            text-align: left;
+            margin-left: 0;
+            margin-bottom: 15px;
+        }
+        .publication-figure img {
+            margin: 0;
+        }
+    }
+
     @media (max-width: 550px) {
         hr {
             display: none;
