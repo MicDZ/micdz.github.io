@@ -102,8 +102,8 @@
       <div class="column about_brief mb-2">
         <!-- Main information, edit it on theme/_config.yml -->
         <!-- <h2 class="mb-2"></h2> -->
-        <!-- <p></p> -->
         <h1 class="site-title">Han Zhou</h1> 
+        <p>Hi, I am Han Zhou (pronounced “Hahn Joe”), a fourth-year undergraduate student at HUST.</p>
       </div>
       <!-- 添加一个头像，放在界面的左上角 -->
 
@@ -111,11 +111,19 @@
     </div>
   </div>
   <div>
-    <div class="row about_brief mb-2 myavatar" style="width: 20%; max-width: 150px;">
-      <img src="/img/h.jpeg" alt="myavatar">
-    </div>
+  <div class="row about_brief mb-2 myavatar" style="width: 20%; max-width: 150px;">
+    <img
+      id="avatarImg"
+      src="/img/h.jpeg"
+      alt="myavatar"
+      data-encrypted-url="/img/h.b64"
+      data-encrypted-blob="" 
+      data-encrypted-iv="DumV/tnyeWqtgQcL"
+      data-mime=""
+    >
+  </div>
     <div class="row" style="width: 75%;">
-    <p>Research interests: Machine Learning, Computer Vision and Robotics, with an emphasis on Multimodal and Embodied AI Agents.</p>
+    <p>Research interests: Deep Learning, Computer Vision and Robotics, with an emphasis on Multimodal and Embodied AI.</p>
     <p>Email: me at micdz dot cn</p>
     <p>Media: 
       <a target="_blank" rel="noopener" href="https://github.com/micdz/">GitHub</a> | <a target="_blank" rel="noopener" href="https://space.bilibili.com/289460319?spm_id_from=333.1007.0.0">Bilibili</a> | <a target="_blank" rel="noopener" href="https://www.xiaohongshu.com/user/profile/62fd00c9000000000f004e92">RedNote</a> 
@@ -157,9 +165,9 @@
     </div>
  <h2>Publications</h2>
     
-      <div style="margin-bottom: 20px;">
+      <div class="mb-3">
         
-        <div class="article-list">
+        <div class="article-list spacing has-figure">
           <div class="publication-text">
             <p>
             
@@ -238,14 +246,16 @@
   
   
             </div>
+              
               <div class="publication-figure">
-              
-                <img src="/MANBench/static/images/teaser.jpg" alt="myavatar" style="max-height: 100%; max-width: 200px;" >
-              
+                <div class="media-aspect">
+                  <img src="/MANBench/static/images/teaser.jpg" alt="publication">
+                </div>
               </div>
-          </div>
-        
-      </div>
+              
+           </div>
+         
+       </div>
     
         <h2>Research &amp; Visiting</h2>
       <div class="scrollableDiv">
@@ -255,7 +265,7 @@
       </div>
       <div  >
         <div class="research-info">
-          <p><b>MAPLE, Laboratory for Machine Perception and Learning, Westlake University</b></p> <p class="info left">May 2025 - Present, Visiting Student</p>
+          <p><b>MAPLE, Laboratory for Machine Perception and Learning, Westlake University</b></p> <p class="info left">May 2025 - Sep. 2025, Visiting Student</p>
           <p>Supervised by Prof. <a target="_blank" rel="noopener" href="https://www.westlake.edu.cn/faculty/guojun-qi.html">Guojun Qi</a> (Fellow of IEEE & IAPR) and Dr. <a target="_blank" rel="noopener" href="https://mlyarthur.github.io/">Liyuan Ma</a></p> <p>Working closely with PhD Candidate Jinjin Cao</p>
         </div>
       </div>
@@ -289,184 +299,473 @@
     </div>
     <hr>
     <h2>Awards</h2>
+    <div class="blockinfo" style="text-align: center;">
+      <p>Secured <b>6 national awards</b> (including <b>3 first prizes</b> and <b>1 track championship</b>) in competitions focused on AI/CV, robotics, and embedded systems, earning over <b>CNY 11,000</b> in prize money.</p>
+    </div>
+    
     <div id="selectedAwards">
       
-      <div class="article-list mb-2 spacing">
         
-          <p class="info left date">
-            Aug. 2025
-          </p></p>
+      <div class="article-list mb-2 spacing has-figure">
+        <div class="publication-text">
           <p class="line">
-              
-              China College IC Competition
-              <span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
-              <b class="description"><i>National First Prize, CNY 3,000</i></b></p>
+            
+              <b>
+                
+                  China College IC Competition
+                
+              </b>
+            
+          </p>
+          
+            <p class="description red">National First Prize, <i><b>CNY 3,000</b></i></p>
+          
+          
+            <p class="description">
+              Supervised by
+              <span class="authors">
+                
+                  Dr. Yujiang Zeng, 
+                
+                  Prof. Qiansong Deng
+                
+              </span>
+            </p>
+          
+          
+            <p class="info left date">
+              Aug. 2025
+            </p>
+          
+        </div>
+        
+          <div class="publication-figure">
+            <div class="media-aspect award-aspect">
+              <img src="/img/news/25jcs.jpeg" alt="award">
+            </div>
+          </div>
         
       </div>
-      
-      <div class="article-list mb-2 spacing">
+    
+       
         
-          <p class="info left date">
-            Sep. 2024
-          </p>
+      <div class="article-list mb-2 spacing has-figure">
+        <div class="publication-text">
           <p class="line">
-          <a href="/news/qs.html" >
-              
-              Embedded Chip and System Design Competition
-              
-          </a><span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
-          <b class="description"><i>National First Prize, CNY 5,000</i></b>
+            
+              <a href="/news/qs.html">
+                <b>
+                  
+                    Embedded Chip and System Design Competition
+                  
+                </b>
+              </a>
+            
           </p>
+          
+            <p class="description red">National First Prize, <i><b>CNY 5,000</b></i></p>
+          
+          
+            <p class="description">
+              Supervised by
+              <span class="authors">
+                
+                  Dr. Yujiang Zeng
+                
+              </span>
+            </p>
+          
+          
+            <p class="info left date">
+              Sep. 2024
+            </p>
+          
+        </div>
+        
+          <div class="publication-figure">
+            <div class="media-aspect award-aspect">
+              <img src="/img/news/24qiansai1.jpeg" alt="award">
+            </div>
+          </div>
         
       </div>
-      
-      <div class="article-list mb-2 spacing">
+    
+       
         
-          <p class="info left date">
-            Sep. 2024
-          </p>
+      <div class="article-list mb-2 spacing has-figure">
+        <div class="publication-text">
           <p class="line">
-          <a href="/news/rm.html" >
-              
-              RoboMaster University Championship
-              
-          </a><span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
-          <b class="description"><i>National Second Prize</i></b>
+            
+              <a href="/news/rm.html">
+                <b>
+                  
+                    RoboMaster University Championship
+                  
+                </b>
+              </a>
+            
           </p>
+          
+            <p class="description">National Second Prize</p>
+          
+          
+            <p class="description">
+              Supervised by
+              <span class="authors">
+                
+                  Dr. Yujiang Zeng, 
+                
+                  Prof. Xinggang Wang
+                
+              </span>
+            </p>
+          
+          
+            <p class="info left date">
+              Sep. 2024
+            </p>
+          
+        </div>
+        
+          <div class="publication-figure">
+            <div class="media-aspect award-aspect">
+              <img src="/img/news/24rm_demo.gif" alt="award">
+            </div>
+          </div>
         
       </div>
-      
-      <div class="article-list mb-2 spacing">
+    
+       
         
-          <p class="info left date">
-            Oct. 2023
-          </p></p>
+      <div class="article-list mb-2 spacing has-figure">
+        <div class="publication-text">
           <p class="line">
-              
-              DIGIX Global AI Challenge
-              <span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
-              <b class="description"><i>National First Prize</i></b></p>
+            
+              <b>
+                
+                  Global Campus Artificial Intelligence Algorithm Elite Competition
+                
+              </b>
+            
+          </p>
+          
+            <p class="description red">National First Prize, Runner-up</p>
+          
+          
+            <p class="description">
+              Supervised by
+              <span class="authors">
+                
+                  Dr. Yujiang Zeng
+                
+              </span>
+            </p>
+          
+          
+            <p class="info left date">
+              Oct. 2023
+            </p>
+          
+        </div>
+        
+          <div class="publication-figure">
+            <div class="media-aspect award-aspect">
+              <img src="/img/news/24jsai.jpg" alt="award">
+            </div>
+          </div>
         
       </div>
-      
+    
+       
       </div>
 
       <div class="scrollableDiv" id="expandDiv" style="display: none;">
        
-      <div class="article-list mb-2 spacing">
         
-          <p class="info left date">
-            Aug. 2025
-          </p></p>
+      <div class="article-list mb-2 spacing has-figure">
+        <div class="publication-text">
           <p class="line">
-              
-              China College IC Competition
-              <span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
-              <b class="description"><i>National First Prize, CNY 3,000</i></b></p>
-        
-      </div>
-      
-      <div class="article-list mb-2 spacing">
-        
-          <p class="info left date">
-            Sep. 2024
+            
+              <b>
+                
+                  China College IC Competition
+                
+              </b>
+            
           </p>
-          <p class="line">
-          <a href="/news/qs.html" >
-              
-              Embedded Chip and System Design Competition
-              
-          </a><span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
-          <b class="description"><i>National First Prize, CNY 5,000</i></b>
-          </p>
+          
+            <p class="description red">National First Prize, <i><b>CNY 3,000</b></i></p>
+          
+          
+            <p class="description">
+              Supervised by
+              <span class="authors">
+                
+                  Dr. Yujiang Zeng, 
+                
+                  Prof. Qiansong Deng
+                
+              </span>
+            </p>
+          
+          
+            <p class="info left date">
+              Aug. 2025
+            </p>
+          
+        </div>
+        
+          <div class="publication-figure">
+            <div class="media-aspect award-aspect">
+              <img src="/img/news/25jcs.jpeg" alt="award">
+            </div>
+          </div>
         
       </div>
-      
-      <div class="article-list mb-2 spacing">
-        
-          <p class="info left date">
-            Sep. 2024
-          </p>
-          <p class="line">
-          <a href="/news/rm.html" >
-              
-              RoboMaster University Championship
-              
-          </a><span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
-          <b class="description"><i>National Second Prize</i></b>
-          </p>
-        
-      </div>
-      
-      <div class="article-list mb-2 spacing">
-        
-          <p class="info left date">
-            Oct. 2023
-          </p></p>
-          <p class="line">
-              
-              DIGIX Global AI Challenge
-              <span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
-              <b class="description"><i>National First Prize</i></b></p>
-        
-      </div>
-      
-      
-      <div class="article-list mb-2 spacing">
-        
-          <p class="info left date">
-            Aug. 2024
-          </p>
-          <p class="line">
-          <a href="/news/rm3.html" >
-              
-              RoboMaster Open Source Award 
-              
-          </a><span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
-          <b class="description"><i>Excellence Award, CNY 3,000</i></b>
-          </p>
-        
-      </div>
-      
-      <div class="article-list mb-2 spacing">
-        
-          <p class="info left date">
-            Aug. 2024
-          </p></p>
-          <p class="line">
-              
-              RoboCom Robotics Developer Competition
-              <span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
-              <b class="description"><i>National Second Prize</i></b></p>
-        
-      </div>
-      
-      <div class="article-list mb-2 spacing">
-        
-          <p class="info left date">
-            May 2024
-          </p></p>
-          <p class="line">
-              
-              RoboMaster University Championship Regionals
-              <span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
-              <b class="description"><i>First Prize (Advanced to Quarterfinals)</i></b></p>
-        
-      </div>
-      
-      <div class="article-list mb-2 spacing">
-        
-          <p class="info left date">
-            Apr. 2024
-          </p></p>
-          <p class="line">
-              
-              RoboMaster University League
-              <span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
-              <b class="description"><i>National Second Prize</i></b></p>
-        
-      </div>
+    
        
+        
+      <div class="article-list mb-2 spacing has-figure">
+        <div class="publication-text">
+          <p class="line">
+            
+              <a href="/news/qs.html">
+                <b>
+                  
+                    Embedded Chip and System Design Competition
+                  
+                </b>
+              </a>
+            
+          </p>
+          
+            <p class="description red">National First Prize, <i><b>CNY 5,000</b></i></p>
+          
+          
+            <p class="description">
+              Supervised by
+              <span class="authors">
+                
+                  Dr. Yujiang Zeng
+                
+              </span>
+            </p>
+          
+          
+            <p class="info left date">
+              Sep. 2024
+            </p>
+          
+        </div>
+        
+          <div class="publication-figure">
+            <div class="media-aspect award-aspect">
+              <img src="/img/news/24qiansai1.jpeg" alt="award">
+            </div>
+          </div>
+        
+      </div>
+    
+       
+        
+      <div class="article-list mb-2 spacing has-figure">
+        <div class="publication-text">
+          <p class="line">
+            
+              <a href="/news/rm.html">
+                <b>
+                  
+                    RoboMaster University Championship
+                  
+                </b>
+              </a>
+            
+          </p>
+          
+            <p class="description">National Second Prize</p>
+          
+          
+            <p class="description">
+              Supervised by
+              <span class="authors">
+                
+                  Dr. Yujiang Zeng, 
+                
+                  Prof. Xinggang Wang
+                
+              </span>
+            </p>
+          
+          
+            <p class="info left date">
+              Sep. 2024
+            </p>
+          
+        </div>
+        
+          <div class="publication-figure">
+            <div class="media-aspect award-aspect">
+              <img src="/img/news/24rm_demo.gif" alt="award">
+            </div>
+          </div>
+        
+      </div>
+    
+       
+        
+      <div class="article-list mb-2 spacing has-figure">
+        <div class="publication-text">
+          <p class="line">
+            
+              <b>
+                
+                  Global Campus Artificial Intelligence Algorithm Elite Competition
+                
+              </b>
+            
+          </p>
+          
+            <p class="description red">National First Prize, Runner-up</p>
+          
+          
+            <p class="description">
+              Supervised by
+              <span class="authors">
+                
+                  Dr. Yujiang Zeng
+                
+              </span>
+            </p>
+          
+          
+            <p class="info left date">
+              Oct. 2023
+            </p>
+          
+        </div>
+        
+          <div class="publication-figure">
+            <div class="media-aspect award-aspect">
+              <img src="/img/news/24jsai.jpg" alt="award">
+            </div>
+          </div>
+        
+      </div>
+    
+       
+       
+        
+      <div class="article-list mb-2 spacing has-figure">
+        <div class="publication-text">
+          <p class="line">
+            
+              <a href="/news/rm3.html">
+                <b>
+                  
+                    RoboMaster Open Source Award 
+                  
+                </b>
+              </a>
+            
+          </p>
+          
+            <p class="description">Excellence Award, <i><b>CNY 3,000</b></i></p>
+          
+          
+          
+            <p class="info left date">
+              Aug. 2024
+            </p>
+          
+        </div>
+        
+          <div class="publication-figure">
+            <div class="media-aspect award-aspect">
+              <img src="/img/news/24rm_demo2.gif" alt="award">
+            </div>
+          </div>
+        
+      </div>
+    
+       
+        
+      <div class="article-list mb-2 spacing ">
+        <div class="publication-text">
+          <p class="line">
+            
+              <b>
+                
+                  RoboCom Robotics Developer Competition
+                
+              </b>
+            
+          </p>
+          
+            <p class="description">National Second Prize</p>
+          
+          
+          
+            <p class="info left date">
+              Aug. 2024
+            </p>
+          
+        </div>
+        
+      </div>
+    
+       
+        
+      <div class="article-list mb-2 spacing ">
+        <div class="publication-text">
+          <p class="line">
+            
+              <b>
+                
+                  RoboMaster University Championship Regionals
+                
+              </b>
+            
+          </p>
+          
+            <p class="description">First Prize (Advanced to Quarterfinals)</p>
+          
+          
+          
+            <p class="info left date">
+              May 2024
+            </p>
+          
+        </div>
+        
+      </div>
+    
+       
+        
+      <div class="article-list mb-2 spacing ">
+        <div class="publication-text">
+          <p class="line">
+            
+              <b>
+                
+                  RoboMaster University League
+                
+              </b>
+            
+          </p>
+          
+            <p class="description">National Second Prize</p>
+          
+          
+          
+            <p class="info left date">
+              Apr. 2024
+            </p>
+          
+        </div>
+        
+      </div>
+    
+        
       </div>
       <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 20px; margin-top: 10px;">
 
@@ -487,6 +786,7 @@
     // 初始化隐藏
     expandDiv.style.display = 'none';
   </script>
+  <hr>
      <h2>Honors</h2>
 
   <div id="selectedHonors">
@@ -607,6 +907,72 @@
   
   
   <h4 class="right"> <a href="/archives">All posts</a></h4>
+
+<script>
+  // 仅当提供了加密数据且 URL 中带 key 时尝试切换加密头像（支持从URL读取密文，回退内嵌base64）
+  (function () {
+    const el = document.getElementById('avatarImg');
+    if (!el) return;
+
+    const encUrl = (el.dataset.encryptedUrl || '').trim();
+    const b64BlobInline = (el.dataset.encryptedBlob || '').trim();
+    const b64Iv = (el.dataset.encryptedIv || '').trim();
+    const mime = (el.dataset.mime || 'image/png').trim();
+
+    if ((!encUrl && !b64BlobInline) || !b64Iv) return;
+
+    // 支持 ?key=xxx 或 #key=xxx
+    const hsKey = new URLSearchParams((window.location.hash || '').replace(/^#/, '')).get('key');
+    console.log('hsKey:', hsKey);
+    const pass = (hsKey || '').trim();
+    if (!pass) return;
+    console.log('Attempting to decrypt avatar with provided key...');
+    const b64Normalize = (b64) => {
+      let s = (b64 || '').replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
+      const pad = s.length % 4;
+      if (pad) s += '='.repeat(4 - pad);
+      return s;
+    };
+
+    const b64ToU8 = (b64) => {
+      const str = atob(b64Normalize(b64));
+      const out = new Uint8Array(str.length);
+      for (let i = 0; i < str.length; i++) out[i] = str.charCodeAt(i);
+      return out;
+    };
+
+    (async () => {
+      try {
+        // 拉取/获取密文
+        let cipherU8;
+        if (encUrl) {
+          const resp = await fetch(encUrl, { cache: 'no-store' });
+          if (!resp.ok) throw new Error('fetch encrypted blob failed');
+          const txt = await resp.text();              // 服务器提供的 base64 文本
+          cipherU8 = b64ToU8(txt);
+        } else {
+          cipherU8 = b64ToU8(b64BlobInline);          // 回退到内嵌 base64
+        }
+
+        // 口令派生密钥并解密
+        const passBytes = new TextEncoder().encode(pass);
+        const hash = await crypto.subtle.digest('SHA-256', passBytes); // 32B key
+        const key = await crypto.subtle.importKey('raw', hash, 'AES-GCM', false, ['decrypt']);
+        const iv = b64ToU8(b64Iv);
+        console.log('iv:', iv);
+        const plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, cipherU8);
+        console.log('Avatar decrypted successfully.');
+        // 替换头像
+        const url = URL.createObjectURL(new Blob([plainBuf], { type: mime || 'application/octet-stream' }));
+        el.src = url;
+        el.addEventListener('load', () => setTimeout(() => URL.revokeObjectURL(url), 3000), { once: true });
+      } catch (e) {
+        // 解密失败或获取失败则保持公开头像
+        console.error('Decrypt avatar failed:', e);
+      }
+    })();
+  })();
+</script>
             <!-- </div> -->
             <div class="row mt-2">
     

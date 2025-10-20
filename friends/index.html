@@ -125,7 +125,7 @@
   
   
   
-<h3 id="friends-from-hust">0.1.&nbsp;<a class="markdownIt-Anchor" href="#friends-from-hust"></a> Friends From HUST</h3>
+<h2 class="no-number"> Friends From HUST</h2>
 <div class="site-list">
 <div class="site-card">
 <img no-lazy="" class="avatar" src="https://pic1.imgdb.cn/item/67b6faa9d0e0a243d40102f5.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';">
@@ -139,8 +139,12 @@
 <img no-lazy="" class="avatar" src="https://pic1.imgdb.cn/item/68a6e0f458cb8da5c840ec45.webp" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';">
 <a target="_blank" rel="noopener" href="http://motues.top">motues</a>
 </div>
+<div class="site-card">
+<img no-lazy="" class="avatar" src="https://avatars.githubusercontent.com/q-mian" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';">
+<a target="_blank" rel="noopener" href="https://qmian.online/">Qmian</a>
 </div>
-<h3 id="friends-from-changjun">0.2.&nbsp;<a class="markdownIt-Anchor" href="#friends-from-changjun"></a> Friends From Changjun</h3>
+</div>
+<h2 class="no-number"> Friends From Changjun</h2>
 <div class="site-list">
 <div class="site-card">
 <img no-lazy="" class="avatar" src="https://pic.imgdb.cn/item/6305e72016f2c2beb18c985a.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';">
@@ -163,7 +167,7 @@
 <a target="_blank" rel="noopener" href="https://marshuni.gitee.io">Marshuni</a>
 </div>
 </div>
-<h3 id="tech-friends">0.3.&nbsp;<a class="markdownIt-Anchor" href="#tech-friends"></a> Tech Friends</h3>
+<h2 class="no-number"> Tech Friends</h2>
 <div class="site-list">
 <div class="site-card">
 <img no-lazy="" class="avatar" src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@master/avatar/avatar.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.4/image/2659360.svg';">
@@ -209,6 +213,25 @@
     font-size: 0.8em;
     color: #6c757d;
   }
+
+  /* 引用悬浮详情卡片样式（改为 fixed，避免滚动偏移） */
+  .ref-hover-popup {
+    position: fixed; /* was: absolute */
+    display: none;
+    pointer-events: auto; /* was: none，允许与卡片交互 */
+    z-index: 10000;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    padding: 8px 10px;
+    max-width: 380px;
+    line-height: 1.4;
+    font-size: 0.9em;
+    color: #333;
+    border-radius: 4px;
+  }
+  /* 在悬浮卡片中隐藏编号链接，只显示详情 */
+  .ref-hover-popup .citation-number { display: none; }
 </style>
 
 <script>
@@ -299,6 +322,123 @@
         }
       }
     });
+    
+    // 引用悬浮详情卡片
+    const refPopup = document.createElement('div');
+    refPopup.className = 'ref-hover-popup';
+    document.body.appendChild(refPopup);
+
+    let currentRefLink = null;
+    let hoverOnPopup = false;
+    let hideTimer = null;
+
+    function clearHideTimer() {
+      if (hideTimer) {
+        clearTimeout(hideTimer);
+        hideTimer = null;
+      }
+    }
+
+    function scheduleHide() {
+      clearHideTimer();
+      hideTimer = setTimeout(() => {
+        if (!hoverOnPopup) {
+          hideRefPopup();
+        }
+      }, 120); // 短延时，允许从链接移动到卡片
+    }
+
+    function getCitationHtmlByHash(hash) {
+      if (!hash || !hash.startsWith('#ref')) return null;
+      const target = document.querySelector(hash);
+      if (!target) return null;
+      const entry = target.closest('.bibtexentry');
+      if (!entry) return null;
+      const clone = entry.cloneNode(true);
+      const num = clone.querySelector('.citation-number');
+      if (num) num.remove();
+      return clone.innerHTML;
+    }
+
+    // 基于链接元素定位（固定在链接下方，必要时放到上方），并限制在视口内
+    function positionPopupAtLink(link) {
+      const margin = 8;
+      refPopup.style.visibility = 'hidden';
+      refPopup.style.display = 'block';
+
+      // 使用 getClientRects 获取链接最后一行的矩形，适配换行链接
+      const rects = link.getClientRects();
+      const linkRect = rects.length ? rects[rects.length - 1] : link.getBoundingClientRect();
+      const popupRect = refPopup.getBoundingClientRect();
+      const vw = document.documentElement.clientWidth;
+      const vh = document.documentElement.clientHeight;
+
+      let left = linkRect.left;
+      let top = linkRect.bottom + margin; // 默认下方
+
+      // 右侧越界则左移，保证不超出
+      if (left + popupRect.width > vw - margin) {
+        left = Math.max(margin, vw - popupRect.width - margin);
+      }
+      // 下方放不下则放到上方
+      if (top + popupRect.height > vh - margin) {
+        top = linkRect.top - popupRect.height - margin;
+      }
+      // 左侧越界兜底
+      if (left < margin) left = margin;
+      // 上侧越界兜底（仍放在下方）
+      if (top < margin) top = Math.min(vh - popupRect.height - margin, linkRect.bottom + margin);
+
+      // fixed 定位：不要加 scroll 偏移
+      refPopup.style.left = left + 'px';
+      refPopup.style.top = top + 'px';
+      refPopup.style.visibility = '';
+    }
+
+    function showRefPopup(link) {
+      const href = link.getAttribute('href');
+      const html = getCitationHtmlByHash(href);
+      if (!html) return;
+      clearHideTimer();
+      refPopup.innerHTML = html;
+      positionPopupAtLink(link);
+      refPopup.style.display = 'block';
+    }
+
+    function hideRefPopup() {
+      refPopup.style.display = 'none';
+      refPopup.innerHTML = '';
+      currentRefLink = null;
+      clearHideTimer();
+    }
+
+    // 允许在卡片上悬停，避免消失
+    refPopup.addEventListener('mouseenter', () => {
+      hoverOnPopup = true;
+      clearHideTimer();
+    });
+    refPopup.addEventListener('mouseleave', () => {
+      hoverOnPopup = false;
+      scheduleHide();
+    });
+
+    // 绑定到具体的 #refN 链接
+    const refLinks = document.querySelectorAll('.article a[href^="#ref"]');
+    refLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        currentRefLink = link;
+        hoverOnPopup = false; // 从链接进入
+        showRefPopup(link);
+      });
+      link.addEventListener('mouseleave', () => {
+        // 移向卡片时不立刻隐藏，由定时器判断
+        scheduleHide();
+      });
+    });
+
+    // 滚动或窗口变化时隐藏，避免错位
+    window.addEventListener('scroll', hideRefPopup, { passive: true });
+    window.addEventListener('resize', hideRefPopup);
   });
 </script>
 
