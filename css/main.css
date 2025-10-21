@@ -643,7 +643,7 @@
 }
 @media (max-width: 550px) {
     .scrollableDiv {
-        max-height: 350px;
+        max-height: 1300px;
     }
 }
 .katex-html {
