@@ -1299,7 +1299,8 @@ The conditional score <span class="katex"><span class="katex-mathml"><math xmlns
     \State Sample noise $\epsilon \sim \mathcal{N}(0, I_d)$
     \State Set $x_t = \alpha_t z + \beta_t \epsilon$ 
     \Comment{(General case: $x_t \sim p_t(\cdot | z)$)}
-    \State Compute loss $\mathcal{L}(\theta) = \left\lVert s_t^\theta(x_t) + \frac{\epsilon}{\beta_t} \right\rVert^2$ (Generally: = $\left\lVert s_t^\theta(x_t) - \nabla \log p_t(x_t|z)\right\rVert^2$ Alternatively: $\mathcal{L}(\theta) = \left\lVert \epsilon_t^\theta(x_t) - \epsilon \right\rVert^2$)
+    \State Compute loss $\mathcal{L}(\theta) = \left\lVert s_t^\theta(x_t) + \frac{\epsilon}{\beta_t} \right\rVert^2$ (Generally: = $\left\lVert s_t^\theta(x_t) - \nabla \log p_t(x_t|z)\right\rVert^2$ 
+    Alternatively: $\mathcal{L}(\theta) = \left\lVert \epsilon_t^\theta(x_t) - \epsilon \right\rVert^2$)
     \State Update the model parameters $\theta$ via gradient descent on $\mathcal{L}(\theta)$.
 \EndFor
 \end{algorithmic}
