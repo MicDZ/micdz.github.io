@@ -232,13 +232,72 @@
   }
   /* 在悬浮卡片中隐藏编号链接，只显示详情 */
   .ref-hover-popup .citation-number { display: none; }
+
+  /* 新增：公式弹窗适配样式 */
+  .ref-hover-popup.is-formula {
+    max-width: min(90vw, 900px);
+    overflow-x: auto;
+  }
+  /* 弹窗里隐藏公式锚点/编号，避免干扰阅读 */
+  .ref-hover-popup .formula-anchor,
+  .ref-hover-popup .formula-number {
+    display: none;
+  }
+  /* 弹窗内压缩公式块的上下间距 */
+  .ref-hover-popup .katex-display {
+    margin: 0;
+  }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     // 【已移除】公式编号和锚点的添加逻辑已移至 EJS 后端渲染。
     
-    // 高亮函数（处理公式和引用），此功能保留在前端
+    // 新增：寻找最近的可滚动祖先（纵向）
+    function getScrollableAncestor(el) {
+      let node = el && el.parentElement;
+      while (node && node !== document.body && node !== document.documentElement) {
+        const style = window.getComputedStyle(node);
+        const overflowY = style.overflowY;
+        if ((overflowY === 'auto' || overflowY === 'scroll') && node.scrollHeight > node.clientHeight) {
+          return node;
+        }
+        node = node.parentElement;
+      }
+      return null;
+    }
+
+    // 更新：滚动目标元素到视口（或容器）正中
+    function smoothScrollToCenter(el) {
+      if (!el) return;
+      // 优先使用原生 scrollIntoView，能自动滚动最近可滚动容器
+      try {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+        return;
+      } catch (e) {
+        // ignore, 使用回退
+      }
+
+      const container = getScrollableAncestor(el);
+      if (container) {
+        const elRect = el.getBoundingClientRect();
+        const cRect = container.getBoundingClientRect();
+        const current = container.scrollTop;
+        const target = current + (elRect.top - cRect.top) - Math.max(0, (container.clientHeight - elRect.height) / 2);
+        container.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+      } else {
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const doc = document.documentElement;
+        const body = document.body;
+        const scrollTop = window.pageYOffset || doc.scrollTop || body.scrollTop || 0;
+        const target = scrollTop + rect.top - Math.max(0, (vh - rect.height) / 2);
+        const maxScroll = Math.max(0, (Math.max(doc.scrollHeight, body.scrollHeight) - vh));
+        window.scrollTo({ top: Math.min(Math.max(0, target), maxScroll), behavior: 'smooth' });
+      }
+    }
+
+    // 高亮函数（处理公式和引用）
     function highlightReference(hash) {
       // 清除之前的高亮
       const allCitations = document.querySelectorAll('.bibtexentry');
@@ -264,7 +323,8 @@
           if (citationElement) {
             citationElement.style.backgroundColor = '#e6e6e6';
             citationElement.style.animation = 'highlight-blink 2s ease-in-out 3';
-            citationElement.scrollIntoView({ behavior: 'smooth' });
+            // 原：citationElement.scrollIntoView({ behavior: 'smooth' });
+            smoothScrollToCenter(citationElement);
           }
         }
       }
@@ -279,7 +339,8 @@
             formulaElement.style.backgroundColor = '#e6e6e6';
             formulaElement.style.paddingTop = '0.6em';
             formulaElement.style.animation = 'highlight-blink 2s ease-in-out 3';
-            formulaScrollElement.scrollIntoView({ behavior: 'smooth' });
+            // 原：formulaScrollElement.scrollIntoView({ behavior: 'smooth' });
+            smoothScrollToCenter(formulaScrollElement);
           }
         }
       }
@@ -288,7 +349,8 @@
         try {
             const targetElement = document.querySelector(targetHash);
             if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
+                // 原：targetElement.scrollIntoView({ behavior: 'smooth' });
+                smoothScrollToCenter(targetElement);
             }
         } catch (e) {
             console.error('Invalid selector for scroll:', targetHash);
@@ -360,13 +422,28 @@
       return clone.innerHTML;
     }
 
-    // 基于链接元素定位（固定在链接下方，必要时放到上方），并限制在视口内
+    /* 新增：根据 #formulaN 生成弹窗 HTML */
+    function getFormulaHtmlByHash(hash) {
+      if (!hash || !hash.startsWith('#formula')) return null;
+      const target = document.querySelector(hash);
+      if (!target) return null;
+      const container = target.closest('.katex-block, .katex-display');
+      if (!container) return null;
+      const clone = container.cloneNode(true);
+      // 弹窗中隐藏锚点与编号
+      const anchor = clone.querySelector('.formula-anchor');
+      if (anchor) anchor.remove();
+      const num = clone.querySelector('.formula-number');
+      if (num) num.remove();
+      return clone.outerHTML;
+    }
+
+    /* 新增：根据链接位置定位弹窗，限制在视口内 */
     function positionPopupAtLink(link) {
       const margin = 8;
       refPopup.style.visibility = 'hidden';
       refPopup.style.display = 'block';
 
-      // 使用 getClientRects 获取链接最后一行的矩形，适配换行链接
       const rects = link.getClientRects();
       const linkRect = rects.length ? rects[rects.length - 1] : link.getBoundingClientRect();
       const popupRect = refPopup.getBoundingClientRect();
@@ -376,20 +453,15 @@
       let left = linkRect.left;
       let top = linkRect.bottom + margin; // 默认下方
 
-      // 右侧越界则左移，保证不超出
       if (left + popupRect.width > vw - margin) {
         left = Math.max(margin, vw - popupRect.width - margin);
       }
-      // 下方放不下则放到上方
       if (top + popupRect.height > vh - margin) {
-        top = linkRect.top - popupRect.height - margin;
+        top = linkRect.top - popupRect.height - margin; // 放到上方
       }
-      // 左侧越界兜底
       if (left < margin) left = margin;
-      // 上侧越界兜底（仍放在下方）
       if (top < margin) top = Math.min(vh - popupRect.height - margin, linkRect.bottom + margin);
 
-      // fixed 定位：不要加 scroll 偏移
       refPopup.style.left = left + 'px';
       refPopup.style.top = top + 'px';
       refPopup.style.visibility = '';
@@ -397,9 +469,19 @@
 
     function showRefPopup(link) {
       const href = link.getAttribute('href');
-      const html = getCitationHtmlByHash(href);
+      let html = null;
+      let isFormula = false;
+
+      if (href.startsWith('#ref')) {
+        html = getCitationHtmlByHash(href);
+      } else if (href.startsWith('#formula')) {
+        html = getFormulaHtmlByHash(href);
+        isFormula = true;
+      }
+
       if (!html) return;
       clearHideTimer();
+      refPopup.classList.toggle('is-formula', isFormula);
       refPopup.innerHTML = html;
       positionPopupAtLink(link);
       refPopup.style.display = 'block';
@@ -422,16 +504,46 @@
       scheduleHide();
     });
 
-    // 绑定到具体的 #refN 链接
-    const refLinks = document.querySelectorAll('.article a[href^="#ref"]');
+    // 新增：过滤仅保留“正文中作者写的”引用/公式链接
+    function isUserAuthoredRefLink(link) {
+      const href = link.getAttribute('href') || '';
+      if (!href.startsWith('#ref')) return false;
+      // 排除引用列表里的编号链接与其容器
+      if (link.closest('.citation-number')) return false;
+      if (link.closest('.bibtexentry')) return false;
+      return true;
+    }
+    function isUserAuthoredFormulaLink(link) {
+      const href = link.getAttribute('href') || '';
+      if (!href.startsWith('#formula')) return false;
+      // 排除自动生成在公式后的锚点与其容器
+      if (link.classList.contains('formula-anchor')) return false;
+      if (link.closest('.katex-display') || link.closest('.katex-block')) return false;
+      return true;
+    }
+
+    // 替换：绑定到具体的 #refN 链接（排除自动生成）
+    const refLinks = Array.from(document.querySelectorAll('.article a[href^="#ref"]')).filter(isUserAuthoredRefLink);
     refLinks.forEach(link => {
       link.addEventListener('mouseenter', () => {
         currentRefLink = link;
-        hoverOnPopup = false; // 从链接进入
+        hoverOnPopup = false;
         showRefPopup(link);
       });
       link.addEventListener('mouseleave', () => {
-        // 移向卡片时不立刻隐藏，由定时器判断
+        scheduleHide();
+      });
+    });
+
+    // 替换：绑定到具体的 #formulaN 链接（排除自动生成）
+    const formulaLinks = Array.from(document.querySelectorAll('.article a[href^="#formula"]')).filter(isUserAuthoredFormulaLink);
+    formulaLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        currentRefLink = link;
+        hoverOnPopup = false;
+        showRefPopup(link);
+      });
+      link.addEventListener('mouseleave', () => {
         scheduleHide();
       });
     });

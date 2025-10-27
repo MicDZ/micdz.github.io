@@ -230,6 +230,9 @@
               <div>
                 <p>
                   
+                    [<a href="#" class="abstract-link" data-abstract="The rapid advancement of Multimodal Large Language Models (MLLMs) has ignited discussions regarding their potential to surpass human performance in multimodal tasks. In response, we introduce MANBench (Multimodal Ability Norms Benchmark), a bilingual benchmark (English and Chinese) comprising 1,314 questions across nine tasks, spanning knowledge-based and non-knowledge-based domains. MANBench emphasizes intuitive reasoning, seamless cross-modal integration, and real-world complexity, providing a rigorous evaluation framework. Through extensive human experiments involving diverse participants, we compared human performance against state-of-the-art MLLMs. The results indicate that while MLLMs excel in tasks like Knowledge and Text-Image Understanding, they struggle with deeper cross-modal reasoning tasks such as Transmorphic Understanding, Image Consistency, and Multi-image Understanding. Moreover, both humans and MLLMs face challenges in highly complex tasks like Puzzles and Spatial Imagination. MANBench highlights the strengths and limitations of MLLMs, revealing that even advanced models fall short of achieving human-level performance across many domains. We hope MANBench will inspire efforts to bridge the gap between MLLMs and human multimodal capabilities.">Abstract</a>]
+                  
+                  
                     [<a target="_blank" rel="noopener" href="https://github.com/micdz/MANBench">GitHub</a>]
                   
                   
@@ -241,6 +244,7 @@
                   
                     [<a target="_blank" rel="noopener" href="https://huggingface.co/datasets/MANBench/MANBench">Hugging Face</a>]
                   
+
                 </p>
               </div>
   
@@ -257,6 +261,126 @@
          
        </div>
     
+        <!-- Abstract 弹出层样式与逻辑（index 页面自包含，不依赖 post.ejs） -->
+        <style>
+          .ref-hover-popup {
+            position: fixed;
+            display: none;
+            pointer-events: auto;
+            z-index: 10000;
+            background: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            padding: 8px 10px;
+            max-width: 780px;
+            line-height: 1.4;
+            font-size: 0.9em;
+            color: #333;
+            border-radius: 4px;
+            white-space: pre-wrap;
+          }
+        </style>
+        <script>
+          (function () {
+            const popup = document.createElement('div');
+            popup.className = 'ref-hover-popup';
+            document.body.appendChild(popup);
+
+            const isTouch = (('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches);
+
+            let currentLink = null;
+            let hoverOnPopup = false;
+            let hideTimer = null;
+
+            function clearHideTimer() {
+              if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+            }
+            function scheduleHide() {
+              clearHideTimer();
+              hideTimer = setTimeout(() => { if (!hoverOnPopup) hide(); }, 120);
+            }
+
+            // 仅在非触摸设备启用 hover 留驻
+            popup.addEventListener('mouseenter', () => { if (!isTouch) { hoverOnPopup = true; clearHideTimer(); }});
+            popup.addEventListener('mouseleave', () => { if (!isTouch) { hoverOnPopup = false; scheduleHide(); }});
+
+            function positionAt(link) {
+              const margin = 8;
+              popup.style.visibility = 'hidden';
+              popup.style.display = 'block';
+
+              const rects = link.getClientRects();
+              const linkRect = rects.length ? rects[rects.length - 1] : link.getBoundingClientRect();
+              const popupRect = popup.getBoundingClientRect();
+              const vw = document.documentElement.clientWidth;
+              const vh = document.documentElement.clientHeight;
+
+              let left = linkRect.left;
+              let top = linkRect.bottom + margin;
+
+              if (left + popupRect.width > vw - margin) left = Math.max(margin, vw - popupRect.width - margin);
+              if (top + popupRect.height > vh - margin) top = linkRect.top - popupRect.height - margin;
+              if (left < margin) left = margin;
+              if (top < margin) top = Math.min(vh - popupRect.height - margin, linkRect.bottom + margin);
+
+              popup.style.left = left + 'px';
+              popup.style.top = top + 'px';
+              popup.style.visibility = '';
+            }
+
+            function show(link) {
+              const text = (link.dataset.abstract || '').trim();
+              if (!text) return;
+              clearHideTimer();
+              popup.textContent = text; // 防注入
+              positionAt(link);
+              popup.style.display = 'block';
+              currentLink = link;
+            }
+
+            function hide() {
+              popup.style.display = 'none';
+              popup.textContent = '';
+              clearHideTimer();
+              currentLink = null;
+            }
+
+            function bind(link) {
+              // 非触摸：支持 hover 显示、移出延迟隐藏
+              if (!isTouch) {
+                link.addEventListener('mouseenter', () => { hoverOnPopup = false; show(link); });
+                link.addEventListener('mouseleave', scheduleHide);
+                link.addEventListener('focus', () => show(link));
+                link.addEventListener('blur', scheduleHide);
+              }
+              // 触摸与桌面共用：点击切换开关
+              link.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (popup.style.display === 'block' && currentLink === link) {
+                  hide();
+                } else {
+                  show(link);
+                }
+              });
+            }
+
+            document.querySelectorAll('.abstract-link').forEach(bind);
+
+            // 点击空白处关闭（避免点链接自身或弹窗内误关闭）
+            document.addEventListener('click', (e) => {
+              if (popup.style.display !== 'block') return;
+              const t = e.target;
+              if (t.closest('.ref-hover-popup')) return;
+              if (t.closest('.abstract-link')) return;
+              hide();
+            });
+
+            // 滚动关闭：仅桌面启用，避免移动端点击后立刻收起
+            if (!isTouch) window.addEventListener('scroll', hide, { passive: true });
+            window.addEventListener('resize', hide);
+            window.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(); });
+          })();
+        </script>
         <h2>Research &amp; Visiting</h2>
       <div class="scrollableDiv">
         <div class="article-list mb-3">
