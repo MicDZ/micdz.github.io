@@ -16,13 +16,13 @@
 <link rel="stylesheet" href="/css/normalize.css">
 
   <style>
+  /* stylelint-disable */
   a:not(.icon):not(.clustrmaps-map-control):not(.formula-anchor) {
-    text-decoration-color: #0FA0CE;
-    background-image: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 50%,
-      #0FA0CE 50%
-    );
+    text-decoration-color: #000;
+  }
+  a:hover:not(.icon):not(.clustrmaps-map-control):not(.formula-anchor),
+  a:focus:not(.icon):not(.clustrmaps-map-control):not(.formula-anchor) {
+    text-decoration-color: #111;
   }
   blockquote {
     border-left: 8px solid #0FA0CE;
@@ -30,6 +30,7 @@
   .nanobar .bar {
     background: #0FA0CE;
   }
+  /* stylelint-enable */
 </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="/img/h.jpeg">
@@ -891,9 +892,9 @@
     
         
       </div>
-      <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 20px; margin-top: 10px;">
+  <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 20px; margin-top: 10px;">
 
-      <a id="toggleBtn" style="text-align: right; display: block; text-decoration: underline;">Click to view all</a>
+  <a id="toggleBtn" class="toggle-link">Click to view all</a>
       </div>
            <script>
     const btn = document.getElementById('toggleBtn');
@@ -942,9 +943,9 @@
       <p class="line"> Academic Excellence Scholarship<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b class="description"><i>CNY 800</i></b></p>  
   </div>
 </div>
-      <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 20px;">
+  <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 20px;">
 
-      <a id="toggleHonorsBtn" style="text-align: right; display: block; text-decoration: underline;">Click to view all</a>
+  <a id="toggleHonorsBtn" class="toggle-link">Click to view all</a>
       </div>
       <script>
           const honorsBtn = document.getElementById('toggleHonorsBtn');

@@ -16,13 +16,13 @@
 <link rel="stylesheet" href="/css/normalize.css">
 
   <style>
+  /* stylelint-disable */
   a:not(.icon):not(.clustrmaps-map-control):not(.formula-anchor) {
-    text-decoration-color: #0FA0CE;
-    background-image: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 50%,
-      #0FA0CE 50%
-    );
+    text-decoration-color: #000;
+  }
+  a:hover:not(.icon):not(.clustrmaps-map-control):not(.formula-anchor),
+  a:focus:not(.icon):not(.clustrmaps-map-control):not(.formula-anchor) {
+    text-decoration-color: #111;
   }
   blockquote {
     border-left: 8px solid #0FA0CE;
@@ -30,6 +30,7 @@
   .nanobar .bar {
     background: #0FA0CE;
   }
+  /* stylelint-enable */
 </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="/img/h.jpeg">
