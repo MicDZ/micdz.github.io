@@ -291,7 +291,7 @@
   }
   /* Links
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
-  a:not(.icon):not(.clustrmaps-map-control) {
+  a:not(.icon):not(.clustrmaps-map-control):not(.formula-anchor) {
       font-family: 'Times New Roman','Noto Serif SC', sans-serif;
       color: inherit;
       text-decoration: underline;
@@ -303,21 +303,14 @@
                   text-decoration-thickness .2s ease-in-out;
     }
   
-    a:hover:not(.icon),
-    a:focus:not(.icon) {
+    a:hover:not(.icon):not(.formula-anchor),
+    a:focus:not(.icon):not(.formula-anchor) {
       color: #111;
       text-decoration-color: #111;
       text-decoration-thickness: 2px;
     }
-
-  a.formula-number {
-    text-decoration: none;
-    text-decoration-color: transparent;
-  }
-
-  a.formula-number:hover,
-  a.formula-number:focus {
-    color: inherit;
+  
+  a.formula-anchor {
     text-decoration: none;
   }
   
