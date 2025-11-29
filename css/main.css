@@ -200,7 +200,7 @@
     /* currently ems cause chrome bug misinterpreting rems on body element */
     line-height: 1.6;
     font-weight: 400;
-    font-family: "Inter", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Times New Roman","Noto Serif SC", serif;
     color: #222;
   }
   
@@ -661,5 +661,31 @@
   overflow-y: hidden;
   padding-top: 0.6em;
 }
+figure.image-container {
+    margin: 1.5em 0;
+    text-align: center;
+    display: block;
+}
 
+figure.image-container img {
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
+}
 
+/* 说明文字区域 */
+figcaption.image-caption {
+    margin-top: 0.5em;
+    font-size: 0.9em;
+    color: #666;
+    font-family: 'Times New Roman', 'Noto Serif SC', serif;
+    line-height: 1.4;
+}
+
+/* "Table X:" 的前缀样式 */
+figcaption.image-caption .caption-prefix {
+    font-weight: bold;
+    color: #333;
+    margin-right: 5px;
+    font-family: "Times New Roman", "Noto Serif SC", serif;
+}

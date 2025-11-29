@@ -119,14 +119,15 @@
           <div>
             <!-- <div class="trans"> -->
               
-
 <title>Common Knowledge in Pose Estimation</title>
 
 <h1>Common Knowledge in Pose Estimation</h1>
 
 <div class="right">
   
-<a class="classtest-link" href="/tags/PNP/" rel="tag">PNP</a> — <p class="info">      Mar. 5, 2024</p>
+<a class="classtest-link" href="/tags/PNP/" rel="tag">PNP</a> —
+ <p class="info">     
+   Mar. 5, 2024</p>
   
 </div>
 
@@ -345,8 +346,8 @@ For example, <span class="katex"><span class="katex-mathml"><math xmlns="http://
 <p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi mathvariant="bold-italic">P</mi><mi>g</mi></msub><mo>=</mo><msub><mi mathvariant="bold-italic">T</mi><mrow><mi>g</mi><mi>c</mi></mrow></msub><msub><mi mathvariant="bold-italic">P</mi><mi>c</mi></msub></mrow><annotation encoding="application/x-tex">\boldsymbol P_g=\boldsymbol T_{gc}\boldsymbol P_c
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.972218em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">P</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.972218em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">T</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span><span class="mord mathnormal mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">P</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><a class="formula-anchor" href="#formula16" id="formula16"><span class="formula-number">(16)</span></a></span></span></span></p>
 <p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="bold-italic">T</mi><mrow><mi>g</mi><mi>c</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\boldsymbol T_{gc}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.972218em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">T</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span><span class="mord mathnormal mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> can also be decomposed into a rotation matrix and a translation vector. Let’s consider how to determine the rotation matrix and translation vector.</p>
-<p>We start with a simpler problem. Assume that in the mechanical design, the camera and the gun barrel have a pitch angle rotation <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span></span></span></span> and a translation <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span></span></span></span> along the z-axis. <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span></span></span></span> are defined in the turret coordinate system, and in the figure below, they should be negative values.<br>
-<img src="https://s2.loli.net/2024/04/01/dX8ix4KIwV9kjnu.jpg" alt="https://s2.loli.net/2024/04/01/dX8ix4KIwV9kjnu.jpg"></p>
+<p>We start with a simpler problem. Assume that in the mechanical design, the camera and the gun barrel have a pitch angle rotation <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span></span></span></span> and a translation <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span></span></span></span> along the z-axis. <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathnormal">t</span></span></span></span> are defined in the turret coordinate system, and in <a href="#Figure1-camera-to-turret-coordinate-system-simple-model">Figure 1</a>, they should be negative values.<br>
+<figure class="image-container" id="camera-to-turret-coordinate-system-simple-model"><img src="/img/post/posesolver/demo.svg" alt="Camera to Turret Coordinate System Simple Model"><figcaption class="image-caption"><a class="formula-anchor" href="#Figure1-camera-to-turret-coordinate-system-simple-model" id="Figure1-camera-to-turret-coordinate-system-simple-model"></a><span class="caption-prefix">Figure 1:</span> Camera to Turret Coordinate System Simple Model</figcaption></figure></p>
 <p>We now need to determine the transformation matrix for this process. An intuitive method is to assume a vector <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mtext>&nbsp;</mtext><mn>1</mn><mtext>&nbsp;</mtext><mn>0</mn><msup><mo stretchy="false">]</mo><mtext>T</mtext></msup></mrow><annotation encoding="application/x-tex">[1\ 1\ 0]^\text T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0913309999999998em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mspace">&nbsp;</span><span class="mord">1</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">T</span></span></span></span></span></span></span></span></span></span></span></span> in the camera coordinate system. According to our earlier definition, this vector points directly forward from the camera. To represent the same vector in the turret coordinate system, we need to rotate this vector downward by the pitch angle. The rotation matrix is given by Rodrigues’ formula, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">R</mi><mo>=</mo><msub><mi mathvariant="bold-italic">R</mi><mi>y</mi></msub><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\boldsymbol R=\boldsymbol R_y(\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68611em;vertical-align:0em;"></span><span class="mord"><span class="mord boldsymbol" style="margin-right:0.00421em;">R</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.00421em;">R</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>.</p>
 <p>To represent the point <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mtext>&nbsp;</mtext><mn>0</mn><mtext>&nbsp;</mtext><mn>0</mn><msup><mo stretchy="false">]</mo><mtext>T</mtext></msup></mrow><annotation encoding="application/x-tex">[1\ 0\ 0]^\text T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0913309999999998em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">T</span></span></span></span></span></span></span></span></span></span></span></span> in the camera coordinate system, we also need to translate it. The translation vector is the vector from the turret coordinate system origin to the camera coordinate system origin. Since we rotate first and then translate, this vector needs to be expressed in the turret coordinate system. The translation vector is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mtext>&nbsp;</mtext><mn>0</mn><mtext>&nbsp;</mtext><mi>t</mi><msup><mo stretchy="false">]</mo><mtext>T</mtext></msup></mrow><annotation encoding="application/x-tex">[0\ 0\ t]^\text T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0913309999999998em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord mathnormal">t</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">T</span></span></span></span></span></span></span></span></span></span></span></span>.</p>
 <p>Combining these two steps, the representation of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mtext>&nbsp;</mtext><mn>0</mn><mtext>&nbsp;</mtext><mn>0</mn><msup><mo stretchy="false">]</mo><mtext>T</mtext></msup></mrow><annotation encoding="application/x-tex">[1\ 0\ 0]^\text T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0913309999999998em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">T</span></span></span></span></span></span></span></span></span></span></span></span> in the camera coordinate system in the turret coordinate system is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>y</mi></msub><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo stretchy="false">[</mo><mn>1</mn><mtext>&nbsp;</mtext><mn>0</mn><mtext>&nbsp;</mtext><mn>0</mn><msup><mo stretchy="false">]</mo><mtext>T</mtext></msup><mo>+</mo><mo stretchy="false">[</mo><mn>0</mn><mtext>&nbsp;</mtext><mn>0</mn><mtext>&nbsp;</mtext><mi>t</mi><msup><mo stretchy="false">]</mo><mtext>T</mtext></msup></mrow><annotation encoding="application/x-tex">R_y(\theta)[1\ 0\ 0]^\text T+[0\ 0\ t]^\text T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1274389999999999em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.00773em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mopen">[</span><span class="mord">1</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">T</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.0913309999999998em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord mathnormal">t</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">T</span></span></span></span></span></span></span></span></span></span></span></span>.</p>
@@ -448,6 +449,23 @@ v_0\\
   .ref-hover-popup.is-formula {
     max-width: min(90vw, 900px);
     overflow-x: auto;
+  }
+  .ref-hover-popup.is-figure {
+    max-width: min(60vw, 320px);
+    padding: 6px;
+  }
+  .ref-hover-popup.is-figure figure {
+    margin: 0;
+  }
+  .ref-hover-popup.is-figure img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  .ref-hover-popup.is-figure .image-caption {
+    margin-top: 0.4em;
+    font-size: 0.85em;
+    color: #444;
   }
   /* 弹窗里隐藏公式锚点/编号，避免干扰阅读 */
   .ref-hover-popup .formula-anchor,
@@ -649,6 +667,19 @@ v_0\\
       return clone.outerHTML;
     }
 
+    /* 新增：根据 #FigureN 生成图片预览 HTML */
+    function getFigureHtmlByHash(hash) {
+      if (!hash || !hash.startsWith('#Figure')) return null;
+      const target = document.querySelector(hash);
+      if (!target) return null;
+      const figure = target.closest('figure');
+      if (!figure) return null;
+      const clone = figure.cloneNode(true);
+      const anchor = clone.querySelector('.formula-anchor');
+      if (anchor) anchor.remove();
+      return clone.outerHTML;
+    }
+
     /* 新增：根据链接位置定位弹窗，限制在视口内 */
     function positionPopupAtLink(link) {
       const margin = 8;
@@ -682,17 +713,22 @@ v_0\\
       const href = link.getAttribute('href');
       let html = null;
       let isFormula = false;
+      let isFigure = false;
 
       if (href.startsWith('#ref')) {
         html = getCitationHtmlByHash(href);
       } else if (href.startsWith('#formula')) {
         html = getFormulaHtmlByHash(href);
         isFormula = true;
+      } else if (href.startsWith('#Figure')) {
+        html = getFigureHtmlByHash(href);
+        isFigure = true;
       }
 
       if (!html) return;
       clearHideTimer();
       refPopup.classList.toggle('is-formula', isFormula);
+      refPopup.classList.toggle('is-figure', isFigure);
       refPopup.innerHTML = html;
       positionPopupAtLink(link);
       refPopup.style.display = 'block';
@@ -732,6 +768,13 @@ v_0\\
       if (link.closest('.katex-display') || link.closest('.katex-block')) return false;
       return true;
     }
+    function isUserAuthoredFigureLink(link) {
+      const href = link.getAttribute('href') || '';
+      if (!href.startsWith('#Figure')) return false;
+      if (link.classList.contains('formula-anchor')) return false;
+      if (link.closest('figure') || link.closest('figcaption')) return false;
+      return true;
+    }
 
     // 替换：绑定到具体的 #refN 链接（排除自动生成）
     const refLinks = Array.from(document.querySelectorAll('.article a[href^="#ref"]')).filter(isUserAuthoredRefLink);
@@ -749,6 +792,19 @@ v_0\\
     // 替换：绑定到具体的 #formulaN 链接（排除自动生成）
     const formulaLinks = Array.from(document.querySelectorAll('.article a[href^="#formula"]')).filter(isUserAuthoredFormulaLink);
     formulaLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        currentRefLink = link;
+        hoverOnPopup = false;
+        showRefPopup(link);
+      });
+      link.addEventListener('mouseleave', () => {
+        scheduleHide();
+      });
+    });
+
+    // 新增：绑定到具体的 #FigureN 链接（排除自动生成）
+    const figureLinks = Array.from(document.querySelectorAll('.article a[href^="#Figure"]')).filter(isUserAuthoredFigureLink);
+    figureLinks.forEach(link => {
       link.addEventListener('mouseenter', () => {
         currentRefLink = link;
         hoverOnPopup = false;

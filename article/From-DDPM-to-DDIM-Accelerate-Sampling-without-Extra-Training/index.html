@@ -119,14 +119,15 @@
           <div>
             <!-- <div class="trans"> -->
               
-
 <title>From DDPM to DDIM — Accelerate Sampling without Extra Training</title>
 
 <h1>From DDPM to DDIM — Accelerate Sampling without Extra Training</h1>
 
 <div class="right">
   
-<a class="classtest-link" href="/tags/DDIM/" rel="tag">DDIM</a>, <a class="classtest-link" href="/tags/DDPM/" rel="tag">DDPM</a>, <a class="classtest-link" href="/tags/Diffusion-Models/" rel="tag">Diffusion Models</a>, <a class="classtest-link" href="/tags/Generative-Models/" rel="tag">Generative Models</a> — <p class="info">      Oct. 28, 2025</p>
+<a class="classtest-link" href="/tags/DDIM/" rel="tag">DDIM</a>,&nbsp;<a class="classtest-link" href="/tags/DDPM/" rel="tag">DDPM</a>,&nbsp;<a class="classtest-link" href="/tags/Diffusion-Models/" rel="tag">Diffusion Models</a>,&nbsp;<a class="classtest-link" href="/tags/Generative-Models/" rel="tag">Generative Models</a> —
+ <p class="info">     
+   Oct. 28, 2025</p>
   
 </div>
 
@@ -1071,6 +1072,23 @@ h400000v40h-400000z"></path></svg></span></span></span><span class="vlist-s">​
     max-width: min(90vw, 900px);
     overflow-x: auto;
   }
+  .ref-hover-popup.is-figure {
+    max-width: min(60vw, 320px);
+    padding: 6px;
+  }
+  .ref-hover-popup.is-figure figure {
+    margin: 0;
+  }
+  .ref-hover-popup.is-figure img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  .ref-hover-popup.is-figure .image-caption {
+    margin-top: 0.4em;
+    font-size: 0.85em;
+    color: #444;
+  }
   /* 弹窗里隐藏公式锚点/编号，避免干扰阅读 */
   .ref-hover-popup .formula-anchor,
   .ref-hover-popup .formula-number {
@@ -1271,6 +1289,19 @@ h400000v40h-400000z"></path></svg></span></span></span><span class="vlist-s">​
       return clone.outerHTML;
     }
 
+    /* 新增：根据 #FigureN 生成图片预览 HTML */
+    function getFigureHtmlByHash(hash) {
+      if (!hash || !hash.startsWith('#Figure')) return null;
+      const target = document.querySelector(hash);
+      if (!target) return null;
+      const figure = target.closest('figure');
+      if (!figure) return null;
+      const clone = figure.cloneNode(true);
+      const anchor = clone.querySelector('.formula-anchor');
+      if (anchor) anchor.remove();
+      return clone.outerHTML;
+    }
+
     /* 新增：根据链接位置定位弹窗，限制在视口内 */
     function positionPopupAtLink(link) {
       const margin = 8;
@@ -1304,17 +1335,22 @@ h400000v40h-400000z"></path></svg></span></span></span><span class="vlist-s">​
       const href = link.getAttribute('href');
       let html = null;
       let isFormula = false;
+      let isFigure = false;
 
       if (href.startsWith('#ref')) {
         html = getCitationHtmlByHash(href);
       } else if (href.startsWith('#formula')) {
         html = getFormulaHtmlByHash(href);
         isFormula = true;
+      } else if (href.startsWith('#Figure')) {
+        html = getFigureHtmlByHash(href);
+        isFigure = true;
       }
 
       if (!html) return;
       clearHideTimer();
       refPopup.classList.toggle('is-formula', isFormula);
+      refPopup.classList.toggle('is-figure', isFigure);
       refPopup.innerHTML = html;
       positionPopupAtLink(link);
       refPopup.style.display = 'block';
@@ -1354,6 +1390,13 @@ h400000v40h-400000z"></path></svg></span></span></span><span class="vlist-s">​
       if (link.closest('.katex-display') || link.closest('.katex-block')) return false;
       return true;
     }
+    function isUserAuthoredFigureLink(link) {
+      const href = link.getAttribute('href') || '';
+      if (!href.startsWith('#Figure')) return false;
+      if (link.classList.contains('formula-anchor')) return false;
+      if (link.closest('figure') || link.closest('figcaption')) return false;
+      return true;
+    }
 
     // 替换：绑定到具体的 #refN 链接（排除自动生成）
     const refLinks = Array.from(document.querySelectorAll('.article a[href^="#ref"]')).filter(isUserAuthoredRefLink);
@@ -1371,6 +1414,19 @@ h400000v40h-400000z"></path></svg></span></span></span><span class="vlist-s">​
     // 替换：绑定到具体的 #formulaN 链接（排除自动生成）
     const formulaLinks = Array.from(document.querySelectorAll('.article a[href^="#formula"]')).filter(isUserAuthoredFormulaLink);
     formulaLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        currentRefLink = link;
+        hoverOnPopup = false;
+        showRefPopup(link);
+      });
+      link.addEventListener('mouseleave', () => {
+        scheduleHide();
+      });
+    });
+
+    // 新增：绑定到具体的 #FigureN 链接（排除自动生成）
+    const figureLinks = Array.from(document.querySelectorAll('.article a[href^="#Figure"]')).filter(isUserAuthoredFigureLink);
+    figureLinks.forEach(link => {
       link.addEventListener('mouseenter', () => {
         currentRefLink = link;
         hoverOnPopup = false;
