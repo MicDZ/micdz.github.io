@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Radar Imaging Simulator (10 Cycles)</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #050505;
+            color: #c9d1d9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            user-select: none; /* Prevent text selection during dragging */
+        }
+
+        /* Top Bar */
+        header {
+            background: #161b22;
+            padding: 15px 20px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 20;
+        }
+
+        h1 { margin: 0; font-size: 1.1rem; color: #58a6ff; }
+        .subtitle { font-size: 0.8rem; color: #8b949e; }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        button {
+            padding: 8px 20px;
+            cursor: pointer;
+            background: #21262d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        button:hover { background: #30363d; border-color: #8b949e; }
+        button.primary {
+            background: #1f6feb;
+            color: white;
+            border: 1px solid #1f6feb;
+        }
+        button.primary:hover { background: #388bfd; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Canvas Wrapper */
+        #canvas-wrapper {
+            flex: 1;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #050505;
+            cursor: crosshair; /* Default cursor for editing */
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #reconCanvas { z-index: 1; }
+        #simCanvas { z-index: 2; }
+
+        /* Legend Box */
+        .legend-box {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 30;
+            background: rgba(22, 27, 34, 0.9);
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 0.85rem;
+            pointer-events: none; 
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+            display: inline-block;
+        }
+        .dot-target { background: #ff7b72; box-shadow: 0 0 5px #ff7b72; }
+        .dot-sensor { background: #8b949e; border: 1px solid #fff; }
+        .dot-wave { background: rgba(63, 185, 80, 0.8); }
+
+        .instruction {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #30363d;
+            color: #8b949e;
+            font-size: 0.8rem;
+        }
+
+        /* Overlay Info (Bottom Left) */
+        .overlay-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 10;
+            pointer-events: none;
+            background: rgba(0,0,0,0.8);
+            padding: 12px;
+            border-radius: 4px;
+            border-left: 3px solid #1f6feb;
+            font-family: monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>Imaging System Simulator</h1>
+            <div class="subtitle">Interactive Setup & Multi-Cycle Integration (10 Cycles)</div>
+        </div>
+        
+        <div class="controls">
+            <button id="btn-scan" class="primary" onclick="startScan()">Start Scan (10 Cycles)</button>
+            <button id="btn-recon" onclick="startReconstruction()" disabled>Reconstruct Image</button>
+            <button onclick="resetToSetup()">Reset / Edit</button>
+        </div>
+    </header>
+
+    <div id="canvas-wrapper">
+        <canvas id="reconCanvas"></canvas>
+        <canvas id="simCanvas"></canvas>
+        
+        <div class="legend-box">
+            <div class="legend-item">
+                <span class="legend-dot dot-target"></span>
+                <span>Active Target</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot dot-sensor"></span>
+                <span>Passive Sensor</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-dot dot-wave"></span>
+                <span>Signal Wave</span>
+            </div>
+            <div class="instruction">
+                <strong>Edit Mode Controls:</strong><br>
+                • 🖱️ Drag to Move<br>
+                • 🖱️ Click Empty to Add<br>
+                • 🖱️ Right-Click to Delete
+            </div>
+        </div>
+
+        <div class="overlay-info" id="info-text">
+            Mode: SETUP<br>Place your targets, then click 'Start Scan'.
+        </div>
+    </div>
+
+    <script>
+        const simCanvas = document.getElementById('simCanvas');
+        const reconCanvas = document.getElementById('reconCanvas');
+        const simCtx = simCanvas.getContext('2d');
+        const reconCtx = reconCanvas.getContext('2d');
+        
+        const infoText = document.getElementById('info-text');
+        const btnRecon = document.getElementById('btn-recon');
+        const btnScan = document.getElementById('btn-scan');
+        const wrapper = document.getElementById('canvas-wrapper');
+
+        // --- Configuration ---
+        const SENSOR_COUNT = 256;
+        const WAVE_SPEED = 1;
+        
+        // --- MODIFIED: Changed to 10 Cycles ---
+        const TOTAL_CYCLES = 10; 
+        
+        const CYCLE_INTERVAL = 30; 
+        
+        let width, height, centerX, centerY;
+        let MAX_RADIUS = 300;
+
+        // --- State ---
+        let mode = 'SETUP'; // 'SETUP', 'ACQUISITION', 'RECONSTRUCTION'
+        let currentCycle = 0;
+        let frameCount = 0;
+        let animationId;
+        
+        // Interaction State
+        let isDragging = false;
+        let dragTargetIndex = -1;
+
+        // Reconstruction State
+        let playbackRadius = 0; 
+        let reconstructionDone = false;
+
+        // --- Entities ---
+        let targets = [];
+        let sensors = [];
+        let forwardWaves = []; 
+        
+        // --- Initialization ---
+        function init() {
+            resize();
+            createSensors();
+            // Default Targets
+            targets = [
+                { x: centerX - 60, y: centerY - 70 },
+                { x: centerX + 80, y: centerY - 30 },
+                { x: centerX - 30, y: centerY + 90 }
+            ];
+            
+            setupInteractions();
+            window.addEventListener('resize', () => {
+                resize();
+                createSensors();
+            });
+            loop();
+        }
+
+        function resize() {
+            width = simCanvas.parentElement.clientWidth;
+            height = simCanvas.parentElement.clientHeight;
+            simCanvas.width = width;
+            simCanvas.height = height;
+            reconCanvas.width = width;
+            reconCanvas.height = height;
+            centerX = width / 2;
+            centerY = height / 2;
+            MAX_RADIUS = Math.min(width, height) / 2 - 80; 
+        }
+
+        function createSensors() {
+            sensors = [];
+            for (let i = 0; i < SENSOR_COUNT; i++) {
+                const theta = (Math.PI * 2 * i) / SENSOR_COUNT;
+                sensors.push({
+                    x: centerX + MAX_RADIUS * Math.cos(theta),
+                    y: centerY + MAX_RADIUS * Math.sin(theta),
+                    angle: theta,
+                    recordings: [], 
+                    accumulatedSignal: 0,
+                    averageSignal: 0,
+                    lastHitFrame: -100
+                });
+            }
+        }
+
+        // --- Interaction Logic (Mouse) ---
+        function setupInteractions() {
+            // Helper to get mouse pos
+            function getMousePos(evt) {
+                const rect = simCanvas.getBoundingClientRect();
+                return {
+                    x: evt.clientX - rect.left,
+                    y: evt.clientY - rect.top
+                };
+            }
+
+            // 1. Mouse Down (Start Drag or Create)
+            simCanvas.addEventListener('mousedown', (e) => {
+                if (mode !== 'SETUP') return;
+                
+                if (e.button !== 0) return; // Only Left Click
+
+                const pos = getMousePos(e);
+                
+                // Hit test
+                const clickedIndex = targets.findIndex(t => {
+                    const dx = t.x - pos.x;
+                    const dy = t.y - pos.y;
+                    return Math.sqrt(dx*dx + dy*dy) < 15; // Hit radius
+                });
+
+                if (clickedIndex >= 0) {
+                    // Start Dragging
+                    isDragging = true;
+                    dragTargetIndex = clickedIndex;
+                    wrapper.style.cursor = 'grabbing';
+                } else {
+                    // Check if inside ring
+                    const distToCenter = Math.sqrt((pos.x - centerX)**2 + (pos.y - centerY)**2);
+                    if (distToCenter < MAX_RADIUS - 10) {
+                        // Create New
+                        targets.push({ x: pos.x, y: pos.y });
+                    }
+                }
+            });
+
+            // 2. Mouse Move (Dragging)
+            simCanvas.addEventListener('mousemove', (e) => {
+                if (mode !== 'SETUP') return;
+                const pos = getMousePos(e);
+
+                if (isDragging && dragTargetIndex >= 0) {
+                    targets[dragTargetIndex].x = pos.x;
+                    targets[dragTargetIndex].y = pos.y;
+                } else {
+                    // Hover Effect
+                    const hoverIndex = targets.findIndex(t => {
+                        const dx = t.x - pos.x;
+                        const dy = t.y - pos.y;
+                        return Math.sqrt(dx*dx + dy*dy) < 15;
+                    });
+                    wrapper.style.cursor = hoverIndex >= 0 ? 'grab' : 'crosshair';
+                }
+            });
+
+            // 3. Mouse Up (Stop Drag)
+            simCanvas.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    dragTargetIndex = -1;
+                    wrapper.style.cursor = 'crosshair';
+                }
+            });
+
+            // 4. Right Click (Delete)
+            simCanvas.addEventListener('contextmenu', (e) => {
+                if (mode !== 'SETUP') return;
+                e.preventDefault(); 
+
+                const pos = getMousePos(e);
+                const clickedIndex = targets.findIndex(t => {
+                    const dx = t.x - pos.x;
+                    const dy = t.y - pos.y;
+                    return Math.sqrt(dx*dx + dy*dy) < 15;
+                });
+
+                if (clickedIndex >= 0) {
+                    targets.splice(clickedIndex, 1);
+                }
+            });
+        }
+
+        // --- System States ---
+
+        function resetToSetup() {
+            mode = 'SETUP';
+            frameCount = 0;
+            currentCycle = 0;
+            forwardWaves = [];
+            playbackRadius = 0;
+            reconstructionDone = false;
+
+            // Clean Data but KEEP TARGETS
+            sensors.forEach(s => {
+                s.recordings = [];
+                s.accumulatedSignal = 0;
+                s.averageSignal = 0;
+                s.lastHitFrame = -100;
+            });
+
+            simCtx.clearRect(0, 0, width, height);
+            reconCtx.clearRect(0, 0, width, height);
+
+            btnScan.disabled = false;
+            btnRecon.disabled = true;
+            btnScan.innerText = "Start Scan (10 Cycles)";
+            infoText.innerHTML = "<strong>Mode: SETUP</strong><br>Edit targets, then click 'Start Scan'.";
+            wrapper.style.cursor = 'crosshair';
+        }
+
+        function startScan() {
+            if (targets.length === 0) {
+                alert("Please place at least one target!");
+                return;
+            }
+            mode = 'ACQUISITION';
+            btnScan.disabled = true;
+            wrapper.style.cursor = 'default';
+            infoText.innerHTML = "<strong>Mode: ACQUISITION</strong><br>Scanning...";
+        }
+
+        function spawnForwardPulse() {
+            if (currentCycle >= TOTAL_CYCLES) return;
+
+            currentCycle++;
+            targets.forEach(t => {
+                forwardWaves.push({
+                    x: t.x,
+                    y: t.y,
+                    r: 0,
+                    maxR: MAX_RADIUS * 2.2,
+                    active: true,
+                    cycleId: currentCycle
+                });
+            });
+        }
+
+        // --- Core Logic ---
+
+        function updateAcquisition() {
+            // Spawn Control
+            if (frameCount % CYCLE_INTERVAL === 0 && currentCycle < TOTAL_CYCLES) {
+                spawnForwardPulse();
+            }
+
+            // Finish Check
+            const allWavesDone = forwardWaves.length === 0;
+            if (currentCycle >= TOTAL_CYCLES && allWavesDone) {
+                btnRecon.disabled = false;
+                infoText.innerHTML = "<strong>ACQUISITION COMPLETE</strong><br>Data collected. Click 'Reconstruct Image'.";
+            } else {
+                infoText.innerHTML = `<strong>ACQUISITION RUNNING</strong><br>Cycle: ${currentCycle} / ${TOTAL_CYCLES}<br>Integrating sensor data...`;
+            }
+
+            // 1. Move Waves
+            forwardWaves.forEach(w => {
+                w.r += WAVE_SPEED;
+                if (w.r > w.maxR) w.active = false;
+            });
+
+            // 2. Sensor Physics
+            forwardWaves.forEach(w => {
+                if (!w.active) return;
+                
+                sensors.forEach(s => {
+                    const dx = s.x - w.x;
+                    const dy = s.y - w.y;
+                    const distToSensor = Math.sqrt(dx*dx + dy*dy);
+                    
+                    if (Math.abs(w.r - distToSensor) < WAVE_SPEED) {
+                        if (frameCount - s.lastHitFrame > 5) {
+                            s.lastHitFrame = frameCount;
+
+                            // Record Data
+                            const isNewData = !s.recordings.some(r => Math.abs(r - distToSensor) < 10);
+                            if (isNewData) {
+                                s.recordings.push(distToSensor);
+                            }
+
+                            // Accumulate Signal
+                            let amp = 100 / Math.sqrt(distToSensor);
+                            if(amp > 1) amp = 1;
+                            s.accumulatedSignal += amp;
+                        }
+                    }
+                });
+            });
+
+            // Update Average
+            if (currentCycle > 0) {
+                sensors.forEach(s => {
+                    s.averageSignal = s.accumulatedSignal / currentCycle;
+                });
+            }
+
+            forwardWaves = forwardWaves.filter(w => w.active);
+        }
+
+        function startReconstruction() {
+            mode = 'RECONSTRUCTION';
+            forwardWaves = []; 
+            playbackRadius = 0;
+            simCtx.clearRect(0, 0, width, height);
+            infoText.innerHTML = "<strong>Mode: BACK-PROPAGATION</strong><br>Reconstructing image...";
+            btnRecon.disabled = true;
+        }
+
+        function updateReconstruction() {
+            if (reconstructionDone) return;
+
+            playbackRadius += WAVE_SPEED;
+
+            if (playbackRadius > MAX_RADIUS * 2.2) {
+                reconstructionDone = true;
+                infoText.innerHTML = "<strong>RECONSTRUCTION COMPLETE</strong><br>Edit targets and Reset to try again.";
+                return;
+            }
+            
+            reconCtx.save();
+            reconCtx.globalCompositeOperation = 'lighter'; 
+            reconCtx.lineWidth = 2;
+            
+            sensors.forEach(s => {
+                s.recordings.forEach(recR => {
+                    if (Math.abs(playbackRadius - recR) < WAVE_SPEED) {
+                        reconCtx.beginPath();
+                        reconCtx.arc(s.x, s.y, playbackRadius, 0, Math.PI*2);
+                        reconCtx.strokeStyle = 'rgba(100, 200, 255, 0.05)'; 
+                        reconCtx.stroke();
+                    }
+                });
+            });
+            reconCtx.restore();
+        }
+
+        // --- Rendering ---
+
+        function draw() {
+            simCtx.clearRect(0, 0, width, height);
+            
+            drawSensors(simCtx);
+
+            if (mode === 'SETUP') {
+                drawTargets(simCtx);
+                // Draw valid area circle
+                simCtx.beginPath();
+                simCtx.arc(centerX, centerY, MAX_RADIUS, 0, Math.PI*2);
+                simCtx.strokeStyle = '#21262d';
+                simCtx.lineWidth = 1;
+                simCtx.stroke();
+            }
+            else if (mode === 'ACQUISITION') {
+                updateAcquisition();
+                drawForwardWaves(simCtx);
+                drawTargets(simCtx);
+            } 
+            else if (mode === 'RECONSTRUCTION') {
+                updateReconstruction();
+                drawBackPropagationWaves(simCtx);
+            }
+
+            frameCount++;
+            animationId = requestAnimationFrame(draw);
+        }
+
+        function drawSensors(ctx) {
+            // Ring
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, MAX_RADIUS, 0, Math.PI*2);
+            ctx.strokeStyle = '#30363d';
+            ctx.setLineDash([2, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            sensors.forEach(s => {
+                // Dot
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, 2, 0, Math.PI*2);
+                ctx.fillStyle = '#8b949e';
+                ctx.fill();
+
+                // Bar Chart
+                if (s.averageSignal > 0.01) {
+                    const barLength = 5 + s.averageSignal * 50; 
+                    const endX = s.x + Math.cos(s.angle) * barLength;
+                    const endY = s.y + Math.sin(s.angle) * barLength;
+
+                    ctx.beginPath();
+                    ctx.moveTo(s.x, s.y);
+                    ctx.lineTo(endX, endY);
+                    
+                    ctx.strokeStyle = `rgba(0, 255, 255, 0.8)`;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+            });
+        }
+
+        function drawTargets(ctx) {
+            targets.forEach((t, index) => {
+                ctx.beginPath();
+                ctx.arc(t.x, t.y, 6, 0, Math.PI*2); 
+                ctx.fillStyle = '#ff7b72'; 
+                ctx.fill();
+                
+                // Highlight if dragging
+                if (isDragging && dragTargetIndex === index) {
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                } else {
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#ff7b72';
+                }
+                ctx.shadowBlur = 0;
+            });
+        }
+
+        function drawForwardWaves(ctx) {
+            ctx.lineWidth = 1; 
+            forwardWaves.forEach(w => {
+                ctx.beginPath();
+                ctx.arc(w.x, w.y, w.r, 0, Math.PI*2);
+                const opacity = Math.max(0, 1 - w.r / (MAX_RADIUS*2.5)) * 0.5; 
+                ctx.strokeStyle = `rgba(63, 185, 80, ${opacity})`; 
+                ctx.stroke();
+            });
+        }
+
+        function drawBackPropagationWaves(ctx) {
+            if (reconstructionDone) return;
+
+            const opacity = Math.max(0, 1 - playbackRadius / (MAX_RADIUS*2.2)) * 0.3;
+            ctx.strokeStyle = `rgba(88, 166, 255, ${opacity})`; 
+            ctx.lineWidth = 1;
+            
+            for(let i=0; i<sensors.length; i+=4) {
+                const s = sensors[i];
+                if (s.recordings.length > 0) {
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, playbackRadius, 0, Math.PI*2);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        function loop() {
+            draw();
+        }
+
+        init();
+
+    </script>
+</body>
+</html>
