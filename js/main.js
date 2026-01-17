@@ -33,10 +33,6 @@
     const vw = document.documentElement.clientWidth;
     const vh = document.documentElement.clientHeight;
 
-    let left = linkRect.left;
-    let top = linkRect.bottom + margin;
-
-    if (left + popupRect.width > vw - margin) left = Math.max(margin, vw - popupRect.width - margin);
     if (top + popupRect.height > vh - margin) top = linkRect.top - popupRect.height - margin;
     if (left < margin) left = margin;
     if (top < margin) top = Math.min(vh - popupRect.height - margin, linkRect.bottom + margin);
@@ -202,4 +198,304 @@
       console.error('Decrypt avatar failed:', e);
     }
   })();
+})();
+
+// Weekly calendar from ICS
+(function () {
+  const container = document.getElementById('weeklyCalendar');
+  if (!container) return;
+
+  const icsUrl = (container.dataset.icsUrl || '/asset/calendar.ics').trim();
+  const startHour = 9;
+  const endHour = 18;
+  const slotHeight = 60;
+  const hours = endHour - startHour;
+  const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+  container.style.setProperty('--slot-height', slotHeight + 'px');
+  container.style.setProperty('--hours', hours);
+
+  function startOfWeek(date) {
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    const day = (d.getDay() + 6) % 7; // Monday = 0
+    d.setDate(d.getDate() - day);
+    return d;
+  }
+
+  function addDays(date, n) {
+    const d = new Date(date);
+    d.setDate(d.getDate() + n);
+    return d;
+  }
+
+  function formatDate(d) {
+    return `${d.getMonth() + 1}/${d.getDate()}`;
+  }
+
+  function pad(n) {
+    return String(n).padStart(2, '0');
+  }
+
+  function formatTime(d) {
+    return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  function unfoldIcs(text) {
+    const lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
+    const out = [];
+    for (const line of lines) {
+      if (!line) continue;
+      if ((line.startsWith(' ') || line.startsWith('\t')) && out.length) {
+        out[out.length - 1] += line.slice(1);
+      } else {
+        out.push(line);
+      }
+    }
+    return out;
+  }
+
+  function parseIcsDate(value) {
+    const v = value.trim();
+    if (/^\d{8}$/.test(v)) {
+      const y = Number(v.slice(0, 4));
+      const m = Number(v.slice(4, 6)) - 1;
+      const d = Number(v.slice(6, 8));
+      return new Date(y, m, d);
+    }
+    const match = v.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})?(Z)?$/);
+    if (!match) return null;
+    const y = Number(match[1]);
+    const m = Number(match[2]) - 1;
+    const d = Number(match[3]);
+    const hh = Number(match[4]);
+    const mm = Number(match[5]);
+    const ss = Number(match[6] || '0');
+    const isUtc = Boolean(match[7]);
+    if (isUtc) return new Date(Date.UTC(y, m, d, hh, mm, ss));
+    return new Date(y, m, d, hh, mm, ss);
+  }
+
+  function parseIcs(text) {
+    const lines = unfoldIcs(text);
+    const events = [];
+    let current = null;
+
+    for (const line of lines) {
+      if (line === 'BEGIN:VEVENT') {
+        current = {};
+        continue;
+      }
+      if (line === 'END:VEVENT') {
+        if (current && current.start) {
+          if (!current.end) current.end = new Date(current.start.getTime() + 60 * 60 * 1000);
+          events.push(current);
+        }
+        current = null;
+        continue;
+      }
+      if (!current) continue;
+      const idx = line.indexOf(':');
+      if (idx === -1) continue;
+      const namePart = line.slice(0, idx).toUpperCase();
+      const value = line.slice(idx + 1);
+      const name = namePart.split(';')[0];
+
+      if (name === 'DTSTART') current.start = parseIcsDate(value);
+      if (name === 'DTEND') current.end = parseIcsDate(value);
+      if (name === 'SUMMARY') current.summary = value;
+      if (name === 'DESCRIPTION') current.description = value;
+      if (name === 'LOCATION') current.location = value;
+    }
+    return events;
+  }
+
+  function buildCalendarShell(weekStart) {
+    container.innerHTML = '';
+
+    const header = document.createElement('div');
+    header.className = 'calendar-header';
+    const empty = document.createElement('div');
+    empty.className = 'time-header';
+    header.appendChild(empty);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    for (let i = 0; i < 7; i++) {
+      const day = addDays(weekStart, i);
+      day.setHours(0, 0, 0, 0);
+      const cell = document.createElement('div');
+      cell.className = 'day-header';
+      if (day.getTime() === today.getTime()) {
+        cell.classList.add('is-today');
+      }
+      cell.innerHTML = `${dayNames[i]}<span class="day-date">${formatDate(day)}</span>`;
+      header.appendChild(cell);
+    }
+    container.appendChild(header);
+
+    const body = document.createElement('div');
+    body.className = 'calendar-body';
+
+    const timeCol = document.createElement('div');
+    timeCol.className = 'time-col';
+    for (let h = startHour; h < endHour; h++) {
+      const slot = document.createElement('div');
+      slot.className = 'time-slot';
+      slot.textContent = `${pad(h)}:00`;
+      timeCol.appendChild(slot);
+    }
+    body.appendChild(timeCol);
+
+    const dayCols = [];
+    for (let i = 0; i < 7; i++) {
+      const col = document.createElement('div');
+      col.className = 'day-col';
+      col.dataset.day = String(i);
+      body.appendChild(col);
+      dayCols.push(col);
+    }
+
+    container.appendChild(body);
+    return dayCols;
+  }
+
+  function renderEvents(events, weekStart, dayCols) {
+    const weekEnd = addDays(weekStart, 7);
+    const visible = events.filter((ev) => ev.start && ev.end && ev.end > weekStart && ev.start < weekEnd);
+
+    for (const col of dayCols) col.innerHTML = '';
+
+    for (const ev of visible) {
+      for (let i = 0; i < 7; i++) {
+        const dayStart = addDays(weekStart, i);
+        dayStart.setHours(startHour, 0, 0, 0);
+        const dayEnd = addDays(weekStart, i);
+        dayEnd.setHours(endHour, 0, 0, 0);
+
+        if (ev.end <= dayStart || ev.start >= dayEnd) continue;
+
+        const segStart = new Date(Math.max(ev.start, dayStart));
+        const segEnd = new Date(Math.min(ev.end, dayEnd));
+        if (segEnd <= segStart) continue;
+
+        const minutesFromStart = (segStart - dayStart) / 60000;
+        const durationMinutes = (segEnd - segStart) / 60000;
+        const top = (minutesFromStart / 60) * slotHeight;
+        const height = Math.max(18, (durationMinutes / 60) * slotHeight);
+
+        const card = document.createElement('div');
+        card.className = 'calendar-event';
+        const title = document.createElement('div');
+        title.className = 'event-title';
+        title.textContent = ev.summary || 'Untitled';
+
+        const meta = document.createElement('div');
+        meta.className = 'event-meta';
+        meta.textContent = `${formatTime(segStart)}–${formatTime(segEnd)}`;
+
+        card.appendChild(title);
+        card.appendChild(meta);
+        if (ev.location) {
+          const loc = document.createElement('div');
+          loc.className = 'event-location';
+          loc.textContent = ev.location;
+          card.appendChild(loc);
+        }
+        card.style.top = `${top}px`;
+        card.style.height = `${height}px`;
+        dayCols[i].appendChild(card);
+      }
+    }
+  }
+
+  let eventsCache = [];
+  let weekOffset = 0;
+
+  function hasEventsInWeek(weekStart) {
+    const weekEnd = addDays(weekStart, 7);
+    return eventsCache.some((ev) => ev.start && ev.end && ev.end > weekStart && ev.start < weekEnd);
+  }
+
+  function updatePrevButton(weekStart) {
+    const prevBtn = document.getElementById('calendarPrevBtn');
+    if (!prevBtn) return;
+    const prevWeekStart = addDays(weekStart, -7);
+    const hasPrev = hasEventsInWeek(prevWeekStart);
+    prevBtn.disabled = !hasPrev;
+  }
+
+  function updateNextButton(weekStart) {
+    const nextBtn = document.getElementById('calendarNextBtn');
+    if (!nextBtn) return;
+    const nextWeekStart = addDays(weekStart, 7);
+    const hasNext = hasEventsInWeek(nextWeekStart);
+    nextBtn.disabled = !hasNext;
+  }
+
+  function renderWeek(offset) {
+    weekOffset = offset;
+    const weekStart = addDays(startOfWeek(new Date()), weekOffset * 7);
+    const dayCols = buildCalendarShell(weekStart);
+    renderEvents(eventsCache, weekStart, dayCols);
+    updatePrevButton(weekStart);
+    updateNextButton(weekStart);
+  }
+
+  async function init() {
+    try {
+      const resp = await fetch(icsUrl, { cache: 'no-store' });
+      if (!resp.ok) throw new Error('ICS fetch failed');
+      const text = await resp.text();
+      eventsCache = parseIcs(text).filter((ev) => ev.start && ev.end);
+      renderWeek(0);
+    } catch (e) {
+      const error = document.createElement('div');
+      error.className = 'calendar-error';
+      error.textContent = 'Calendar unavailable.';
+      container.appendChild(error);
+    }
+  }
+
+  const prevBtn = document.getElementById('calendarPrevBtn');
+  const nextBtn = document.getElementById('calendarNextBtn');
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      if (prevBtn.disabled) return;
+      renderWeek(weekOffset - 1);
+    });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      renderWeek(weekOffset + 1);
+    });
+  }
+
+  init();
+})();
+
+// Calendar expand/collapse
+(function () {
+  const container = document.getElementById('weeklyCalendar');
+  const btn = document.getElementById('calendarToggleBtn');
+  if (!container || !btn) return;
+
+  const collapsedClass = 'is-collapsed';
+  const expandedClass = 'is-expanded';
+
+  function syncText() {
+    const expanded = container.classList.contains(expandedClass);
+    btn.textContent = expanded ? 'Hide calendar' : 'Click to view calendar';
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const isExpanded = container.classList.contains(expandedClass);
+    container.classList.toggle(expandedClass, !isExpanded);
+    container.classList.toggle(collapsedClass, isExpanded);
+    syncText();
+  });
+
+  syncText();
 })();

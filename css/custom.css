@@ -399,6 +399,179 @@
                                     supported by Chrome, Edge, Opera and Firefox */
     }
 
+    .weekly-calendar {
+        --slot-height: 60px;
+        --hours: 9;
+        margin: 12px 0 24px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background: #fff;
+        overflow-x: auto;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.06);
+    }
+
+    .calendar-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin: 8px 0 6px;
+    }
+
+    .calendar-navs {
+        display: flex;
+        gap: 8px;
+    }
+
+    .calendar-nav {
+        font-family: 'Times New Roman', 'Noto Serif SC', serif;
+        font-size: 1.3rem;
+        padding: 4px 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background: #fff;
+        color: #333;
+        cursor: pointer;
+    }
+
+    .calendar-nav:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+    }
+
+    .weekly-calendar.is-collapsed {
+        max-height: 220px;
+        overflow-y: auto;
+    }
+
+    .weekly-calendar.is-expanded {
+        max-height: 1000px;
+        overflow-y: visible;
+    }
+
+    .calendar-range {
+        padding: 8px 10px 0 10px;
+        font-family: 'Times New Roman', 'Noto Serif SC', serif;
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+    .calendar-header {
+        display: grid;
+        grid-template-columns: 72px repeat(7, minmax(110px, 1fr));
+        background: #f6f6f6;
+        border-bottom: 1px solid #e5e5e5;
+        margin-top: 6px;
+        min-width: max-content;
+    }
+
+    .time-header {
+        border-right: 1px solid #e5e5e5;
+    }
+
+    .day-header {
+        padding: 8px 6px;
+        text-align: center;
+        font-family: 'Times New Roman', 'Noto Serif SC', serif;
+        font-size: 1.3rem;
+        border-left: 1px solid #e5e5e5;
+    }
+
+    .day-header.is-today {
+        background: rgba(255, 230, 160, 0.35);
+        font-weight: 600;
+    }
+
+    .day-date {
+        display: block;
+        font-size: 1.3rem;
+        color: #666;
+    }
+
+    .calendar-body {
+        display: grid;
+        grid-template-columns: 72px repeat(7, minmax(110px, 1fr));
+        min-width: max-content;
+    }
+
+    .calendar-body,
+    .time-col,
+    .day-col,
+    .time-slot {
+        box-sizing: border-box;
+    }
+
+    .time-col {
+        border-right: 1px solid #e5e5e5;
+    }
+
+    .time-slot {
+        height: var(--slot-height);
+        padding: 4px 8px;
+        border-bottom: 1px solid #efefef;
+        font-size: 1.3rem;
+        color: #666;
+    }
+
+    .day-col {
+        position: relative;
+        height: calc(var(--slot-height) * var(--hours));
+        border-left: 1px solid #efefef;
+        background: repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent calc(var(--slot-height) - 1px),
+            #efefef calc(var(--slot-height) - 1px),
+            #efefef var(--slot-height)
+        );
+    }
+
+    .calendar-event {
+        position: absolute;
+        left: 6px;
+        right: 6px;
+        background: #f3f0ea;
+        border: 1px solid #d7d2c6;
+        border-left: 3px solid #2b2b2b;
+        border-radius: 4px;
+        padding: 4px 6px;
+        font-size: 0.8rem;
+        line-height: 1.2;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .event-title {
+        font-weight: 600;
+    }
+
+    .event-meta,
+    .event-location {
+        font-size: 0.75rem;
+        color: #555;
+    }
+
+    .event-location {
+        margin-top: 2px;
+        color: #666;
+    }
+
+    .calendar-error {
+        padding: 10px;
+        font-size: 0.9rem;
+        color: #a33;
+    }
+
+    @media (max-width: 700px) {
+        .calendar-header,
+        .calendar-body {
+            grid-template-columns: 60px repeat(7, minmax(120px, 1fr));
+        }
+        .time-slot {
+            font-size: 0.8rem;
+        }
+    }
+
     .text-center {
     text-align: center;
     }
@@ -704,6 +877,13 @@ span {
     text-decoration-color: #111;
     text-decoration-thickness: 2px;
 }
+
+    .calendar-tz {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #666;
+        margin-left: 8px;
+    }
 
 /* Abstract popup and sup tooltip styles */
 .ref-hover-popup {
