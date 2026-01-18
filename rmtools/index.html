@@ -1,0 +1,752 @@
+<!DOCTYPE html><html lang="en,zh_cn,default"><head>
+  <meta charset="utf-8">
+  
+  <title>Tools I created for RoboMaster - MicDZ</title>
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  <style>
+  /* stylelint-disable */
+  a:not(.icon):not(.clustrmaps-map-control):not(.formula-anchor) {
+    text-decoration-color: #000;
+  }
+  a:hover:not(.icon):not(.clustrmaps-map-control):not(.formula-anchor),
+  a:focus:not(.icon):not(.clustrmaps-map-control):not(.formula-anchor) {
+    text-decoration-color: #111;
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  /* stylelint-enable */
+</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="/img/h.jpeg">
+  <link rel="stylesheet" href="https://cdn.jsdmirror.com
+/npm/lxgw-wenkai-webfont@1.1.0/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <!-- KaTeX support -->
+  <link rel="stylesheet" href="https://cdn.jsdmirror.com
+/npm/katex@0.16.9/dist/katex.css" integrity="sha384-OH8qNTHoMMVNVcKdKewlipV4SErXqccxxlg6HC9Cwjr5oZu2AdBej1TndeCirael" crossorigin="anonymous">
+<script defer="" src="https://cdn.jsdmirror.com
+/npm/katex@0.16.9/dist/katex.js" integrity="sha384-ImWHyYvDPlRzwFnvLhG9Jcpm/7qL4SVIuJK0C6Rj+Mf7fpeNJCLCynC+EVz4kCSA" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js" integrity="sha512-EKW5YvKU3hpyyOcN6jQnAxO/L8gts+YdYV6Yymtl8pk9YlYFtqJgihORuRoBXK8/cOIlappdU6Ms8KdK6yBCgA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</script>
+<link rel="stylesheet" href="https://cdn.jsdmirror.com
+/npm/pseudocode@2.4.1/build/pseudocode.min.css">
+<script src="https://cdn.jsdmirror.com
+/npm/pseudocode@2.4.1/build/pseudocode.min.js">
+</script>
+
+<!-- Prism support ./js/prism.js-->
+  
+<link rel="stylesheet" href="/css/prism.css">
+
+<meta name="generator" content="Hexo 7.0.0"><link rel="alternate" href="/atom.xml" title="MicDZ's Blog" type="application/atom+xml">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="row">
+
+    <div class="two columns" style="max-width: 50px">
+      <h1 class="mt-2 mode">
+        <div onclick="setDarkMode(true)" id="darkBtn"></div>
+        <div onclick="setDarkMode(false)" id="lightBtn" class="hidden"></div>
+        <script>
+          if (localStorage.getItem('preferredTheme') == 'dark') {
+            setDarkMode(true)
+          }
+          function setDarkMode(isDark) {
+            var darkBtn = document.getElementById('darkBtn')
+            var lightBtn = document.getElementById('lightBtn')
+            if (isDark) {
+              lightBtn.style.display = "block"
+              darkBtn.style.display = "none"
+              localStorage.setItem('preferredTheme', 'dark');
+            } else {
+              lightBtn.style.display = "none"
+              darkBtn.style.display = "block"
+              localStorage.removeItem('preferredTheme');
+            }
+            document.body.classList.toggle("darkmode");
+          }
+        </script>
+      </h1>
+    </div>
+     
+    <div class="six columns ml-1">
+      <h1 class="mt-2 site-title">
+        MicDZ's Blog
+      </h1>
+    </div>
+  
+    <div class="twelve columns">
+      <div class="row">
+        <div class="right">
+          
+            <a href="/" class="ml">Home</a>
+          
+          
+          
+            <a href="/archives" class="ml">Archives</a>
+             
+
+          <!-- <a href="/" class="ml">About</a> -->
+          
+            <a href="/friends" class="ml">Friends</a>
+           
+          
+          
+        </div>
+      </div>
+      <hr style="margin-bottom: 2.6rem">
+    </div>
+    
+
+
+  </div>
+          <div>
+            <!-- <div class="trans"> -->
+              
+<title>Tools I created for RoboMaster</title>
+
+<div class="article">
+  
+  
+  
+<h1 id="tools-i-created-for-robomaster"><a class="markdownIt-Anchor" href="#tools-i-created-for-robomaster"></a> Tools I created for RoboMaster</h1>
+<div class="repo-grid" id="repoGrid"></div>
+<div class="repo-footer">Data from GitHub API.</div>
+<script>
+	(function () {
+		const repos = [
+			{ owner: 'MicDZ', repo: 'RM-Ballistic-Analysis' },
+			{ owner: 'MicDZ', repo: 'RM_Tactics_Board' },
+			{ owner: 'HUSTLYRM', repo: 'langya_website' }
+		];
+
+		const el = document.getElementById('repoGrid');
+		if (!el) return;
+
+		const fmtDate = (iso) => {
+			if (!iso) return '';
+			const d = new Date(iso);
+			if (Number.isNaN(d.getTime())) return '';
+			return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+		};
+
+		const skeleton = () => {
+			const item = document.createElement('div');
+			item.className = 'article-list mb-2 spacing repo-item is-loading';
+			item.innerHTML = `
+				<p class="line">
+					<span class="shimmer repo-title"></span>
+				</p>
+				<p class="description shimmer repo-desc"></p>
+				<p class="info left date shimmer repo-meta"></p>
+			`;
+			return item;
+		};
+
+		repos.forEach(() => el.appendChild(skeleton()));
+
+		const loadRepo = async (owner, repo) => {
+			const url = `https://api.github.com/repos/${owner}/${repo}`;
+			const resp = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
+			if (!resp.ok) throw new Error(`GitHub API error: ${resp.status}`);
+			return resp.json();
+		};
+
+		const render = (data) => {
+			const topics = Array.isArray(data.topics) ? data.topics.slice(0, 6) : [];
+			const lang = data.language || 'Unknown';
+			const updated = fmtDate(data.pushed_at);
+			const meta = [
+				lang,
+				`★ ${data.stargazers_count || 0}`,
+				
+				updated ? `Updated ${updated}` : ''
+			].filter(Boolean).join(' · ');
+			return `
+				<div class="article-list mb-2 spacing repo-item">
+					<p class="line">
+						<a href="${data.html_url}" target="_blank" rel="noopener"><b>${data.name}</b></a>
+					</p>
+					<p class="description">${data.description || 'No description provided.'}</p>
+					<p class="info left date">${meta}</p>
+					${topics.length ? `<p class="description repo-topics">${topics.map(t => `<span class="repo-topic">${t}</span>`).join('')}</p>` : ''}
+				</div>
+			`;
+		};
+
+		const showError = (owner, repo) => {
+			return `
+				<div class="article-list mb-2 spacing repo-item is-error">
+					<p class="line"><b>${owner}/${repo}</b></p>
+					<p class="description">Failed to load from GitHub API. Please try again later.</p>
+				</div>
+			`;
+		};
+
+		Promise.allSettled(repos.map(r => loadRepo(r.owner, r.repo)))
+			.then(results => {
+				el.innerHTML = results.map((res, idx) => {
+					if (res.status === 'fulfilled') return render(res.value);
+					const r = repos[idx];
+					return showError(r.owner, r.repo);
+				}).join('');
+			});
+	})();
+</script>
+<style>
+	.repo-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		gap: 16px;
+		margin: 16px 0 8px;
+	}
+	.repo-item {
+		position: relative;
+		border: 1px solid rgba(0, 0, 0, 0.08);
+		border-radius: 8px;
+		padding: 14px 16px;
+		background: transparent;
+	}
+	.repo-topics {
+		margin-top: 4px;
+	}
+	.repo-topic {
+		display: inline-block;
+		margin-right: 6px;
+		margin-bottom: 4px;
+		padding: 2px 8px;
+		border-radius: 999px;
+		background: rgba(0, 0, 0, 0.05);
+		font-size: 0.78rem;
+	}
+	.repo-footer {
+		color: #9ca3af;
+		font-size: 0.85rem;
+		text-align: right;
+	}
+	.repo-item.is-loading .repo-title {
+		display: inline-block;
+		height: 16px;
+		width: 40%;
+		border-radius: 6px;
+	}
+	.repo-item.is-loading .repo-desc {
+		height: 12px;
+		width: 80%;
+		border-radius: 6px;
+	}
+	.repo-item.is-loading .repo-meta {
+		height: 12px;
+		width: 60%;
+		border-radius: 6px;
+	}
+	.shimmer {
+		background: rgba(0,0,0,0.08);
+	}
+	.repo-item.is-error {
+		border-left: 3px solid rgba(239, 68, 68, 0.5);
+		padding-left: 12px;
+	}
+	@media (prefers-color-scheme: dark) {
+		.repo-topic {
+			background: rgba(255, 255, 255, 0.08);
+		}
+		.repo-footer {
+			color: rgba(255, 255, 255, 0.5);
+		}
+		.repo-item {
+			border-color: rgba(255, 255, 255, 0.15);
+		}
+		.shimmer {
+			background: rgba(255, 255, 255, 0.12);
+		}
+	}
+</style>
+
+<style>
+  @keyframes highlight-blink {
+    0%, 100% { background-color: #e6e6e6; }
+    50% { background-color: #d8d8d8; }
+  }
+  .katex-display {
+    transition: background-color 0.3s ease;
+    position: relative;
+  }
+  .katex-display .katex-html {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .katex-display:target {
+
+  }
+  /* 这些样式依然需要，因为服务器端生成了对应的class */
+  .formula-anchor {
+    margin-left: auto;
+    padding-left: 1em;
+    text-decoration: none;
+    color: inherit;
+    flex-shrink: 0;
+  }
+  .formula-number {
+    font-size: 0.8em;
+    color: #6c757d;
+  }
+
+  /* 引用悬浮详情卡片样式（改为 fixed，避免滚动偏移） */
+  .ref-hover-popup {
+    position: fixed; /* was: absolute */
+    display: none;
+    pointer-events: auto; /* was: none，允许与卡片交互 */
+    z-index: 10000;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    padding: 8px 10px;
+    max-width: 380px;
+    line-height: 1.4;
+    font-size: 0.9em;
+    color: #333;
+    border-radius: 4px;
+  }
+  /* 在悬浮卡片中隐藏编号链接，只显示详情 */
+  .ref-hover-popup .citation-number { display: none; }
+
+  /* 新增：公式弹窗适配样式 */
+  .ref-hover-popup.is-formula {
+    max-width: min(90vw, 900px);
+    overflow-x: auto;
+  }
+  .ref-hover-popup.is-figure {
+    max-width: min(60vw, 320px);
+    padding: 6px;
+  }
+  .ref-hover-popup.is-figure figure {
+    margin: 0;
+  }
+  .ref-hover-popup.is-figure img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  .ref-hover-popup.is-figure .image-caption {
+    margin-top: 0.4em;
+    font-size: 0.85em;
+    color: #444;
+  }
+  /* 弹窗里隐藏公式锚点/编号，避免干扰阅读 */
+  .ref-hover-popup .formula-anchor,
+  .ref-hover-popup .formula-number {
+    display: none;
+  }
+  /* 弹窗内压缩公式块的上下间距 */
+  .ref-hover-popup .katex-display {
+    margin: 0;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 【已移除】公式编号和锚点的添加逻辑已移至 EJS 后端渲染。
+    
+    // 新增：寻找最近的可滚动祖先（纵向）
+    function getScrollableAncestor(el) {
+      let node = el && el.parentElement;
+      while (node && node !== document.body && node !== document.documentElement) {
+        const style = window.getComputedStyle(node);
+        const overflowY = style.overflowY;
+        if ((overflowY === 'auto' || overflowY === 'scroll') && node.scrollHeight > node.clientHeight) {
+          return node;
+        }
+        node = node.parentElement;
+      }
+      return null;
+    }
+
+    // 更新：滚动目标元素到视口（或容器）正中
+    function smoothScrollToCenter(el) {
+      if (!el) return;
+      // 优先使用原生 scrollIntoView，能自动滚动最近可滚动容器
+      try {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+        return;
+      } catch (e) {
+        // ignore, 使用回退
+      }
+
+      const container = getScrollableAncestor(el);
+      if (container) {
+        const elRect = el.getBoundingClientRect();
+        const cRect = container.getBoundingClientRect();
+        const current = container.scrollTop;
+        const target = current + (elRect.top - cRect.top) - Math.max(0, (container.clientHeight - elRect.height) / 2);
+        container.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+      } else {
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const doc = document.documentElement;
+        const body = document.body;
+        const scrollTop = window.pageYOffset || doc.scrollTop || body.scrollTop || 0;
+        const target = scrollTop + rect.top - Math.max(0, (vh - rect.height) / 2);
+        const maxScroll = Math.max(0, (Math.max(doc.scrollHeight, body.scrollHeight) - vh));
+        window.scrollTo({ top: Math.min(Math.max(0, target), maxScroll), behavior: 'smooth' });
+      }
+    }
+
+    // 高亮函数（处理公式和引用）
+    function highlightReference(hash) {
+      // 清除之前的高亮
+      const allCitations = document.querySelectorAll('.bibtexentry');
+      allCitations.forEach(citation => {
+        citation.style.backgroundColor = '';
+        citation.style.animation = '';
+      });
+      
+      const allFormulas = document.querySelectorAll('.katex-html');
+      allFormulas.forEach(formula => {
+        formula.style.backgroundColor = '';
+        formula.style.animation = '';
+      });
+      
+      // 使用传入的hash或当前URL的hash
+      const targetHash = hash || window.location.hash;
+      
+      // 处理引用高亮
+      if (targetHash && targetHash.startsWith('#ref')) {
+        const targetElement = document.querySelector(targetHash);
+        if (targetElement) {
+          const citationElement = targetElement.closest('.bibtexentry');
+          if (citationElement) {
+            citationElement.style.backgroundColor = '#e6e6e6';
+            citationElement.style.animation = 'highlight-blink 2s ease-in-out 3';
+            // 原：citationElement.scrollIntoView({ behavior: 'smooth' });
+            smoothScrollToCenter(citationElement);
+          }
+        }
+      }
+      
+      // 处理公式高亮
+      else if (targetHash && targetHash.startsWith('#formula')) {
+        const targetElement = document.querySelector(targetHash);
+        if (targetElement) {
+          const formulaScrollElement = targetElement.closest('.katex-block, .katex-display'); // 适配两种可能的父容器
+          const formulaElement = targetElement.closest('.katex-html');
+          if (formulaElement && formulaScrollElement) {
+            formulaElement.style.backgroundColor = '#e6e6e6';
+            formulaElement.style.paddingTop = '0.6em';
+            formulaElement.style.animation = 'highlight-blink 2s ease-in-out 3';
+            // 原：formulaScrollElement.scrollIntoView({ behavior: 'smooth' });
+            smoothScrollToCenter(formulaScrollElement);
+          }
+        }
+      }
+
+      else {
+        try {
+            const targetElement = document.querySelector(targetHash);
+            if (targetElement) {
+                // 原：targetElement.scrollIntoView({ behavior: 'smooth' });
+                smoothScrollToCenter(targetElement);
+            }
+        } catch (e) {
+            console.error('Invalid selector for scroll:', targetHash);
+        }
+      }
+    }
+    
+    // 延迟检查hash，确保所有内容都已渲染
+    setTimeout(function() {
+      highlightReference();
+    }, 600);
+    
+    // 监听hash变化
+    window.addEventListener('hashchange', function() {
+      highlightReference();
+    });
+    
+    // 拦截页面内的链接点击
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('a');
+      if (link && link.getAttribute('href')) {
+        const href = link.getAttribute('href');
+        // 只拦截指向本文内锚点的链接
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          const hash = href;
+          // 更新URL但不触发默认跳转
+          history.pushState(null, null, hash);
+          // 执行平滑滚动和高亮
+          highlightReference(hash);
+        }
+      }
+    });
+    
+    // 引用悬浮详情卡片
+    const refPopup = document.createElement('div');
+    refPopup.className = 'ref-hover-popup';
+    document.body.appendChild(refPopup);
+
+    let currentRefLink = null;
+    let hoverOnPopup = false;
+    let hideTimer = null;
+
+    function clearHideTimer() {
+      if (hideTimer) {
+        clearTimeout(hideTimer);
+        hideTimer = null;
+      }
+    }
+
+    function scheduleHide() {
+      clearHideTimer();
+      hideTimer = setTimeout(() => {
+        if (!hoverOnPopup) {
+          hideRefPopup();
+        }
+      }, 120); // 短延时，允许从链接移动到卡片
+    }
+
+    function getCitationHtmlByHash(hash) {
+      if (!hash || !hash.startsWith('#ref')) return null;
+      const target = document.querySelector(hash);
+      if (!target) return null;
+      const entry = target.closest('.bibtexentry');
+      if (!entry) return null;
+      const clone = entry.cloneNode(true);
+      const num = clone.querySelector('.citation-number');
+      if (num) num.remove();
+      return clone.innerHTML;
+    }
+
+    /* 新增：根据 #formulaN 生成弹窗 HTML */
+    function getFormulaHtmlByHash(hash) {
+      if (!hash || !hash.startsWith('#formula')) return null;
+      const target = document.querySelector(hash);
+      if (!target) return null;
+      const container = target.closest('.katex-block, .katex-display');
+      if (!container) return null;
+      const clone = container.cloneNode(true);
+      // 弹窗中隐藏锚点与编号
+      const anchor = clone.querySelector('.formula-anchor');
+      if (anchor) anchor.remove();
+      const num = clone.querySelector('.formula-number');
+      if (num) num.remove();
+      return clone.outerHTML;
+    }
+
+    /* 新增：根据 #FigureN 生成图片预览 HTML */
+    function getFigureHtmlByHash(hash) {
+      if (!hash || !hash.startsWith('#Figure')) return null;
+      const target = document.querySelector(hash);
+      if (!target) return null;
+      const figure = target.closest('figure');
+      if (!figure) return null;
+      const clone = figure.cloneNode(true);
+      const anchor = clone.querySelector('.formula-anchor');
+      if (anchor) anchor.remove();
+      return clone.outerHTML;
+    }
+
+    /* 新增：根据链接位置定位弹窗，限制在视口内 */
+    function positionPopupAtLink(link) {
+      const margin = 8;
+      refPopup.style.visibility = 'hidden';
+      refPopup.style.display = 'block';
+
+      const rects = link.getClientRects();
+      const linkRect = rects.length ? rects[rects.length - 1] : link.getBoundingClientRect();
+      const popupRect = refPopup.getBoundingClientRect();
+      const vw = document.documentElement.clientWidth;
+      const vh = document.documentElement.clientHeight;
+
+      let left = linkRect.left;
+      let top = linkRect.bottom + margin; // 默认下方
+
+      if (left + popupRect.width > vw - margin) {
+        left = Math.max(margin, vw - popupRect.width - margin);
+      }
+      if (top + popupRect.height > vh - margin) {
+        top = linkRect.top - popupRect.height - margin; // 放到上方
+      }
+      if (left < margin) left = margin;
+      if (top < margin) top = Math.min(vh - popupRect.height - margin, linkRect.bottom + margin);
+
+      refPopup.style.left = left + 'px';
+      refPopup.style.top = top + 'px';
+      refPopup.style.visibility = '';
+    }
+
+    function showRefPopup(link) {
+      const href = link.getAttribute('href');
+      let html = null;
+      let isFormula = false;
+      let isFigure = false;
+
+      if (href.startsWith('#ref')) {
+        html = getCitationHtmlByHash(href);
+      } else if (href.startsWith('#formula')) {
+        html = getFormulaHtmlByHash(href);
+        isFormula = true;
+      } else if (href.startsWith('#Figure')) {
+        html = getFigureHtmlByHash(href);
+        isFigure = true;
+      }
+
+      if (!html) return;
+      clearHideTimer();
+      refPopup.classList.toggle('is-formula', isFormula);
+      refPopup.classList.toggle('is-figure', isFigure);
+      refPopup.innerHTML = html;
+      positionPopupAtLink(link);
+      refPopup.style.display = 'block';
+    }
+
+    function hideRefPopup() {
+      refPopup.style.display = 'none';
+      refPopup.innerHTML = '';
+      currentRefLink = null;
+      clearHideTimer();
+    }
+
+    // 允许在卡片上悬停，避免消失
+    refPopup.addEventListener('mouseenter', () => {
+      hoverOnPopup = true;
+      clearHideTimer();
+    });
+    refPopup.addEventListener('mouseleave', () => {
+      hoverOnPopup = false;
+      scheduleHide();
+    });
+
+    // 新增：过滤仅保留“正文中作者写的”引用/公式链接
+    function isUserAuthoredRefLink(link) {
+      const href = link.getAttribute('href') || '';
+      if (!href.startsWith('#ref')) return false;
+      // 排除引用列表里的编号链接与其容器
+      if (link.closest('.citation-number')) return false;
+      if (link.closest('.bibtexentry')) return false;
+      return true;
+    }
+    function isUserAuthoredFormulaLink(link) {
+      const href = link.getAttribute('href') || '';
+      if (!href.startsWith('#formula')) return false;
+      // 排除自动生成在公式后的锚点与其容器
+      if (link.classList.contains('formula-anchor')) return false;
+      if (link.closest('.katex-display') || link.closest('.katex-block')) return false;
+      return true;
+    }
+    function isUserAuthoredFigureLink(link) {
+      const href = link.getAttribute('href') || '';
+      if (!href.startsWith('#Figure')) return false;
+      if (link.classList.contains('formula-anchor')) return false;
+      if (link.closest('figure') || link.closest('figcaption')) return false;
+      return true;
+    }
+
+    // 替换：绑定到具体的 #refN 链接（排除自动生成）
+    const refLinks = Array.from(document.querySelectorAll('.article a[href^="#ref"]')).filter(isUserAuthoredRefLink);
+    refLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        currentRefLink = link;
+        hoverOnPopup = false;
+        showRefPopup(link);
+      });
+      link.addEventListener('mouseleave', () => {
+        scheduleHide();
+      });
+    });
+
+    // 替换：绑定到具体的 #formulaN 链接（排除自动生成）
+    const formulaLinks = Array.from(document.querySelectorAll('.article a[href^="#formula"]')).filter(isUserAuthoredFormulaLink);
+    formulaLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        currentRefLink = link;
+        hoverOnPopup = false;
+        showRefPopup(link);
+      });
+      link.addEventListener('mouseleave', () => {
+        scheduleHide();
+      });
+    });
+
+    // 新增：绑定到具体的 #FigureN 链接（排除自动生成）
+    const figureLinks = Array.from(document.querySelectorAll('.article a[href^="#Figure"]')).filter(isUserAuthoredFigureLink);
+    figureLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        currentRefLink = link;
+        hoverOnPopup = false;
+        showRefPopup(link);
+      });
+      link.addEventListener('mouseleave', () => {
+        scheduleHide();
+      });
+    });
+
+    // 滚动或窗口变化时隐藏，避免错位
+    window.addEventListener('scroll', hideRefPopup, { passive: true });
+    window.addEventListener('resize', hideRefPopup);
+  });
+</script>
+
+
+</div>
+<p class="right">
+    
+</p>
+            <!-- </div> -->
+            <div class="row mt-2">
+    
+    <p id="copyright">
+        
+        Unless otherwise stated, all content on this blog is licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><span class="d-none d-sm-inline"> | </span>
+        <a href="/atom.xml" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm">RSS subscribe</a> <span class="d-none d-sm-inline"> | </span>
+        <a href="/friends">Friends</a>
+        <br>
+        
+        <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">鄂ICP备2025091178号</a> <span class="d-none d-sm-inline"> | </span>
+        <span class="d-none d-sm-inline"> 
+        
+
+
+        
+
+
+    
+        
+            对应的中文页面尚未上线
+        
+    
+
+    </span></p>
+
+    <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&amp;w=250&amp;t=n&amp;d=tomGCTh1CxWc_-uuNllmA6Nl5mVnvkzy2svb86OrEyc&amp;co=2d78ad&amp;cmo=3acc3a&amp;cmn=ff5353&amp;ct=ffffff"></script>
+    
+    
+</div> 
+          </div>
+    
+        </div>
+    
+      </div>
+  
+<script src="/js/main.js"></script>
+
+
+
+</body></html>

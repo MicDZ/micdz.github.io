@@ -33,6 +33,10 @@
     const vw = document.documentElement.clientWidth;
     const vh = document.documentElement.clientHeight;
 
+    let left = linkRect.left;
+    let top = linkRect.bottom + margin;
+
+    if (left + popupRect.width > vw - margin) left = Math.max(margin, vw - popupRect.width - margin);
     if (top + popupRect.height > vh - margin) top = linkRect.top - popupRect.height - margin;
     if (left < margin) left = margin;
     if (top < margin) top = Math.min(vh - popupRect.height - margin, linkRect.bottom + margin);
