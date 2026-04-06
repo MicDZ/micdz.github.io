@@ -423,6 +423,45 @@
         gap: 8px;
     }
 
+    .calendar-tz-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: 'Times New Roman', 'Noto Serif SC', serif;
+        font-size: 1.2rem;
+        color: #333;
+    }
+
+    .calendar-tz-toggle input {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        border: 1px solid #888;
+        border-radius: 2px;
+        background: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transform: translateY(1px);
+        cursor: pointer;
+    }
+
+    .calendar-tz-toggle input::after {
+        content: '';
+        width: 6px;
+        height: 10px;
+        border-right: 2px solid #333;
+        border-bottom: 2px solid #333;
+        display: block;
+        transform: rotate(45deg) scale(0);
+        transition: transform 0.12s ease;
+    }
+
+    .calendar-tz-toggle input:checked::after {
+        transform: rotate(45deg) scale(1);
+    }
+
     .calendar-nav {
         font-family: 'Times New Roman', 'Noto Serif SC', serif;
         font-size: 1.3rem;

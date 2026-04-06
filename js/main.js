@@ -210,14 +210,22 @@
   if (!container) return;
 
   const icsUrl = (container.dataset.icsUrl || '/asset/calendar.ics').trim();
-  const startHour = 9;
-  const endHour = 18;
+  const defaultTimeZone = 'America/Los_Angeles';
+  const defaultStartHour = 9;
+  const defaultEndHour = 18;
   const slotHeight = 60;
-  const hours = endHour - startHour;
   const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
+  let timeZone = defaultTimeZone;
+  let startHour = defaultStartHour;
+  let endHour = defaultEndHour;
+
   container.style.setProperty('--slot-height', slotHeight + 'px');
-  container.style.setProperty('--hours', hours);
+  container.style.setProperty('--hours', endHour - startHour);
+
+  function toZonedDate(date) {
+    return new Date(date.toLocaleString('en-US', { timeZone }));
+  }
 
   function startOfWeek(date) {
     const d = new Date(date);
@@ -323,7 +331,7 @@
     empty.className = 'time-header';
     header.appendChild(empty);
 
-    const today = new Date();
+    const today = toZonedDate(new Date());
     today.setHours(0, 0, 0, 0);
 
     for (let i = 0; i < 7; i++) {
@@ -367,7 +375,12 @@
 
   function renderEvents(events, weekStart, dayCols) {
     const weekEnd = addDays(weekStart, 7);
-    const visible = events.filter((ev) => ev.start && ev.end && ev.end > weekStart && ev.start < weekEnd);
+    const visible = events.filter((ev) => {
+      if (!ev.start || !ev.end) return false;
+      const evStart = toZonedDate(ev.start);
+      const evEnd = toZonedDate(ev.end);
+      return evEnd > weekStart && evStart < weekEnd;
+    });
 
     for (const col of dayCols) col.innerHTML = '';
 
@@ -378,10 +391,13 @@
         const dayEnd = addDays(weekStart, i);
         dayEnd.setHours(endHour, 0, 0, 0);
 
-        if (ev.end <= dayStart || ev.start >= dayEnd) continue;
+        const evStart = toZonedDate(ev.start);
+        const evEnd = toZonedDate(ev.end);
 
-        const segStart = new Date(Math.max(ev.start, dayStart));
-        const segEnd = new Date(Math.min(ev.end, dayEnd));
+        if (evEnd <= dayStart || evStart >= dayEnd) continue;
+
+        const segStart = new Date(Math.max(evStart, dayStart));
+        const segEnd = new Date(Math.min(evEnd, dayEnd));
         if (segEnd <= segStart) continue;
 
         const minutesFromStart = (segStart - dayStart) / 60000;
@@ -419,7 +435,12 @@
 
   function hasEventsInWeek(weekStart) {
     const weekEnd = addDays(weekStart, 7);
-    return eventsCache.some((ev) => ev.start && ev.end && ev.end > weekStart && ev.start < weekEnd);
+    return eventsCache.some((ev) => {
+      if (!ev.start || !ev.end) return false;
+      const evStart = toZonedDate(ev.start);
+      const evEnd = toZonedDate(ev.end);
+      return evEnd > weekStart && evStart < weekEnd;
+    });
   }
 
   function updatePrevButton(weekStart) {
@@ -440,11 +461,30 @@
 
   function renderWeek(offset) {
     weekOffset = offset;
-    const weekStart = addDays(startOfWeek(new Date()), weekOffset * 7);
+    const weekStart = addDays(startOfWeek(toZonedDate(new Date())), weekOffset * 7);
     const dayCols = buildCalendarShell(weekStart);
     renderEvents(eventsCache, weekStart, dayCols);
     updatePrevButton(weekStart);
     updateNextButton(weekStart);
+  }
+
+  function applyTimeConfig(useLocalTimeZone) {
+    if (useLocalTimeZone) {
+      const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone || defaultTimeZone;
+      timeZone = localTz;
+      startHour = 0;
+      endHour = 24;
+    } else {
+      timeZone = defaultTimeZone;
+      startHour = defaultStartHour;
+      endHour = defaultEndHour;
+    }
+    container.style.setProperty('--hours', endHour - startHour);
+
+    const tzLabel = document.querySelector('.calendar-tz');
+    if (tzLabel) {
+      tzLabel.textContent = `(${timeZone} time)`;
+    }
   }
 
   async function init() {
@@ -453,6 +493,7 @@
       if (!resp.ok) throw new Error('ICS fetch failed');
       const text = await resp.text();
       eventsCache = parseIcs(text).filter((ev) => ev.start && ev.end);
+      applyTimeConfig(false);
       renderWeek(0);
     } catch (e) {
       const error = document.createElement('div');
@@ -464,6 +505,7 @@
 
   const prevBtn = document.getElementById('calendarPrevBtn');
   const nextBtn = document.getElementById('calendarNextBtn');
+  const tzToggle = document.getElementById('calendarTzToggle');
   if (prevBtn) {
     prevBtn.addEventListener('click', () => {
       if (prevBtn.disabled) return;
@@ -473,6 +515,13 @@
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
       renderWeek(weekOffset + 1);
+    });
+  }
+
+  if (tzToggle) {
+    tzToggle.addEventListener('change', () => {
+      applyTimeConfig(tzToggle.checked);
+      renderWeek(weekOffset);
     });
   }
 
