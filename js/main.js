@@ -405,11 +405,26 @@
         const top = (minutesFromStart / 60) * slotHeight;
         const height = Math.max(18, (durationMinutes / 60) * slotHeight);
 
+        const summaryText = (ev.summary || '').trim();
+        const isRest = summaryText.toLowerCase().includes('rest');
+        if (isRest) {
+          const restBlock = document.createElement('div');
+          restBlock.className = 'calendar-rest-block';
+          const restLabel = document.createElement('div');
+          restLabel.className = 'rest-label';
+          restLabel.textContent = 'Rest';
+          restBlock.appendChild(restLabel);
+          restBlock.style.top = `${top}px`;
+          restBlock.style.height = `${height}px`;
+          dayCols[i].appendChild(restBlock);
+          continue;
+        }
+
         const card = document.createElement('div');
         card.className = 'calendar-event';
         const title = document.createElement('div');
         title.className = 'event-title';
-        title.textContent = ev.summary || 'Untitled';
+        title.textContent = summaryText || 'Untitled';
 
         const meta = document.createElement('div');
         meta.className = 'event-meta';

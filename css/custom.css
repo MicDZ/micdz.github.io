@@ -445,21 +445,24 @@
         justify-content: center;
         transform: translateY(1px);
         cursor: pointer;
+        position: relative;
     }
 
     .calendar-tz-toggle input::after {
         content: '';
-        width: 6px;
-        height: 10px;
-        border-right: 2px solid #333;
-        border-bottom: 2px solid #333;
-        display: block;
-        transform: rotate(45deg) scale(0);
+        width: 7px;
+        height: 11px;
+        border-right: 2px solid #222;
+        border-bottom: 2px solid #222;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -60%) rotate(45deg) scale(0);
         transition: transform 0.12s ease;
     }
 
     .calendar-tz-toggle input:checked::after {
-        transform: rotate(45deg) scale(1);
+        transform: translate(-50%, -60%) rotate(45deg) scale(1);
     }
 
     .calendar-nav {
@@ -578,6 +581,46 @@
         line-height: 1.2;
         overflow: hidden;
         box-sizing: border-box;
+    }
+
+    .calendar-rest-block {
+        position: absolute;
+        left: 0;
+        right: 0;
+        background: rgba(190, 190, 190, 0.45);
+        border-top: 1px solid #c5c5c5;
+        border-bottom: 1px solid #c5c5c5;
+        color: #666;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        cursor: not-allowed;
+        pointer-events: auto;
+        box-sizing: border-box;
+    }
+
+    .calendar-rest-block:hover::after {
+        content: 'X';
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 18px;
+        height: 18px;
+        border: 1px solid #777;
+        border-radius: 50%;
+        font-size: 0.7rem;
+        line-height: 16px;
+        text-align: center;
+        background: #efefef;
+        color: #555;
+        box-sizing: border-box;
+    }
+
+    .rest-label {
+        font-weight: 600;
     }
 
     .event-title {
