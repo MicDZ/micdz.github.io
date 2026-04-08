@@ -245,6 +245,13 @@
     return `${d.getMonth() + 1}/${d.getDate()}`;
   }
 
+  function formatDateISO(d) {
+    const y = d.getFullYear();
+    const m = pad(d.getMonth() + 1);
+    const day = pad(d.getDate());
+    return `${y}-${m}-${day}`;
+  }
+
   function pad(n) {
     return String(n).padStart(2, '0');
   }
@@ -373,6 +380,52 @@
     return dayCols;
   }
 
+  function getObfuscatedEmail() {
+    const codes = [109, 101, 64, 109, 105, 99, 100, 122, 46, 99, 110];
+    return String.fromCharCode.apply(null, codes);
+  }
+
+  function buildMailtoLink(dateObj) {
+    const email = getObfuscatedEmail();
+    const dateStr = formatDateISO(dateObj);
+    const timeStr = formatTime(dateObj);
+    const tzLabel = timeZone;
+    const subject = `Time request: ${dateStr} ${timeStr} (${tzLabel})`;
+    const body = [
+      'Hello,',
+      '',
+      `I would like to request this time: ${dateStr} ${timeStr} (${tzLabel}).`,
+      '',
+      'Topic:',
+      'Duration:',
+      'Additional notes:',
+      '',
+      'Best,',
+      ''
+    ].join('\n');
+
+    return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+
+  function addClickToEmail(dayCols, weekStart) {
+    dayCols.forEach((col, dayIndex) => {
+      col.addEventListener('click', (e) => {
+        const rect = col.getBoundingClientRect();
+        const y = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
+        const minutesFloat = (y / slotHeight) * 60;
+        const minutesRounded = Math.round(minutesFloat / 30) * 30;
+        const hour = startHour + Math.floor(minutesRounded / 60);
+        const minute = minutesRounded % 60;
+
+        const dateObj = addDays(weekStart, dayIndex);
+        dateObj.setHours(hour, minute, 0, 0);
+
+        const link = buildMailtoLink(dateObj);
+        window.location.href = link;
+      });
+    });
+  }
+
   function renderEvents(events, weekStart, dayCols) {
     const weekEnd = addDays(weekStart, 7);
     const visible = events.filter((ev) => {
@@ -479,6 +532,7 @@
     const weekStart = addDays(startOfWeek(toZonedDate(new Date())), weekOffset * 7);
     const dayCols = buildCalendarShell(weekStart);
     renderEvents(eventsCache, weekStart, dayCols);
+    addClickToEmail(dayCols, weekStart);
     updatePrevButton(weekStart);
     updateNextButton(weekStart);
   }
