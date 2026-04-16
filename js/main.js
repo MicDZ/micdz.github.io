@@ -498,8 +498,41 @@
     }
   }
 
+  function clearNowIndicators(dayCols) {
+    dayCols.forEach((col) => {
+      const existing = col.querySelectorAll('.calendar-now-line');
+      existing.forEach((el) => el.remove());
+    });
+  }
+
+  function renderNowIndicator(weekStart, dayCols) {
+    clearNowIndicators(dayCols);
+
+    const now = toZonedDate(new Date());
+    const weekEnd = addDays(weekStart, 7);
+    if (now < weekStart || now >= weekEnd) return;
+
+    const dayIndex = Math.floor((now - weekStart) / 86400000);
+    if (dayIndex < 0 || dayIndex > 6) return;
+
+    const dayStart = addDays(weekStart, dayIndex);
+    dayStart.setHours(startHour, 0, 0, 0);
+    const dayEnd = addDays(weekStart, dayIndex);
+    dayEnd.setHours(endHour, 0, 0, 0);
+    if (now < dayStart || now > dayEnd) return;
+
+    const minutesFromStart = (now - dayStart) / 60000;
+    const top = (minutesFromStart / 60) * slotHeight;
+    const line = document.createElement('div');
+    line.className = 'calendar-now-line';
+    line.style.top = `${top}px`;
+    dayCols[dayIndex].appendChild(line);
+  }
+
   let eventsCache = [];
   let weekOffset = 0;
+  let currentWeekStart = null;
+  let currentDayCols = null;
 
   function hasEventsInWeek(weekStart) {
     const weekEnd = addDays(weekStart, 7);
@@ -531,7 +564,10 @@
     weekOffset = offset;
     const weekStart = addDays(startOfWeek(toZonedDate(new Date())), weekOffset * 7);
     const dayCols = buildCalendarShell(weekStart);
+    currentWeekStart = weekStart;
+    currentDayCols = dayCols;
     renderEvents(eventsCache, weekStart, dayCols);
+    renderNowIndicator(weekStart, dayCols);
     addClickToEmail(dayCols, weekStart);
     updatePrevButton(weekStart);
     updateNextButton(weekStart);
@@ -595,6 +631,11 @@
   }
 
   init();
+
+  setInterval(() => {
+    if (!currentWeekStart || !currentDayCols) return;
+    renderNowIndicator(currentWeekStart, currentDayCols);
+  }, 60000);
 })();
 
 // Calendar expand/collapse

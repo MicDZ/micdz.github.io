@@ -623,6 +623,29 @@
         font-weight: 600;
     }
 
+    .calendar-now-line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #d34a3a;
+        z-index: 3;
+        pointer-events: none;
+    }
+
+    .calendar-now-line::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 50%;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #d34a3a;
+        transform: translateY(-50%);
+        box-shadow: 0 0 0 2px #fff;
+    }
+
     .event-title {
         font-weight: 600;
     }
