@@ -66,7 +66,10 @@
     let top = evt.pageY + margin;
 
     const rect = popup.getBoundingClientRect();
-    if (left + rect.width > vw - margin) left = Math.max(margin, vw - rect.width - margin);
+    if (left + rect.width > vw - margin) {
+      left = evt.pageX - rect.width - margin;
+    }
+    if (left < margin) left = margin;
     if (top + rect.height > vh - margin) top = Math.max(margin, vh - rect.height - margin);
 
     popup.style.left = `${left}px`;
