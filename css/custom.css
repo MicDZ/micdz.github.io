@@ -438,6 +438,13 @@
             text-overflow: ellipsis;
         }
 
+        .photo-map-cluster-note {
+            margin: 4px 4px 0;
+            font-size: 0.85rem;
+            color: #555;
+            text-align: center;
+        }
+
         @media (max-width: 700px) {
             .photo-map {
                 height: 300px;

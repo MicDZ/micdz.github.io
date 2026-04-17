@@ -4,10 +4,11 @@
     americas: document.getElementById('photoMapAmericas'),
     usa: document.getElementById('photoMapUSA'),
     eastAsia: document.getElementById('photoMapEastAsia'),
-    southeastAsia: document.getElementById('photoMapSoutheastAsia')
+    southeastAsia: document.getElementById('photoMapSoutheastAsia'),
+    europe: document.getElementById('photoMapEurope')
   };
 
-  if (!mapEls.world || !mapEls.americas || !mapEls.usa || !mapEls.eastAsia || !mapEls.southeastAsia) return;
+  if (!mapEls.world || !mapEls.americas || !mapEls.usa || !mapEls.eastAsia || !mapEls.southeastAsia || !mapEls.europe) return;
 
   const dataUrl = mapEls.world.getAttribute('data-locations-url') || '/assets/maps/locations.json';
 
@@ -127,7 +128,8 @@
     americas: null,
     usa: null,
     eastAsia: null,
-    southeastAsia: null
+    southeastAsia: null,
+    europe: null
   };
 
   const mapState = {
@@ -152,7 +154,8 @@
     americas: { latMin: -60, latMax: 75, lngMin: -170, lngMax: -30 },
     eastAsia: { latMin: 0, latMax: 55, lngMin: 95, lngMax: 155 },
     southeastAsia: { latMin: -15, latMax: 25, lngMin: 90, lngMax: 140 },
-    usa: { latMin: 24, latMax: 50, lngMin: -125, lngMax: -66 }
+    usa: { latMin: 24, latMax: 50, lngMin: -125, lngMax: -66 },
+    europe: { latMin: 34, latMax: 72, lngMin: -25, lngMax: 45 }
   };
 
   const resetControl = document.querySelector('[data-map-action="back-world-inner"]');
@@ -184,6 +187,10 @@
       setTimeout(() => mapInstances.southeastAsia.resize(), 0);
       setTimeout(() => refreshMapBubbles('southeastAsia'), 0);
     }
+    if (name === 'europe' && mapInstances.europe) {
+      setTimeout(() => mapInstances.europe.resize(), 0);
+      setTimeout(() => refreshMapBubbles('europe'), 0);
+    }
   }
 
   function bindControlEvents(locations) {
@@ -201,6 +208,14 @@
   const SOUTHEAST_ASIA = new Set([
     'MMR', 'THA', 'LAO', 'KHM', 'VNM', 'MYS', 'SGP', 'IDN', 'PHL', 'BRN',
     'TLS'
+  ]);
+
+  const EUROPE = new Set([
+    'ALB', 'AND', 'AUT', 'BEL', 'BGR', 'BIH', 'BLR', 'CHE', 'CZE', 'DEU',
+    'DNK', 'ESP', 'EST', 'FIN', 'FRA', 'GBR', 'GRC', 'HRV', 'HUN', 'IRL',
+    'ISL', 'ITA', 'LTU', 'LUX', 'LVA', 'MCO', 'MDA', 'MKD', 'MLT', 'MNE',
+    'NLD', 'NOR', 'POL', 'PRT', 'ROU', 'RUS', 'SRB', 'SVK', 'SVN', 'SWE',
+    'UKR'
   ]);
 
   function buildBubbles(locations, filterFn, radius) {
@@ -230,6 +245,7 @@
       americas: 0.04,
       eastAsia: 0.032,
       southeastAsia: 0.032,
+      europe: 0.032,
       usa: 0.03
     };
     const ratio = ratios[mapName] || 0.035;
@@ -332,7 +348,7 @@
         Promise.all(validItems.map((item) => loadImageAsync(item.photo_src)))
           .then((images) => {
             if (token !== popupToken) return;
-            const html = buildClusterHtml(validItems, images);
+            const html = buildClusterHtml(validItems, images, { limit: 6, showMoreNote: true });
             if (!html) {
               showPopup('<div class="photo-map-loading">Failed to load image.</div>', evt);
               return;
@@ -350,7 +366,7 @@
         Promise.all(validItems.map((item) => loadImageAsync(item.photo_src)))
           .then((images) => {
             if (token !== popupToken) return;
-            const html = buildClusterHtml(validItems, images);
+            const html = buildClusterHtml(validItems, images, { limit: null, showMoreNote: false });
             if (!html) return;
             showModal(html);
           });
@@ -365,9 +381,14 @@
       });
   }
 
-  function buildClusterHtml(items, images) {
+  function buildClusterHtml(items, images, options) {
+    const opts = options || {};
+    const limit = typeof opts.limit === 'number' ? opts.limit : null;
+    const showMoreNote = Boolean(opts.showMoreNote);
+    const totalCount = items.length;
+    const displayCount = limit && totalCount > limit ? limit : totalCount;
     const blocks = [];
-    items.forEach((item, idx) => {
+    items.slice(0, displayCount).forEach((item, idx) => {
       const img = images[idx];
       if (!img) return;
       const placeHtml = buildPlaceHtml(item);
@@ -378,7 +399,10 @@
     if (!blocks.length) return '';
     if (blocks.length === 1) return blocks[0];
     const extraClass = blocks.length > 4 ? ' photo-map-cluster-double' : '';
-    return `<div class="photo-map-cluster${extraClass}">${blocks.join('')}</div>`;
+    const noteHtml = showMoreNote && totalCount > displayCount
+      ? `<div class="photo-map-cluster-note">${totalCount - displayCount} more photos. Click to view all.</div>`
+      : '';
+    return `<div class="photo-map-cluster${extraClass}">${blocks.join('')}${noteHtml}</div>`;
   }
 
   function renderWorldMap(locations) {
@@ -389,7 +413,8 @@
         pin: '#c12f2f',
         naHighlight: '#bdbdbd',
         eastHighlight: '#c7c7c7',
-        seaHighlight: '#cfcfcf'
+        seaHighlight: '#cfcfcf',
+        euHighlight: '#c3c3c3'
       },
       geographyConfig: {
         highlightOnHover: false,
@@ -404,6 +429,7 @@
     const naHighlightData = {};
     const eastHighlightData = {};
     const seaHighlightData = {};
+    const euHighlightData = {};
     NORTH_AMERICA.forEach((id) => {
       naHighlightData[id] = { fillKey: 'naHighlight' };
     });
@@ -412,6 +438,9 @@
     });
     SOUTHEAST_ASIA.forEach((id) => {
       seaHighlightData[id] = { fillKey: 'seaHighlight' };
+    });
+    EUROPE.forEach((id) => {
+      euHighlightData[id] = { fillKey: 'euHighlight' };
     });
 
     map.svg.selectAll('.datamaps-subunit')
@@ -423,6 +452,8 @@
           map.updateChoropleth(eastHighlightData);
         } else if (SOUTHEAST_ASIA.has(geo.id)) {
           map.updateChoropleth(seaHighlightData);
+        } else if (EUROPE.has(geo.id)) {
+          map.updateChoropleth(euHighlightData);
         }
       })
       .on('mouseout', function () {
@@ -439,6 +470,9 @@
         } else if (SOUTHEAST_ASIA.has(geo.id)) {
           setActivePane('southeastAsia');
           ensureSoutheastAsiaMap(locations);
+        } else if (EUROPE.has(geo.id)) {
+          setActivePane('europe');
+          ensureEuropeMap(locations);
         }
       });
 
@@ -589,6 +623,44 @@
     renderMapBubbles('southeastAsia', map, locations, filterFn, 7);
 
     mapInstances.southeastAsia = map;
+    setTimeout(() => map.resize(), 0);
+  }
+
+  function ensureEuropeMap(locations) {
+    if (mapInstances.europe) return;
+
+    const map = new WorldDatamap({
+      element: mapEls.europe,
+      fills: {
+        defaultFill: '#d9d9d9',
+        pin: '#c12f2f'
+      },
+      geographyConfig: {
+        highlightOnHover: false,
+        popupOnHover: false,
+        borderColor: 'transparent',
+        borderWidth: 0
+      },
+      setProjection: function (element) {
+        const width = element.offsetWidth;
+        const height = element.offsetHeight;
+        const projection = d3.geo.mercator()
+          .center([15, 52])
+          .scale(Math.min(width, height) * 1.75)
+          .translate([width / 2, height / 2]);
+        const path = d3.geo.path().projection(projection);
+        return { path, projection };
+      }
+    });
+
+    const filterFn = (loc) => {
+      return loc.lat >= bounds.europe.latMin && loc.lat <= bounds.europe.latMax &&
+        loc.lng >= bounds.europe.lngMin && loc.lng <= bounds.europe.lngMax;
+    };
+
+    renderMapBubbles('europe', map, locations, filterFn, 7);
+
+    mapInstances.europe = map;
     setTimeout(() => map.resize(), 0);
   }
 
