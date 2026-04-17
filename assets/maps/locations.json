@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-17T10:54:38.568Z",
-  "count": 46,
+  "generated_at": "2026-04-17T11:10:45.171Z",
+  "count": 59,
   "locations": [
     {
       "id": 0,
@@ -508,6 +508,174 @@
     },
     {
       "id": 36,
+      "name": "IMG 6744",
+      "lat": 30.508180555555555,
+      "lng": 114.39736944444445,
+      "photo_src": "/img/maps/IMG_6744.jpg",
+      "shot_time": "2026-03-14T19:00:05.000Z",
+      "exposure_time": 0.016666666666666666,
+      "f_number": 1.7799999713880652,
+      "iso": 250,
+      "focal_length": 6.764999865652793,
+      "camera_model": "iPhone 15 Pro",
+      "place_name": "Hongshan District, Hubei, China"
+    },
+    {
+      "id": 37,
+      "name": "IMG 6745",
+      "lat": 30.50904166666667,
+      "lng": 114.40058888888889,
+      "photo_src": "/img/maps/IMG_6745.jpg",
+      "shot_time": "2026-03-14T20:57:04.000Z",
+      "exposure_time": 0.01,
+      "f_number": 2.2,
+      "iso": 64,
+      "focal_length": 2.220000028611935,
+      "camera_model": "iPhone 15 Pro",
+      "place_name": "Hongshan District, Hubei, China"
+    },
+    {
+      "id": 38,
+      "name": "IMG 6758",
+      "lat": 30.512991666666668,
+      "lng": 114.42606388888889,
+      "photo_src": "/img/maps/IMG_6758.jpg",
+      "shot_time": "2026-03-17T02:31:23.000Z",
+      "exposure_time": 0.02,
+      "f_number": 1.7799999713880652,
+      "iso": 125,
+      "focal_length": 6.764999865652793,
+      "camera_model": "iPhone 15 Pro",
+      "place_name": "Hongshan District, Hubei, China"
+    },
+    {
+      "id": 39,
+      "name": "IMG 6762",
+      "lat": 30.512988888888888,
+      "lng": 114.42599444444446,
+      "photo_src": "/img/maps/IMG_6762.jpg",
+      "shot_time": "2026-03-17T03:08:21.000Z",
+      "exposure_time": 0.02,
+      "f_number": 1.7799999713880652,
+      "iso": 160,
+      "focal_length": 6.764999865652793,
+      "camera_model": "iPhone 15 Pro",
+      "place_name": "Hongshan District, Hubei, China"
+    },
+    {
+      "id": 40,
+      "name": "IMG 6793",
+      "lat": 30.511575,
+      "lng": 114.42526944444445,
+      "photo_src": "/img/maps/IMG_6793.jpg",
+      "shot_time": "2026-03-19T03:26:33.000Z",
+      "exposure_time": 0.02,
+      "f_number": 1.7799999713880652,
+      "iso": 64,
+      "focal_length": 6.764999865652793,
+      "camera_model": "iPhone 15 Pro",
+      "place_name": "Hongshan District, Hubei, China"
+    },
+    {
+      "id": 41,
+      "name": "IMG 6909",
+      "lat": 30.50486666666667,
+      "lng": 114.40797500000001,
+      "photo_src": "/img/maps/IMG_6909.jpg",
+      "shot_time": "2026-03-30T03:11:14.000Z",
+      "exposure_time": 0.004219409282700422,
+      "f_number": 1.7799999713880652,
+      "iso": 64,
+      "focal_length": 6.764999865652793,
+      "camera_model": "iPhone 15 Pro",
+      "place_name": "Hongshan District, Hubei, China"
+    },
+    {
+      "id": 42,
+      "name": "IMG 6918",
+      "lat": 30.49756111111111,
+      "lng": 114.39948333333334,
+      "photo_src": "/img/maps/IMG_6918.jpg",
+      "shot_time": "2026-03-30T19:53:13.000Z",
+      "exposure_time": 0.01,
+      "f_number": 1.7799999713880652,
+      "iso": 100,
+      "focal_length": 6.764999865652793,
+      "camera_model": "iPhone 15 Pro",
+      "place_name": "Hongshan District, Hubei, China"
+    },
+    {
+      "id": 43,
+      "name": "IMG 6922",
+      "lat": 30.503888888888888,
+      "lng": 114.40289444444446,
+      "photo_src": "/img/maps/IMG_6922.jpg",
+      "shot_time": "2026-03-31T22:01:26.000Z",
+      "exposure_time": 0.02,
+      "f_number": 1.7799999713880652,
+      "iso": 125,
+      "focal_length": 6.764999865652793,
+      "camera_model": "iPhone 15 Pro",
+      "place_name": "Hongshan District, Hubei, China"
+    },
+    {
+      "id": 44,
+      "name": "IMG 6929",
+      "lat": 30.508355555555557,
+      "lng": 114.39981111111112,
+      "photo_src": "/img/maps/IMG_6929.jpg",
+      "shot_time": "2026-04-01T21:54:01.000Z",
+      "exposure_time": 0.004608294930875576,
+      "f_number": 1.7799999713880652,
+      "iso": 64,
+      "focal_length": 6.764999865652793,
+      "camera_model": "iPhone 15 Pro",
+      "place_name": "Hongshan District, Hubei, China"
+    },
+    {
+      "id": 45,
+      "name": "IMG 6931",
+      "lat": 30.508619444444445,
+      "lng": 114.39874166666668,
+      "photo_src": "/img/maps/IMG_6931.jpg",
+      "shot_time": "2026-04-02T00:23:46.000Z",
+      "exposure_time": 0.01,
+      "f_number": 2.2,
+      "iso": 200,
+      "focal_length": 2.220000028611935,
+      "camera_model": "iPhone 15 Pro",
+      "place_name": "Hongshan District, Hubei, China"
+    },
+    {
+      "id": 46,
+      "name": "IMG 6935",
+      "lat": 30.530927777777777,
+      "lng": 114.3359,
+      "photo_src": "/img/maps/IMG_6935.jpg",
+      "shot_time": "2026-04-02T04:14:02.000Z",
+      "exposure_time": 0.01,
+      "f_number": 1.7799999713880652,
+      "iso": 100,
+      "focal_length": 6.764999865652793,
+      "camera_model": "iPhone 15 Pro",
+      "place_name": "Wuchang District, Hubei, China"
+    },
+    {
+      "id": 47,
+      "name": "IMG 6946",
+      "lat": 30.504733333333334,
+      "lng": 114.40258055555556,
+      "photo_src": "/img/maps/IMG_6946.jpg",
+      "shot_time": "2026-04-03T21:57:51.000Z",
+      "exposure_time": 0.02,
+      "f_number": 1.7799999713880652,
+      "iso": 125,
+      "focal_length": 6.764999865652793,
+      "camera_model": "iPhone 15 Pro",
+      "place_name": "Hongshan District, Hubei, China"
+    },
+    {
+      "id": 48,
       "name": "IMG 7251",
       "lat": 36.580894444444446,
       "lng": -118.7508388888889,
@@ -521,7 +689,7 @@
       "place_name": "California, United States"
     },
     {
-      "id": 37,
+      "id": 49,
       "name": "IMG 7319",
       "lat": 34.41359722222222,
       "lng": -119.84043055555556,
@@ -535,7 +703,7 @@
       "place_name": "Isla Vista, California, United States"
     },
     {
-      "id": 38,
+      "id": 50,
       "name": "IMG 7324",
       "lat": 34.4152,
       "lng": -119.8366861111111,
@@ -549,7 +717,7 @@
       "place_name": "Isla Vista, California, United States"
     },
     {
-      "id": 39,
+      "id": 51,
       "name": "IMG 7339",
       "lat": 34.415752777777776,
       "lng": -119.83593888888889,
@@ -563,7 +731,7 @@
       "place_name": "Isla Vista, California, United States"
     },
     {
-      "id": 40,
+      "id": 52,
       "name": "IMG 8163",
       "lat": 28.168105555555556,
       "lng": 112.960075,
@@ -577,7 +745,7 @@
       "place_name": "Changsha, Hunan, China"
     },
     {
-      "id": 41,
+      "id": 53,
       "name": "IMG 8943-1",
       "lat": 22.294611111111113,
       "lng": 114.17296666666667,
@@ -591,7 +759,21 @@
       "place_name": "Hong Kong, Kowloon, China"
     },
     {
-      "id": 42,
+      "id": 54,
+      "name": "IMG 8946",
+      "lat": 30.51450277777778,
+      "lng": 114.43130555555555,
+      "photo_src": "/img/maps/IMG_8946.jpg",
+      "shot_time": "2024-01-25T22:05:44.000Z",
+      "exposure_time": 0.01282051282051282,
+      "f_number": 1.6,
+      "iso": 125,
+      "focal_length": 5.1,
+      "camera_model": "iPhone 13",
+      "place_name": "Hongshan District, Hubei, China"
+    },
+    {
+      "id": 55,
       "name": "IMG 8951",
       "lat": 22.294344444444445,
       "lng": 114.17228611111112,
@@ -605,7 +787,7 @@
       "place_name": "Hong Kong, Kowloon, China"
     },
     {
-      "id": 43,
+      "id": 56,
       "name": "IMG 8954",
       "lat": 22.29301388888889,
       "lng": 114.17076111111112,
@@ -619,7 +801,7 @@
       "place_name": "Hong Kong, Kowloon, China"
     },
     {
-      "id": 44,
+      "id": 57,
       "name": "IMG 9070",
       "lat": 22.580605555555554,
       "lng": 113.93833055555555,
@@ -633,7 +815,7 @@
       "place_name": "Nanshan District, Guangdong, China"
     },
     {
-      "id": 45,
+      "id": 58,
       "name": "IMG 9392",
       "lat": 29.63915,
       "lng": 95.06520833333333,
