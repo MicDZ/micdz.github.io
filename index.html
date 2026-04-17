@@ -1043,6 +1043,44 @@
     <hr>
     <h2>Something Interesting</h2>
 
+    Places I've been to:
+      <div class="photo-map-section">
+        <button type="button" class="photo-map-reset" data-map-action="back-world-inner" aria-hidden="true" aria-label="Back to World">&larr;</button>
+        <div
+          id="photoMapWorld"
+          class="photo-map photo-map-pane is-active"
+          data-locations-url="/assets/maps/locations.json"
+        ></div>
+        <div
+          id="photoMapAmericas"
+          class="photo-map photo-map-pane"
+          data-locations-url="/assets/maps/locations.json"
+        ></div>
+        <div
+          id="photoMapUSA"
+          class="photo-map photo-map-pane"
+          data-locations-url="/assets/maps/locations.json"
+        ></div>
+        <div
+          id="photoMapEastAsia"
+          class="photo-map photo-map-pane"
+          data-locations-url="/assets/maps/locations.json"
+        ></div>
+        <div
+          id="photoMapSoutheastAsia"
+          class="photo-map photo-map-pane"
+          data-locations-url="/assets/maps/locations.json"
+        ></div>
+        <div class="photo-map-note">Hover a pin to preview a photo.</div>
+      </div>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/datamaps/0.5.9/datamaps.world.min.js"></script>
+      
+<script src="/js/photo-map.js"></script>
+
+
     I compiled a list of HUST restaurants, you can get it <a href="/assets/HUST_Restaurants.pdf" download>here (PDF, Chinese)</a>. Enjoy your meals!
     <br>
     I also created a few useful tools for RoboMaster series competitions, check them out <a href="/rmtools">here</a>.
