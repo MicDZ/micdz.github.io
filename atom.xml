@@ -88,11 +88,11 @@
     
     
     
+    <category term="Machine Learning" scheme="https://www.micdz.cn/tags/Machine-Learning/"/>
+    
     <category term="Diffusion Models" scheme="https://www.micdz.cn/tags/Diffusion-Models/"/>
     
     <category term="Generative Models" scheme="https://www.micdz.cn/tags/Generative-Models/"/>
-    
-    <category term="Machine Learning" scheme="https://www.micdz.cn/tags/Machine-Learning/"/>
     
   </entry>
   
@@ -169,11 +169,11 @@
     
     
     
-    <category term="Diffusion Models" scheme="https://www.micdz.cn/tags/Diffusion-Models/"/>
-    
     <category term="Mathematics" scheme="https://www.micdz.cn/tags/Mathematics/"/>
     
     <category term="Machine Learning" scheme="https://www.micdz.cn/tags/Machine-Learning/"/>
+    
+    <category term="Diffusion Models" scheme="https://www.micdz.cn/tags/Diffusion-Models/"/>
     
   </entry>
   
