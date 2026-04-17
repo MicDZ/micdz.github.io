@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 @font-face {
     font-family: 'Noto Serif SC';
@@ -183,6 +184,295 @@
         font-size: 1.6rem;
         font-weight: 300;
     }
+
+        .photo-map-section {
+            position: relative;
+        }
+
+        .photo-map {
+            width: 100%;
+            height: 420px;
+            border: 1px solid #d8d5cc;
+            border-radius: 6px;
+            background: #f2f2f2;
+            margin: 10px 0 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-map-pane {
+            display: none;
+        }
+
+        .photo-map-pane.is-active {
+            display: block;
+        }
+
+        .photo-map-controls {
+            display: flex;
+            gap: 8px;
+            margin: 6px 0 8px;
+        }
+
+        .photo-map-btn {
+            border: 1px solid #b8b8b8;
+            background: #f7f7f7;
+            color: #333;
+            font-size: 0.95rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .photo-map-btn:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        .photo-map-reset {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            z-index: 5;
+            border: 1px solid #b8b8b8;
+            background: rgba(247, 247, 247, 0.92);
+            color: #333;
+            font-size: 0.8rem;
+            padding: 0 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            line-height: 1;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            display: none;
+        }
+
+        .photo-map-note {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .photo-map-empty {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .ref-hover-popup.photo-map-popup {
+            max-width: 680px;
+            padding: 6px;
+            pointer-events: none;
+        }
+
+        .photo-map-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(20, 20, 20, 0.45);
+            z-index: 9999;
+        }
+
+        .photo-map-modal.is-open {
+            display: flex;
+        }
+
+        .photo-map-modal-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background: #f7f7f7;
+            border: 1px solid #b8b8b8;
+            border-radius: 8px;
+            padding: 16px 16px 12px;
+            max-width: min(94vw, 1240px);
+            max-height: 80vh;
+            overflow: auto;
+        }
+
+        .photo-map-modal-close {
+            position: sticky;
+            top: 8px;
+            align-self: flex-end;
+            border: 1px solid #b8b8b8;
+            background: #fff;
+            color: #333;
+            font-size: 1.9rem;
+            line-height: 2;
+            width: 36px;
+            height: 38px;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 0;
+            z-index: 2;
+        }
+
+        .ref-hover-popup.photo-map-popup .photo-map-img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            box-shadow: none;
+            margin: 0;
+        }
+
+        .photo-map-modal .photo-map-img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .ref-hover-popup.photo-map-popup .photo-map-cluster {
+            column-count: 1;
+            column-gap: 12px;
+            column-fill: balance;
+        }
+
+        .ref-hover-popup.photo-map-popup .photo-map-cluster:not(.photo-map-cluster-double) {
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .ref-hover-popup.photo-map-popup .photo-map-cluster-double {
+            column-count: 2;
+        }
+
+        .ref-hover-popup.photo-map-popup .photo-map-cluster-double {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .photo-map-modal .photo-map-cluster {
+            column-count: 1;
+            column-gap: 16px;
+            column-fill: balance;
+        }
+
+        .photo-map-modal .photo-map-cluster:not(.photo-map-cluster-double) {
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .photo-map-modal .photo-map-cluster-double {
+            column-count: 2;
+        }
+
+        .photo-map-modal .photo-map-cluster-double {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .ref-hover-popup.photo-map-popup .photo-map-frame {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .photo-map-modal .photo-map-frame {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .ref-hover-popup.photo-map-popup .photo-map-cluster-item,
+        .photo-map-modal .photo-map-cluster-item {
+            display: inline-block;
+            width: 100%;
+            break-inside: avoid;
+            margin-bottom: 12px;
+        }
+
+        .ref-hover-popup.photo-map-popup > .photo-map-cluster-item {
+            max-width: 280px;
+            margin: 0 auto 12px;
+        }
+
+        .photo-map-modal .photo-map-modal-body > .photo-map-cluster-item {
+            max-width: 440px;
+            margin: 0 auto 12px;
+        }
+
+        .ref-hover-popup.photo-map-popup .photo-map-cluster-item .photo-map-img {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .photo-map-loading {
+            font-size: 0.9rem;
+            color: #444;
+            white-space: nowrap;
+        }
+
+        .photo-map-meta {
+            position: absolute;
+            right: 6px;
+            bottom: 4px;
+            font-family: 'VT323', 'Courier New', monospace;
+            font-size: 1rem;
+            color: white;
+            margin: 0;
+            text-align: right;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+        }
+
+        .photo-map-place {
+            position: absolute;
+            left: 6px;
+            top: 4px;
+            max-width: calc(100% - 12px);
+            font-family: 'VT323', 'Courier New', monospace;
+            font-size: 1rem;
+            color: white;
+            margin: 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 700px) {
+            .photo-map {
+                height: 300px;
+            }
+
+            .ref-hover-popup.photo-map-popup {
+                max-width: 90vw;
+            }
+
+            .ref-hover-popup.photo-map-popup .photo-map-img {
+                max-width: 90vw;
+            }
+
+            .photo-map-modal-card {
+                max-width: 94vw;
+            }
+
+            .photo-map-modal .photo-map-img {
+                max-width: 70vw;
+            }
+
+            .ref-hover-popup.photo-map-popup .photo-map-cluster,
+            .photo-map-modal .photo-map-cluster {
+                column-count: 1;
+            }
+
+            .ref-hover-popup.photo-map-popup .photo-map-cluster:not(.photo-map-cluster-double),
+            .photo-map-modal .photo-map-cluster:not(.photo-map-cluster-double) {
+                max-width: 90vw;
+            }
+
+            .ref-hover-popup.photo-map-popup > .photo-map-cluster-item,
+            .photo-map-modal .photo-map-modal-body > .photo-map-cluster-item {
+                max-width: 90vw;
+            }
+        }
 
 
     .mb-1 {
@@ -520,7 +810,7 @@
     }
 
     .day-header.is-today {
-        background: rgba(255, 230, 160, 0.35);
+        background: rgba(210, 210, 210, 0.6);
         font-weight: 600;
     }
 
@@ -572,9 +862,9 @@
         position: absolute;
         left: 6px;
         right: 6px;
-        background: #f3f0ea;
-        border: 1px solid #d7d2c6;
-        border-left: 3px solid #2b2b2b;
+        background: #f2f2f2;
+        border: 1px solid #c9c9c9;
+        border-left: 3px solid #4a4a4a;
         border-radius: 4px;
         padding: 4px 6px;
         font-size: 0.8rem;
@@ -628,7 +918,7 @@
         left: 0;
         right: 0;
         height: 2px;
-        background: #d34a3a;
+        background: #4a4a4a;
         z-index: 3;
         pointer-events: none;
     }
@@ -641,7 +931,7 @@
         width: 6px;
         height: 6px;
         border-radius: 50%;
-        background: #d34a3a;
+        background: #4a4a4a;
         transform: translateY(-50%);
         box-shadow: 0 0 0 2px #fff;
     }
@@ -664,7 +954,7 @@
     .calendar-error {
         padding: 10px;
         font-size: 0.9rem;
-        color: #a33;
+        color: #555;
     }
 
     @media (max-width: 700px) {
