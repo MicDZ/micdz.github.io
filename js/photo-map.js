@@ -2,13 +2,17 @@
   const mapEls = {
     world: document.getElementById('photoMapWorld'),
     americas: document.getElementById('photoMapAmericas'),
-    usa: document.getElementById('photoMapUSA'),
     eastAsia: document.getElementById('photoMapEastAsia'),
     southeastAsia: document.getElementById('photoMapSoutheastAsia'),
-    europe: document.getElementById('photoMapEurope')
+    europe: document.getElementById('photoMapEurope'),
+    usaCalifornia: document.getElementById('photoMapCalifornia'),
+    usaNevada: document.getElementById('photoMapNevada'),
+    usaNewYork: document.getElementById('photoMapNewYork'),
+    usaDC: document.getElementById('photoMapDC')
   };
 
-  if (!mapEls.world || !mapEls.americas || !mapEls.usa || !mapEls.eastAsia || !mapEls.southeastAsia || !mapEls.europe) return;
+  if (!mapEls.world || !mapEls.americas || !mapEls.eastAsia || !mapEls.southeastAsia || !mapEls.europe ||
+      !mapEls.usaCalifornia || !mapEls.usaNevada || !mapEls.usaNewYork || !mapEls.usaDC) return;
 
   const dataUrl = mapEls.world.getAttribute('data-locations-url') || '/assets/maps/locations.json';
 
@@ -77,10 +81,31 @@
     popup.style.top = `${top}px`;
   }
 
+  function updateOverlayBounds(scopeEl) {
+    if (!scopeEl) return;
+    const frames = scopeEl.querySelectorAll('.photo-map-frame');
+    frames.forEach((frame) => {
+      const img = frame.querySelector('img');
+      if (!img) return;
+      const applyBounds = () => {
+        const left = img.offsetLeft;
+        const width = img.clientWidth;
+        frame.style.setProperty('--overlay-left', `${left}px`);
+        frame.style.setProperty('--overlay-width', `${width}px`);
+      };
+      if (img.complete) {
+        requestAnimationFrame(applyBounds);
+      } else {
+        img.addEventListener('load', applyBounds, { once: true });
+      }
+    });
+  }
+
   function showPopup(html, evt) {
     popup.innerHTML = html;
     popup.style.display = 'block';
     positionPopup(evt);
+    requestAnimationFrame(() => updateOverlayBounds(popup));
   }
 
   function hidePopup() {
@@ -92,6 +117,7 @@
     if (!modalBody) return;
     modalBody.innerHTML = html;
     modal.classList.add('is-open');
+    requestAnimationFrame(() => updateOverlayBounds(modalBody));
   }
 
   function hideModal() {
@@ -126,10 +152,13 @@
   const mapInstances = {
     world: null,
     americas: null,
-    usa: null,
     eastAsia: null,
     southeastAsia: null,
-    europe: null
+    europe: null,
+    usaCalifornia: null,
+    usaNevada: null,
+    usaNewYork: null,
+    usaDC: null
   };
 
   const mapState = {
@@ -155,7 +184,11 @@
     eastAsia: { latMin: 0, latMax: 55, lngMin: 95, lngMax: 155 },
     southeastAsia: { latMin: -15, latMax: 25, lngMin: 90, lngMax: 140 },
     usa: { latMin: 24, latMax: 50, lngMin: -125, lngMax: -66 },
-    europe: { latMin: 34, latMax: 72, lngMin: -25, lngMax: 45 }
+    europe: { latMin: 34, latMax: 72, lngMin: -25, lngMax: 45 },
+    california: { latMin: 32, latMax: 42.5, lngMin: -124.5, lngMax: -114 },
+    nevada: { latMin: 35, latMax: 42.2, lngMin: -120.2, lngMax: -114 },
+    newYork: { latMin: 40.4, latMax: 45.1, lngMin: -79.9, lngMax: -71.8 },
+    dc: { latMin: 38.8, latMax: 39.1, lngMin: -77.2, lngMax: -76.9 }
   };
 
   const resetControl = document.querySelector('[data-map-action="back-world-inner"]');
@@ -175,10 +208,6 @@
       setTimeout(() => mapInstances.americas.resize(), 0);
       setTimeout(() => refreshMapBubbles('americas'), 0);
     }
-    if (name === 'usa' && mapInstances.usa) {
-      setTimeout(() => mapInstances.usa.resize(), 0);
-      setTimeout(() => refreshMapBubbles('usa'), 0);
-    }
     if (name === 'eastAsia' && mapInstances.eastAsia) {
       setTimeout(() => mapInstances.eastAsia.resize(), 0);
       setTimeout(() => refreshMapBubbles('eastAsia'), 0);
@@ -190,6 +219,22 @@
     if (name === 'europe' && mapInstances.europe) {
       setTimeout(() => mapInstances.europe.resize(), 0);
       setTimeout(() => refreshMapBubbles('europe'), 0);
+    }
+    if (name === 'usaCalifornia' && mapInstances.usaCalifornia) {
+      setTimeout(() => mapInstances.usaCalifornia.resize(), 0);
+      setTimeout(() => refreshMapBubbles('usaCalifornia'), 0);
+    }
+    if (name === 'usaNevada' && mapInstances.usaNevada) {
+      setTimeout(() => mapInstances.usaNevada.resize(), 0);
+      setTimeout(() => refreshMapBubbles('usaNevada'), 0);
+    }
+    if (name === 'usaNewYork' && mapInstances.usaNewYork) {
+      setTimeout(() => mapInstances.usaNewYork.resize(), 0);
+      setTimeout(() => refreshMapBubbles('usaNewYork'), 0);
+    }
+    if (name === 'usaDC' && mapInstances.usaDC) {
+      setTimeout(() => mapInstances.usaDC.resize(), 0);
+      setTimeout(() => refreshMapBubbles('usaDC'), 0);
     }
   }
 
@@ -216,6 +261,13 @@
     'ISL', 'ITA', 'LTU', 'LUX', 'LVA', 'MCO', 'MDA', 'MKD', 'MLT', 'MNE',
     'NLD', 'NOR', 'POL', 'PRT', 'ROU', 'RUS', 'SRB', 'SVK', 'SVN', 'SWE',
     'UKR'
+  ]);
+
+  const USA_FOCUS_STATES = new Map([
+    ['CA', { mapKey: 'usaCalifornia', center: [-119.5, 37.8], scale: 4.2, boundsKey: 'california' }],
+    ['NV', { mapKey: 'usaNevada', center: [-116.6, 38.6], scale: 4.8, boundsKey: 'nevada' }],
+    ['NY', { mapKey: 'usaNewYork', center: [-75.3, 42.9], scale: 5.2, boundsKey: 'newYork' }],
+    ['DC', { mapKey: 'usaDC', center: [-77.0, 38.9], scale: 9.5, boundsKey: 'dc' }]
   ]);
 
   function buildBubbles(locations, filterFn, radius) {
@@ -246,6 +298,10 @@
       eastAsia: 0.032,
       southeastAsia: 0.032,
       europe: 0.032,
+      usaCalifornia: 0.028,
+      usaNevada: 0.028,
+      usaNewYork: 0.028,
+      usaDC: 0.02,
       usa: 0.03
     };
     const ratio = ratios[mapName] || 0.035;
@@ -488,6 +544,12 @@
       activeMap.resize();
     }
     refreshMapBubbles(mapState.active);
+    if (popup.style.display !== 'none') {
+      updateOverlayBounds(popup);
+    }
+    if (modal.classList.contains('is-open')) {
+      updateOverlayBounds(modalBody);
+    }
   }
 
   function scheduleResize() {
@@ -503,51 +565,78 @@
   function ensureAmericasMap(locations) {
     if (mapInstances.americas) return;
 
-    const map = new WorldDatamap({
-      element: mapEls.americas,
-      fills: {
-        defaultFill: '#d9d9d9',
-        pin: '#c12f2f'
-      },
-      geographyConfig: {
-        highlightOnHover: false,
-        popupOnHover: false,
-        borderColor: 'transparent',
-        borderWidth: 0
-      },
-      setProjection: function (element) {
-        const width = element.offsetWidth;
-        const height = element.offsetHeight;
-        const projection = d3.geo.mercator()
-          .center([-100, 40])
-          .scale(Math.min(width, height) * 1.35)
-          .translate([width / 2, height / 2]);
-        const path = d3.geo.path().projection(projection);
-        return { path, projection };
-      }
-    });
+    loadUsaDatamap().then((UsaDatamap) => {
+      const map = new UsaDatamap({
+        element: mapEls.americas,
+        scope: 'usa',
+        fills: {
+          defaultFill: '#d9d9d9',
+          pin: '#c12f2f',
+          stateHighlight: '#bdbdbd'
+        },
+        geographyConfig: {
+          highlightOnHover: false,
+          highlightBorderColor: 'transparent',
+          popupOnHover: false,
+          borderColor: '#b8b8b8',
+          borderWidth: 0.6
+        },
+        done: function (datamap) {
+          let hoverState = null;
+          const setStateFill = (stateId, fillKey) => {
+            if (!stateId) return;
+            datamap.updateChoropleth({ [stateId]: { fillKey } });
+          };
+          const setHoverState = (stateId) => {
+            if (hoverState && hoverState !== stateId) {
+              setStateFill(hoverState, 'defaultFill');
+            }
+            hoverState = stateId;
+            setStateFill(stateId, 'stateHighlight');
+          };
+          const clearHoverState = (stateId) => {
+            if (!hoverState) return;
+            if (!stateId || hoverState === stateId) {
+              setStateFill(hoverState, 'defaultFill');
+              hoverState = null;
+            }
+          };
 
-    const filterFn = (loc) => {
-      return loc.lat >= bounds.americas.latMin && loc.lat <= bounds.americas.latMax &&
-        loc.lng >= bounds.americas.lngMin && loc.lng <= bounds.americas.lngMax;
-    };
+          datamap.svg.selectAll('.datamaps-subunit')
+            .on('mouseover', function (geo) {
+              if (!geo || !geo.id) return;
+              if (!USA_FOCUS_STATES.has(geo.id)) return;
+              setHoverState(geo.id);
+            })
+            .on('mouseout', function (geo) {
+              if (!geo || !geo.id) return;
+              if (!USA_FOCUS_STATES.has(geo.id)) return;
+              clearHoverState(geo.id);
+            })
+            .on('click', function (geo) {
+              if (!geo || !geo.id) return;
+              const focusConfig = USA_FOCUS_STATES.get(geo.id);
+              if (!focusConfig) return;
+              setActivePane(focusConfig.mapKey);
+              ensureUsaFocusMap(locations, focusConfig);
+            });
 
-    renderMapBubbles('americas', map, locations, filterFn, 7);
-
-    map.svg.selectAll('.datamaps-subunit')
-      .on('click', function (geo) {
-        if (!geo || !geo.id) return;
-        if (geo.id === 'USA') {
-          ensureUsaMap(locations).then(() => {
-            setActivePane('usa');
-          }).catch((err) => {
-            console.warn(err);
+          datamap.svg.on('mouseleave', function () {
+            clearHoverState();
           });
         }
       });
 
-    mapInstances.americas = map;
-    setTimeout(() => map.resize(), 0);
+      const filterFn = (loc) => {
+        return loc.lat >= bounds.usa.latMin && loc.lat <= bounds.usa.latMax &&
+          loc.lng >= bounds.usa.lngMin && loc.lng <= bounds.usa.lngMax;
+      };
+
+      renderMapBubbles('americas', map, locations, filterFn, 8);
+
+      mapInstances.americas = map;
+      setTimeout(() => map.resize(), 0);
+    });
   }
 
   function ensureEastAsiaMap(locations) {
@@ -664,52 +753,49 @@
     setTimeout(() => map.resize(), 0);
   }
 
-  function ensureUsaMap(locations) {
-    if (mapInstances.usa) return Promise.resolve();
+  function ensureUsaFocusMap(locations, config) {
+    if (!config || mapInstances[config.mapKey]) return Promise.resolve();
 
     return loadUsaDatamap().then((UsaDatamap) => {
       const map = new UsaDatamap({
-        element: mapEls.usa,
+        element: mapEls[config.mapKey],
         scope: 'usa',
         fills: {
           defaultFill: '#d9d9d9',
           pin: '#c12f2f',
-          selected: '#b0b0b0'
+          stateHighlight: '#bdbdbd'
         },
         geographyConfig: {
-          highlightOnHover: true,
-          highlightFillColor: '#c7c7c7',
-          highlightBorderColor: 'transparent',
+          highlightOnHover: false,
           popupOnHover: false,
-          borderColor: 'transparent',
-          borderWidth: 0
+          borderColor: '#b8b8b8',
+          borderWidth: 0.6
         },
-        done: function (datamap) {
-          datamap.svg.selectAll('.datamaps-subunit')
-            .on('click', function (geo) {
-              if (!geo || !geo.id) return;
-              const isSelected = mapState.selectedStates.has(geo.id);
-              if (isSelected) {
-                mapState.selectedStates.delete(geo.id);
-                datamap.updateChoropleth({ [geo.id]: null });
-              } else {
-                mapState.selectedStates.add(geo.id);
-                datamap.updateChoropleth({ [geo.id]: { fillKey: 'selected' } });
-              }
-            });
+        setProjection: function (element) {
+          const width = element.offsetWidth;
+          const height = element.offsetHeight;
+          const projection = d3.geo.mercator()
+            .center(config.center)
+            .scale(Math.min(width, height) * config.scale)
+            .translate([width / 2, height / 2]);
+          const path = d3.geo.path().projection(projection);
+          return { path, projection };
         }
       });
 
       const filterFn = (loc) => {
-        return loc.lat >= bounds.usa.latMin && loc.lat <= bounds.usa.latMax &&
-          loc.lng >= bounds.usa.lngMin && loc.lng <= bounds.usa.lngMax;
+        const range = bounds[config.boundsKey];
+        return loc.lat >= range.latMin && loc.lat <= range.latMax &&
+          loc.lng >= range.lngMin && loc.lng <= range.lngMax;
       };
 
-      renderMapBubbles('usa', map, locations, filterFn, 8);
+      renderMapBubbles(config.mapKey, map, locations, filterFn, 8);
 
-      mapInstances.usa = map;
+      mapInstances[config.mapKey] = map;
+      setTimeout(() => map.resize(), 0);
     });
   }
+
 
   function formatShotTime(value) {
     const date = new Date(value);

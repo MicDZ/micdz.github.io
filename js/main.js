@@ -154,10 +154,10 @@
 
   // 支持 ?key=xxx 或 #key=xxx
   const hsKey = new URLSearchParams((window.location.hash || '').replace(/^#/, '')).get('key');
-  console.log('hsKey:', hsKey);
+  // console.log('hsKey:', hsKey);
   const pass = (hsKey || '').trim();
   if (!pass) return;
-  console.log('Attempting to decrypt avatar with provided key...');
+  // console.log('Attempting to decrypt avatar with provided key...');
   const b64Normalize = (b64) => {
     let s = (b64 || '').replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
     const pad = s.length % 4;
@@ -190,9 +190,9 @@
       const hash = await crypto.subtle.digest('SHA-256', passBytes); // 32B key
       const key = await crypto.subtle.importKey('raw', hash, 'AES-GCM', false, ['decrypt']);
       const iv = b64ToU8(b64Iv);
-      console.log('iv:', iv);
+      // console.log('iv:', iv);
       const plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, cipherU8);
-      console.log('Avatar decrypted successfully.');
+      // console.log('Avatar decrypted successfully.');
       // 替换头像
       const url = URL.createObjectURL(new Blob([plainBuf], { type: mime || 'application/octet-stream' }));
       el.src = url;

@@ -337,6 +337,7 @@
         }
 
         .ref-hover-popup.photo-map-popup .photo-map-cluster:not(.photo-map-cluster-double) {
+            width: fit-content;
             max-width: 280px;
             margin: 0 auto;
         }
@@ -357,8 +358,17 @@
         }
 
         .photo-map-modal .photo-map-cluster:not(.photo-map-cluster-double) {
+            width: fit-content;
             max-width: 440px;
             margin: 0 auto;
+        }
+
+        .ref-hover-popup.photo-map-popup .photo-map-cluster:not(.photo-map-cluster-double) .photo-map-frame,
+        .ref-hover-popup.photo-map-popup > .photo-map-cluster-item .photo-map-frame,
+        .photo-map-modal .photo-map-cluster:not(.photo-map-cluster-double) .photo-map-frame,
+        .photo-map-modal .photo-map-modal-body > .photo-map-cluster-item .photo-map-frame {
+            width: fit-content;
+            max-width: 100%;
         }
 
         .photo-map-modal .photo-map-cluster-double {
@@ -373,35 +383,52 @@
         .ref-hover-popup.photo-map-popup .photo-map-frame {
             position: relative;
             display: inline-block;
-            width: 100%;
+            width: fit-content;
+            overflow: hidden;
+            --overlay-left: 0px;
+            --overlay-width: 100%;
         }
 
         .photo-map-modal .photo-map-frame {
             position: relative;
             display: inline-block;
-            width: 100%;
+            width: fit-content;
+            overflow: hidden;
+            --overlay-left: 0px;
+            --overlay-width: 100%;
         }
 
         .ref-hover-popup.photo-map-popup .photo-map-cluster-item,
         .photo-map-modal .photo-map-cluster-item {
-            display: inline-block;
+            display: flex;
+            justify-content: center;
             width: 100%;
             break-inside: avoid;
             margin-bottom: 12px;
         }
 
         .ref-hover-popup.photo-map-popup > .photo-map-cluster-item {
+            width: 100%;
             max-width: 280px;
             margin: 0 auto 12px;
         }
 
         .photo-map-modal .photo-map-modal-body > .photo-map-cluster-item {
+            width: 100%;
             max-width: 440px;
             margin: 0 auto 12px;
         }
 
         .ref-hover-popup.photo-map-popup .photo-map-cluster-item .photo-map-img {
-            width: 100%;
+            width: auto;
+            max-width: 100%;
+        }
+
+        .ref-hover-popup.photo-map-popup .photo-map-cluster:not(.photo-map-cluster-double) .photo-map-img,
+        .ref-hover-popup.photo-map-popup > .photo-map-cluster-item .photo-map-img,
+        .photo-map-modal .photo-map-cluster:not(.photo-map-cluster-double) .photo-map-img,
+        .photo-map-modal .photo-map-modal-body > .photo-map-cluster-item .photo-map-img {
+            width: auto;
             max-width: 100%;
         }
 
@@ -413,7 +440,9 @@
 
         .photo-map-meta {
             position: absolute;
-            right: 6px;
+            left: var(--overlay-left);
+            width: calc(var(--overlay-width) - 16px);
+            padding: 0 8px;
             bottom: 4px;
             font-family: 'VT323', 'Courier New', monospace;
             font-size: 1rem;
@@ -421,13 +450,17 @@
             margin: 0;
             text-align: right;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .photo-map-place {
             position: absolute;
-            left: 6px;
+            left: var(--overlay-left);
             top: 4px;
-            max-width: calc(100% - 12px);
+            width: calc(var(--overlay-width) - 16px);
+            padding: 0 8px;
             font-family: 'VT323', 'Courier New', monospace;
             font-size: 1rem;
             color: white;
@@ -440,7 +473,7 @@
 
         .photo-map-cluster-note {
             margin: 4px 4px 0;
-            font-size: 0.85rem;
+            font-size: 1rem;
             color: #555;
             text-align: center;
         }
@@ -451,7 +484,7 @@
             }
 
             .ref-hover-popup.photo-map-popup {
-                max-width: 90vw;
+                max-width: 78vw;
             }
 
             .ref-hover-popup.photo-map-popup .photo-map-img {
