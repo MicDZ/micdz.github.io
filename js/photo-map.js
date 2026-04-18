@@ -15,14 +15,73 @@
       !mapEls.usaCalifornia || !mapEls.usaNevada || !mapEls.usaNewYork || !mapEls.usaDC) return;
 
   const dataUrl = mapEls.world.getAttribute('data-locations-url') || '/assets/maps/locations.json';
+  const chinaGeoUrl = mapEls.world.getAttribute('data-china-geo-url') || '/js/china-provinces-simplified.json';
 
   if (!window.Datamap || !window.d3) {
     console.warn('Datamaps or d3 is not loaded.');
     return;
   }
 
+  function debugLog() {
+    if (!window.PHOTO_MAP_DEBUG) return;
+    const args = Array.prototype.slice.call(arguments);
+    args.unshift('[photo-map]');
+    console.log.apply(console, args);
+  }
+
+  function bringToFront(selection) {
+    selection.each(function () {
+      if (this && this.parentNode) {
+        this.parentNode.appendChild(this);
+      }
+    });
+  }
+
+  function ensureBubbleOnTop(map) {
+    if (!map || !map.svg) return;
+    const bubbleLayer = map.svg.select('.datamaps-bubbles, .bubbles');
+    const outlineLayer = map.svg.select('g.china-outline');
+    const hitLayer = map.svg.select('g.china-outline-hit');
+    const svgNode = map.svg.node ? map.svg.node() : null;
+    if (!svgNode) return;
+
+    const moveLayers = () => {
+      if (!outlineLayer.empty()) {
+        svgNode.appendChild(outlineLayer.node());
+        outlineLayer.style('pointer-events', 'none');
+        outlineLayer.selectAll('path').style('pointer-events', 'none');
+      }
+      if (!hitLayer.empty()) {
+        svgNode.appendChild(hitLayer.node());
+      }
+      if (!bubbleLayer.empty()) {
+        svgNode.appendChild(bubbleLayer.node());
+        bubbleLayer.style('pointer-events', 'all');
+        bubbleLayer.selectAll('.datamaps-bubble, .bubble').style('pointer-events', 'all');
+      }
+    };
+
+    moveLayers();
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(moveLayers);
+    }
+
+    if (window.PHOTO_MAP_DEBUG) {
+      const order = [];
+      if (svgNode && svgNode.childNodes) {
+        Array.prototype.forEach.call(svgNode.childNodes, (node) => {
+          if (!node || node.nodeType !== 1) return;
+          const cls = node.getAttribute ? node.getAttribute('class') : '';
+          order.push({ tag: node.tagName, className: cls });
+        });
+      }
+      debugLog('svg layer order', { map: map.__name || 'unknown', order });
+    }
+  }
+
   const WorldDatamap = window.Datamap;
   let usaLoadPromise = null;
+  let chinaGeoPromise = null;
 
   function loadUsaDatamap() {
     if (usaLoadPromise) return usaLoadPromise;
@@ -41,6 +100,29 @@
       document.head.appendChild(script);
     });
     return usaLoadPromise;
+  }
+
+  function loadChinaGeo() {
+    if (chinaGeoPromise) return chinaGeoPromise;
+    if (window.PHOTO_MAP_DEBUG) {
+      console.log('[photo-map] china geo url', chinaGeoUrl);
+    }
+    const cacheBuster = `v=${Date.now()}`;
+    const url = chinaGeoUrl.includes('?') ? `${chinaGeoUrl}&${cacheBuster}` : `${chinaGeoUrl}?${cacheBuster}`;
+    chinaGeoPromise = fetch(url, { cache: 'no-store' })
+      .then((res) => {
+        if (window.PHOTO_MAP_DEBUG) {
+          console.log('[photo-map] china geo status', res.status);
+        }
+        return res.json();
+      })
+      .catch((err) => {
+        if (window.PHOTO_MAP_DEBUG) {
+          console.warn('[photo-map] china geo fetch failed', err);
+        }
+        return null;
+      });
+    return chinaGeoPromise;
   }
 
   const popup = document.createElement('div');
@@ -181,7 +263,7 @@
 
   const bounds = {
     americas: { latMin: -60, latMax: 75, lngMin: -170, lngMax: -30 },
-    eastAsia: { latMin: 0, latMax: 55, lngMin: 95, lngMax: 155 },
+     eastAsia: { latMin: -15, latMax: 65, lngMin: 60, lngMax: 180 },
     southeastAsia: { latMin: -15, latMax: 25, lngMin: 90, lngMax: 140 },
     usa: { latMin: 24, latMax: 50, lngMin: -125, lngMax: -66 },
     europe: { latMin: 34, latMax: 72, lngMin: -25, lngMax: 45 },
@@ -211,6 +293,7 @@
     if (name === 'eastAsia' && mapInstances.eastAsia) {
       setTimeout(() => mapInstances.eastAsia.resize(), 0);
       setTimeout(() => refreshMapBubbles('eastAsia'), 0);
+      setTimeout(() => ensureChinaOutline(mapInstances.eastAsia), 0);
     }
     if (name === 'southeastAsia' && mapInstances.southeastAsia) {
       setTimeout(() => mapInstances.southeastAsia.resize(), 0);
@@ -241,6 +324,20 @@
   function bindControlEvents(locations) {
     if (resetControl) {
       resetControl.addEventListener('click', () => {
+        if (mapState.active === 'usaCalifornia' || mapState.active === 'usaNevada' ||
+            mapState.active === 'usaNewYork' || mapState.active === 'usaDC') {
+          setActivePane('americas');
+          return;
+        }
+
+        if (mapState.active === 'eastAsia') {
+          const eastAsiaMap = mapInstances.eastAsia;
+          if (eastAsiaMap && eastAsiaMap.__zoomScale && eastAsiaMap.__zoomScale > 1) {
+            resetChinaZoom(eastAsiaMap);
+            return;
+          }
+        }
+
         setActivePane('world');
       });
     }
@@ -277,7 +374,7 @@
         name: loc.name,
         latitude: loc.lat,
         longitude: loc.lng,
-        radius: radius || 6,
+        radius: Math.max(2, (radius || 6) * 0.82),
         fillKey: 'pin',
         photo_src: loc.photo_src,
         shot_time: loc.shot_time,
@@ -290,7 +387,7 @@
       }));
   }
 
-  function getClusterDistance(mapName, width, height) {
+  function getClusterDistance(mapName, width, height, zoomScale) {
     const minDim = Math.min(width, height);
     const ratios = {
       world: 0.05,
@@ -305,7 +402,9 @@
       usa: 0.03
     };
     const ratio = ratios[mapName] || 0.035;
-    return Math.max(10, Math.round(minDim * ratio));
+    const baseDistance = Math.round(minDim * ratio);
+    const scale = zoomScale && zoomScale > 1 ? Math.pow(zoomScale, 1.75) : 1;
+    return Math.max(1, Math.round(baseDistance / scale));
   }
 
   function buildClusteredBubbles(locations, mapName, map, filterFn, radius) {
@@ -318,7 +417,17 @@
     const svgNode = map.svg && map.svg.node ? map.svg.node() : null;
     const width = svgNode ? svgNode.clientWidth : mapEls[mapName].offsetWidth;
     const height = svgNode ? svgNode.clientHeight : mapEls[mapName].offsetHeight;
-    const distance = getClusterDistance(mapName, width || 0, height || 0);
+    const zoomScale = map && map.__zoomScale ? map.__zoomScale : 1;
+    const distance = getClusterDistance(mapName, width || 0, height || 0, zoomScale);
+    if (mapName === 'eastAsia' && window.PHOTO_MAP_DEBUG) {
+      debugLog('cluster distance', {
+        zoomScale,
+        distance,
+        width: width || 0,
+        height: height || 0,
+        points: filtered.length
+      });
+    }
     const clusters = [];
 
     filtered.forEach((loc) => {
@@ -353,7 +462,9 @@
 
     return clusters.map((cluster) => {
       const count = cluster.items.length;
-      const bubbleRadius = radius + (count > 1 ? Math.min(10, 2 + Math.sqrt(count) * 1.6) : 0);
+      const zoomScaleFactor = zoomScale && zoomScale > 1 ? Math.pow(zoomScale, 0.9) : 1;
+      const baseRadius = Math.max(2, (radius * 0.7) / zoomScaleFactor);
+      const bubbleRadius = baseRadius + (count > 1 ? Math.min(5, 0.8 + Math.sqrt(count) * 0.8) : 0);
       const first = cluster.items[0];
       const bubble = {
         name: first.name,
@@ -379,10 +490,71 @@
 
   function renderMapBubbles(mapName, map, locations, filterFn, radius) {
     const bubbles = buildClusteredBubbles(locations, mapName, map, filterFn, radius);
-    map.svg.selectAll('.datamaps-bubble').remove();
+    map.svg.selectAll('.datamaps-bubble, .bubble').remove();
     map.bubbles(bubbles, { popupOnHover: false });
+    const bubbleLayer = map.svg.select('.datamaps-bubbles, .bubbles');
+    if (!bubbleLayer.empty()) {
+      bubbleLayer.style('pointer-events', 'all');
+      ensureBubbleOnTop(map);
+    }
+    map.svg.selectAll('.datamaps-bubble, .bubble').style('pointer-events', 'all');
     bindBubbleEvents(map);
     map.__bubbleConfig = { mapName, locations, filterFn, radius };
+    map.__name = mapName;
+
+    if (mapName === 'eastAsia' && window.PHOTO_MAP_DEBUG) {
+      const bubbleNodes = [];
+      map.svg.selectAll('.datamaps-bubble, .bubble').each(function () {
+        bubbleNodes.push(this);
+      });
+      const first = bubbleNodes && bubbleNodes.length ? bubbleNodes[0] : null;
+      const bbox = first && typeof first.getBBox === 'function' ? first.getBBox() : null;
+      const peLayer = bubbleLayer.empty() ? null : bubbleLayer.style('pointer-events');
+      const peBubble = first && first.style ? first.style.pointerEvents : null;
+      debugLog('eastAsia bubble dom', {
+        bubbleCount: bubbleNodes.length,
+        layerPointerEvents: peLayer,
+        bubblePointerEvents: peBubble,
+        firstBBox: bbox ? { x: Math.round(bbox.x), y: Math.round(bbox.y), w: Math.round(bbox.width), h: Math.round(bbox.height) } : null
+      });
+    }
+
+    if (mapName === 'eastAsia' && map && map.__zoomScale && map.__zoomScale !== 1 && map.__zoomTranslate) {
+      applyChinaZoomImmediate(map, map.__zoomScale, map.__zoomTranslate);
+      if (window.PHOTO_MAP_DEBUG) {
+        debugLog('reapply china zoom after bubbles render', {
+          zoomScale: map.__zoomScale,
+          translate: map.__zoomTranslate
+        });
+      }
+    }
+
+    if (mapName === 'eastAsia' && window.PHOTO_MAP_DEBUG) {
+      const projection = map && (map.projection || (map.path && map.path.projection && map.path.projection()));
+      const sample = bubbles.slice(0, 3).map((b) => {
+        const proj = projection ? projection([b.longitude, b.latitude]) : null;
+        return {
+          lat: b.latitude,
+          lng: b.longitude,
+          projX: proj ? Math.round(proj[0]) : null,
+          projY: proj ? Math.round(proj[1]) : null,
+          radius: b.radius,
+          count: Array.isArray(b.items) ? b.items.length : 1
+        };
+      });
+      debugLog('eastAsia bubbles rendered', {
+        zoomScale: map.__zoomScale || 1,
+        bubbleCount: bubbles.length,
+        sample
+      });
+
+      setTimeout(() => {
+        const bubbleLayer = map.svg.select('.datamaps-bubbles, .bubbles');
+        debugLog('eastAsia bubble layer transform', {
+          transform: bubbleLayer.empty() ? null : bubbleLayer.attr('transform')
+        });
+      }, 0);
+    }
   }
 
   function refreshMapBubbles(mapName) {
@@ -392,10 +564,39 @@
   }
 
   function bindBubbleEvents(map) {
-    map.svg.selectAll('.datamaps-bubble')
+    if (window.PHOTO_MAP_DEBUG && map && map.svg) {
+      const svgNode = map.svg.node();
+      if (svgNode && !svgNode.__photoMapDebugBound) {
+        svgNode.__photoMapDebugBound = true;
+        let lastLog = 0;
+        map.svg.on('mousemove.photoMapDebug', function () {
+          const now = Date.now();
+          if (now - lastLog < 400) return;
+          lastLog = now;
+          const evt = d3.event;
+          if (!evt) return;
+          const x = evt.clientX;
+          const y = evt.clientY;
+          const topEl = document.elementFromPoint(x, y);
+          const topClass = topEl && topEl.getAttribute ? topEl.getAttribute('class') : '';
+          debugLog('pointer target', {
+            map: map.__name || 'unknown',
+            tag: topEl ? topEl.tagName : null,
+            className: topClass
+          });
+        });
+      }
+    }
+    map.svg.selectAll('.datamaps-bubble, .bubble')
       .on('mouseover', function (d) {
         const evt = d3.event;
         if (!d) return;
+        if (window.PHOTO_MAP_DEBUG) {
+          debugLog('bubble mouseover', {
+            map: map && map.__name ? map.__name : 'unknown',
+            targetClass: this && this.getAttribute ? this.getAttribute('class') : ''
+          });
+        }
         const items = Array.isArray(d.items) && d.items.length ? d.items : [d];
         const validItems = items.filter((item) => item && item.photo_src);
         if (!validItems.length) return;
@@ -413,6 +614,9 @@
           });
       })
       .on('click', function (d) {
+        if (d3.event && typeof d3.event.stopPropagation === 'function') {
+          d3.event.stopPropagation();
+        }
         if (!d) return;
         const items = Array.isArray(d.items) && d.items.length ? d.items : [d];
         const validItems = items.filter((item) => item && item.photo_src);
@@ -544,6 +748,9 @@
       activeMap.resize();
     }
     refreshMapBubbles(mapState.active);
+    if (mapState.active === 'eastAsia') {
+      ensureChinaOutline(mapInstances.eastAsia);
+    }
     if (popup.style.display !== 'none') {
       updateOverlayBounds(popup);
     }
@@ -672,9 +879,234 @@
     };
 
     renderMapBubbles('eastAsia', map, locations, filterFn, 7);
+    ensureChinaOutline(map);
 
     mapInstances.eastAsia = map;
     setTimeout(() => map.resize(), 0);
+  }
+
+  function ensureChinaOutline(map) {
+    if (!map) return;
+    loadChinaGeo().then((geoData) => {
+      if (!geoData) return;
+      drawChinaOutline(map, geoData);
+    });
+  }
+
+  function drawChinaOutline(map, geoData) {
+    if (!map || !map.svg || !geoData) return;
+    const projection = map.projection || (map.path && map.path.projection && map.path.projection());
+    if (!projection) return;
+    const path = d3.geo.path().projection(projection);
+    let outlineLayer = map.svg.select('g.china-outline');
+    let hitLayer = map.svg.select('g.china-outline-hit');
+    if (outlineLayer.empty()) {
+      const bubbleLayer = map.svg.select('.datamaps-bubbles, .bubbles');
+      if (bubbleLayer.empty()) {
+        hitLayer = map.svg.append('g').attr('class', 'china-outline-hit');
+        outlineLayer = map.svg.append('g').attr('class', 'china-outline');
+      } else {
+        hitLayer = map.svg.insert('g', '.datamaps-bubbles, .bubbles').attr('class', 'china-outline-hit');
+        outlineLayer = map.svg.insert('g', '.datamaps-bubbles, .bubbles').attr('class', 'china-outline');
+      }
+    }
+    if (hitLayer.empty()) {
+      const bubbleLayer = map.svg.select('.datamaps-bubbles, .bubbles');
+      hitLayer = bubbleLayer.empty()
+        ? map.svg.insert('g', 'g.china-outline').attr('class', 'china-outline-hit')
+        : map.svg.insert('g', '.datamaps-bubbles, .bubbles').attr('class', 'china-outline-hit');
+    }
+
+    let features = [];
+    if (geoData.type === 'Topology') {
+      const objects = geoData.objects || {};
+      const objectKey = Object.keys(objects)[0];
+      if (window.PHOTO_MAP_DEBUG) {
+        console.log('[photo-map] china topojson object', { objectKey });
+      }
+      if (objectKey && window.topojson && typeof window.topojson.feature === 'function') {
+        features = (window.topojson.feature(geoData, objects[objectKey]) || {}).features || [];
+      }
+    } else {
+      features = geoData.features || [];
+    }
+    const isTaiwanProps = (props) => {
+      const id = String((props && props.id) || '');
+      return /^09\d{3}$/.test(id) || /^100\d{2}$/.test(id) || /^(63|64|65|66|67|68)000$/.test(id);
+    };
+
+    if (window.topojson && typeof window.topojson.merge === 'function') {
+      const objects = geoData.objects || {};
+      const objectKey = Object.keys(objects)[0];
+      if (objectKey) {
+        const geoms = (objects[objectKey] && objects[objectKey].geometries) || [];
+        const taiwanGeoms = geoms.filter((g) => isTaiwanProps(g && g.properties ? g.properties : {}));
+        if (taiwanGeoms.length) {
+          const merged = window.topojson.merge(geoData, taiwanGeoms);
+          features = features.filter((f) => !isTaiwanProps(f && f.properties ? f.properties : {}));
+          features.push({
+            type: 'Feature',
+            properties: { name: 'Taiwan', adcode: 'TW-PROV' },
+            geometry: merged
+          });
+        }
+      }
+    }
+    features.forEach((feature) => {
+      if (!feature || !feature.properties) return;
+      const props = feature.properties;
+      if (!props.name) {
+        props.name = props.NAME_1 || props.NL_NAME_1 || props.name || '';
+      }
+      if (!props.adcode) {
+        props.adcode = props.id || props.ID_1 || props.adcode || '';
+      }
+    });
+    if (window.PHOTO_MAP_DEBUG) {
+      const taiwanCount = features.filter((f) => {
+        const name = f && f.properties ? String(f.properties.name || '') : '';
+        return /台湾|台灣|Taiwan/i.test(name);
+      }).length;
+      console.log('[photo-map] china outline draw', { features: features.length, taiwanCount });
+    }
+    const outlines = outlineLayer.selectAll('path.china-province-outline')
+      .data(features, (d, i) => {
+        const props = d && d.properties ? d.properties : null;
+        const adcode = props && props.adcode ? String(props.adcode) : '';
+        const name = props && props.name ? String(props.name) : '';
+        return adcode || name || `idx-${i}`;
+      });
+
+    outlines.enter().append('path').attr('class', 'china-province-outline');
+    outlines
+      .attr('d', path)
+      .attr('stroke', '#b8b8b8')
+      .style('stroke', '#b8b8b8', 'important')
+      .style('pointer-events', 'none');
+    outlines.exit().remove();
+
+    const hits = hitLayer.selectAll('path.china-province-hit')
+      .data(features, (d, i) => {
+        const props = d && d.properties ? d.properties : null;
+        const adcode = props && props.adcode ? String(props.adcode) : '';
+        const name = props && props.name ? String(props.name) : '';
+        return adcode || name || `idx-${i}`;
+      });
+
+    hits.enter().append('path').attr('class', 'china-province-hit');
+    hits
+      .attr('d', path)
+      .on('mouseover', function (d) {
+        outlineLayer.selectAll('path.china-province-outline')
+          .filter(function (d2) { return d2 === d; })
+          .classed('is-hover', true);
+      })
+      .on('mouseout', function (d) {
+        outlineLayer.selectAll('path.china-province-outline')
+          .filter(function (d2) { return d2 === d; })
+          .classed('is-hover', false);
+      })
+      .on('click', function (d) {
+        d3.event.stopPropagation();
+        zoomChinaProvince(map, path, d);
+      });
+    hits.exit().remove();
+
+    map.svg.on('click', function () {
+      resetChinaZoom(map);
+    });
+
+    const bubbleLayer = map.svg.select('.datamaps-bubbles, .bubbles');
+    if (!bubbleLayer.empty()) {
+      ensureBubbleOnTop(map);
+    }
+  }
+
+  function zoomChinaProvince(map, path, feature) {
+    if (!map || !map.svg || !feature) return;
+    const svgNode = map.svg.node();
+    const width = svgNode ? svgNode.clientWidth : 0;
+    const height = svgNode ? svgNode.clientHeight : 0;
+    if (!width || !height) return;
+    const boundsBox = path.bounds(feature);
+    const dx = boundsBox[1][0] - boundsBox[0][0];
+    const dy = boundsBox[1][1] - boundsBox[0][1];
+    const x = (boundsBox[0][0] + boundsBox[1][0]) / 2;
+    const y = (boundsBox[0][1] + boundsBox[1][1]) / 2;
+    const scale = Math.max(1, Math.min(6, 0.9 / Math.max(dx / width, dy / height)));
+    const translate = [width / 2 - scale * x, height / 2 - scale * y];
+    if (window.PHOTO_MAP_DEBUG) {
+      const props = feature && feature.properties ? feature.properties : {};
+      debugLog('china zoom', {
+        name: props.name || props.NAME_1 || '',
+        adcode: props.adcode || props.id || '',
+        bounds: boundsBox,
+        scale,
+        translate
+      });
+    }
+    map.__zoomScale = scale;
+    map.__zoomTranslate = translate;
+    applyChinaZoom(map, scale, translate);
+    refreshMapBubbles('eastAsia');
+  }
+
+  function resetChinaZoom(map) {
+    if (!map || !map.svg) return;
+    map.__zoomScale = 1;
+    map.__zoomTranslate = null;
+    if (window.PHOTO_MAP_DEBUG) {
+      debugLog('china zoom reset');
+    }
+    applyChinaZoom(map, 1, [0, 0]);
+    refreshMapBubbles('eastAsia');
+  }
+
+  function applyChinaZoom(map, scale, translate) {
+    const tx = translate[0];
+    const ty = translate[1];
+    map.svg.selectAll('.datamaps-subunits, g.china-outline, g.china-outline-hit, .datamaps-bubbles, .bubbles')
+      .transition().duration(450)
+      .attr('transform', `translate(${tx},${ty})scale(${scale})`);
+
+    if (window.PHOTO_MAP_DEBUG) {
+      debugLog('apply china zoom', { scale, translate });
+    }
+
+    const bubbles = map.svg.selectAll('.datamaps-bubble, .bubble');
+    bubbles.each(function (d) {
+      if (d && d.__baseRadius == null) {
+        d.__baseRadius = d.radius || Number(d3.select(this).attr('r')) || 0;
+      }
+    });
+
+    bubbles
+      .transition().duration(450)
+      .attr('r', (d) => {
+        if (!d || !d.__baseRadius) return d && d.radius ? d.radius : 0;
+        return d.__baseRadius / scale;
+      });
+    ensureBubbleOnTop(map);
+  }
+
+  function applyChinaZoomImmediate(map, scale, translate) {
+    const tx = translate[0];
+    const ty = translate[1];
+    map.svg.selectAll('.datamaps-subunits, g.china-outline, g.china-outline-hit, .datamaps-bubbles, .bubbles')
+      .attr('transform', `translate(${tx},${ty})scale(${scale})`);
+
+    const bubbles = map.svg.selectAll('.datamaps-bubble, .bubble');
+    bubbles.each(function (d) {
+      if (d && d.__baseRadius == null) {
+        d.__baseRadius = d.radius || Number(d3.select(this).attr('r')) || 0;
+      }
+    });
+    bubbles
+      .attr('r', (d) => {
+        if (!d || !d.__baseRadius) return d && d.radius ? d.radius : 0;
+        return d.__baseRadius / scale;
+      });
+    ensureBubbleOnTop(map);
   }
 
   function ensureSoutheastAsiaMap(locations) {

@@ -88,11 +88,11 @@
     
     
     
-    <category term="Machine Learning" scheme="https://www.micdz.cn/tags/Machine-Learning/"/>
-    
     <category term="Diffusion Models" scheme="https://www.micdz.cn/tags/Diffusion-Models/"/>
     
     <category term="Generative Models" scheme="https://www.micdz.cn/tags/Generative-Models/"/>
+    
+    <category term="Machine Learning" scheme="https://www.micdz.cn/tags/Machine-Learning/"/>
     
   </entry>
   
@@ -169,11 +169,11 @@
     
     
     
+    <category term="Diffusion Models" scheme="https://www.micdz.cn/tags/Diffusion-Models/"/>
+    
     <category term="Mathematics" scheme="https://www.micdz.cn/tags/Mathematics/"/>
     
     <category term="Machine Learning" scheme="https://www.micdz.cn/tags/Machine-Learning/"/>
-    
-    <category term="Diffusion Models" scheme="https://www.micdz.cn/tags/Diffusion-Models/"/>
     
   </entry>
   
@@ -196,11 +196,11 @@
     
     
     
-    <category term="Mathematics" scheme="https://www.micdz.cn/tags/Mathematics/"/>
-    
     <category term="Philosophy" scheme="https://www.micdz.cn/tags/Philosophy/"/>
     
     <category term="Book Review" scheme="https://www.micdz.cn/tags/Book-Review/"/>
+    
+    <category term="Mathematics" scheme="https://www.micdz.cn/tags/Mathematics/"/>
     
   </entry>
   
@@ -222,11 +222,11 @@
     
     
     
-    <category term="Mathematics" scheme="https://www.micdz.cn/tags/Mathematics/"/>
-    
     <category term="Philosophy" scheme="https://www.micdz.cn/tags/Philosophy/"/>
     
     <category term="Book Review" scheme="https://www.micdz.cn/tags/Book-Review/"/>
+    
+    <category term="Mathematics" scheme="https://www.micdz.cn/tags/Mathematics/"/>
     
   </entry>
   
@@ -249,9 +249,9 @@
     
     
     
-    <category term="Mathematics" scheme="https://www.micdz.cn/tags/Mathematics/"/>
-    
     <category term="Philosophy" scheme="https://www.micdz.cn/tags/Philosophy/"/>
+    
+    <category term="Mathematics" scheme="https://www.micdz.cn/tags/Mathematics/"/>
     
   </entry>
   

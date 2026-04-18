@@ -208,6 +208,17 @@
             display: block;
         }
 
+        .photo-map .datamaps-bubbles,
+        .photo-map .bubbles {
+            pointer-events: all;
+        }
+
+        .photo-map .datamaps-bubble,
+        .photo-map .bubble {
+            pointer-events: all;
+            cursor: pointer;
+        }
+
         .photo-map-controls {
             display: flex;
             gap: 8px;
@@ -253,6 +264,33 @@
             color: #666;
             margin-bottom: 12px;
         
+        }
+
+        .china-outline .china-province-outline,
+        .photo-map .china-outline path {
+            fill: none;
+            stroke: #b8b8b8 !important;
+            stroke-width: 0.8;
+            cursor: pointer;
+            pointer-events: none;
+        }
+
+        .photo-map .datamap path.china-province-outline,
+        .photo-map .datamap path.china-province-outline.is-hover {
+            stroke: #b8b8b8 !important;
+        }
+
+        .china-outline-hit .china-province-hit {
+            fill: transparent;
+            stroke: transparent;
+            stroke-width: 10;
+            pointer-events: all;
+        }
+
+        .china-outline .china-province-outline.is-hover {
+            fill: rgba(199, 199, 199, 0.35);
+            stroke-width: 1.2;
+            pointer-events: none;
         }
 
         .photo-map-empty {
