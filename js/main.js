@@ -248,19 +248,6 @@
   async function resolveDefaultTimeZoneFromGithub(user) {
     if (!user) return null;
 
-    const cacheKey = `weeklyCalendar:defaultTimeZone:${user}`;
-    try {
-      const cached = localStorage.getItem(cacheKey);
-      if (cached) {
-        const parsed = JSON.parse(cached);
-        if (parsed && isValidTimeZone(parsed.tz) && Number(parsed.expiresAt) > Date.now()) {
-          return parsed.tz;
-        }
-      }
-    } catch (_) {
-      // Ignore cache read failures and continue network resolution.
-    }
-
     const profile = await fetchJson(`https://api.github.com/users/${encodeURIComponent(user)}`, {
       headers: {
         Accept: 'application/vnd.github+json'
@@ -269,6 +256,20 @@
     });
     const rawLocation = typeof profile.location === 'string' ? profile.location.trim() : '';
     if (!rawLocation) return null;
+
+    const cacheKey = `weeklyCalendar:defaultTimeZone:${user}`;
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        const sameLocation = parsed && typeof parsed.location === 'string' && parsed.location === rawLocation;
+        if (sameLocation && isValidTimeZone(parsed.tz) && Number(parsed.expiresAt) > Date.now()) {
+          return parsed.tz;
+        }
+      }
+    } catch (_) {
+      // Ignore cache read failures and continue network resolution.
+    }
 
     const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${encodeURIComponent(rawLocation)}`;
     const geoRows = await fetchJson(geocodeUrl, {
@@ -290,6 +291,7 @@
 
     try {
       localStorage.setItem(cacheKey, JSON.stringify({
+        location: rawLocation,
         tz: resolvedTz,
         expiresAt: Date.now() + 24 * 60 * 60 * 1000
       }));
