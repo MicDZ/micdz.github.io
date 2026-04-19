@@ -161,6 +161,17 @@
   if (modalClose) {
     modalClose.addEventListener('click', hideModal);
   }
+  modal.addEventListener('click', function (evt) {
+    if (evt && evt.target === modal) {
+      hideModal();
+    }
+  });
+  document.addEventListener('keydown', function (evt) {
+    if (!evt || evt.key !== 'Escape') return;
+    if (modal.classList.contains('is-open')) {
+      hideModal();
+    }
+  });
 
   const imageCache = new Map();
   let popupToken = 0;
@@ -1188,7 +1199,7 @@
         Promise.all(validItems.map((item) => loadImageAsync(item.photo_src)))
           .then((images) => {
             if (token !== popupToken) return;
-            const html = buildClusterHtml(validItems, images, { limit: null, showMoreNote: false });
+            const html = buildClusterHtml(validItems, images, { limit: null, showMoreNote: false, frameLayout: 'card' });
             if (!html) return;
             showModal(html);
           });
@@ -1207,16 +1218,16 @@
     const opts = options || {};
     const limit = typeof opts.limit === 'number' ? opts.limit : null;
     const showMoreNote = Boolean(opts.showMoreNote);
+    const frameLayout = opts.frameLayout || 'overlay';
+    const itemClass = frameLayout === 'card' ? 'photo-map-cluster-item photo-map-cluster-item-card' : 'photo-map-cluster-item';
     const totalCount = items.length;
     const displayCount = limit && totalCount > limit ? limit : totalCount;
     const blocks = [];
     items.slice(0, displayCount).forEach((item, idx) => {
       const img = images[idx];
       if (!img) return;
-      const placeHtml = buildPlaceHtml(item);
-      const metaHtml = buildMetaHtml(item);
-      const imgHtml = `<div class="photo-map-frame"><img class="photo-map-img" src="${item.photo_src}" alt="${item.name || 'photo'}">${placeHtml}${metaHtml}</div>`;
-      blocks.push(`<div class="photo-map-cluster-item">${imgHtml}</div>`);
+      const imgHtml = buildPhotoFrameHtml(item, { layout: frameLayout });
+      blocks.push(`<div class="${itemClass}">${imgHtml}</div>`);
     });
     if (!blocks.length) return '';
     if (blocks.length === 1) return blocks[0];
@@ -1863,13 +1874,22 @@
     return String(value);
   }
 
+  function escapeHtml(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function buildPlaceHtml(data) {
     const place = data.place_name || '';
     if (!place) return '';
-    return `<div class="photo-map-place">${place}</div>`;
+    return `<div class="photo-map-place">${escapeHtml(place)}</div>`;
   }
 
-  function buildMetaHtml(data) {
+  function buildMetaText(data) {
     const parts = [];
     const timeLabel = data.shot_time ? formatShotTime(data.shot_time) : '';
     const exposure = formatExposure(data.exposure_time);
@@ -1885,9 +1905,36 @@
     if (focal) parts.push(focal);
     if (camera) parts.push(camera);
 
-    if (!parts.length) return '';
-    return `<div class="photo-map-meta">${parts.join(' \u00b7 ')}</div>`;
+    return parts.join(' | ');
   }
+
+  function buildMetaHtml(data) {
+    const text = buildMetaText(data);
+    if (!text) return '';
+    return `<div class="photo-map-meta">${escapeHtml(text)}</div>`;
+  }
+
+  function buildPhotoFrameHtml(data, options) {
+    const opts = options || {};
+    const layout = opts.layout || 'overlay';
+    const frameClass = opts.frameClass || (layout === 'card' ? 'photo-map-frame photo-map-frame-card' : 'photo-map-frame');
+    const imgClass = opts.imgClass || 'photo-map-img';
+    const imgLoading = opts.imgLoading ? ` loading="${opts.imgLoading}"` : '';
+    const imgDecoding = opts.imgDecoding ? ` decoding="${opts.imgDecoding}"` : '';
+    const src = data && data.photo_src ? String(data.photo_src) : '';
+    const alt = data && data.name ? String(data.name) : 'photo';
+    if (!src) return '';
+    const placeHtml = buildPlaceHtml(data || {});
+    const metaHtml = buildMetaHtml(data || {});
+    return `<div class="${frameClass}"><img class="${imgClass}"${imgLoading}${imgDecoding} src="${escapeHtml(src)}" alt="${escapeHtml(alt)}">${placeHtml}${metaHtml}</div>`;
+  }
+
+  window.PhotoMapSharedUI = window.PhotoMapSharedUI || {};
+  window.PhotoMapSharedUI.escapeHtml = escapeHtml;
+  window.PhotoMapSharedUI.buildMetaText = buildMetaText;
+  window.PhotoMapSharedUI.buildPhotoFrameHtml = buildPhotoFrameHtml;
+  window.PhotoMapSharedUI.showModalHtml = showModal;
+  window.PhotoMapSharedUI.hideModal = hideModal;
 
   fetch(dataUrl, { cache: 'no-store' })
     .then((res) => res.json())

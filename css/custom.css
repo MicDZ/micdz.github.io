@@ -379,11 +379,11 @@
         }
 
         .photo-map-modal-close {
-            position: sticky;
-            top: 8px;
-            align-self: flex-end;
+            position: absolute;
+            top: 16px;
+            right: 16px;
             border: 1px solid #b8b8b8;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.92);
             color: #333;
             font-size: 1.9rem;
             line-height: 2;
@@ -393,6 +393,26 @@
             cursor: pointer;
             padding: 0;
             z-index: 2;
+        }
+
+        .ref-hover-popup.photo-map-popup .photo-map-frame {
+            --overlay-left: 0px;
+            --overlay-width: 100%;
+            position: relative;
+            display: inline-block;
+            width: fit-content;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .photo-map-modal .photo-map-frame {
+            position: relative;
+            display: inline-block;
+            width: fit-content;
+            max-width: 100%;
+            overflow: hidden;
+            --overlay-left: 0px;
+            --overlay-width: 100%;
         }
 
         .ref-hover-popup.photo-map-popup .photo-map-img {
@@ -424,58 +444,8 @@
 
         .ref-hover-popup.photo-map-popup .photo-map-cluster-double {
             column-count: 2;
-        }
-
-        .ref-hover-popup.photo-map-popup .photo-map-cluster-double {
             max-width: 640px;
             margin: 0 auto;
-        }
-
-        .photo-map-modal .photo-map-cluster {
-            column-count: 1;
-            column-gap: 16px;
-            column-fill: balance;
-        }
-
-        .photo-map-modal .photo-map-cluster:not(.photo-map-cluster-double) {
-            width: fit-content;
-            max-width: 440px;
-            margin: 0 auto;
-        }
-
-        .ref-hover-popup.photo-map-popup .photo-map-cluster:not(.photo-map-cluster-double) .photo-map-frame,
-        .ref-hover-popup.photo-map-popup > .photo-map-cluster-item .photo-map-frame,
-        .photo-map-modal .photo-map-cluster:not(.photo-map-cluster-double) .photo-map-frame,
-        .photo-map-modal .photo-map-modal-body > .photo-map-cluster-item .photo-map-frame {
-            width: fit-content;
-            max-width: 100%;
-        }
-
-        .photo-map-modal .photo-map-cluster-double {
-            column-count: 2;
-        }
-
-        .photo-map-modal .photo-map-cluster-double {
-            max-width: 980px;
-            margin: 0 auto;
-        }
-
-        .ref-hover-popup.photo-map-popup .photo-map-frame {
-            position: relative;
-            display: inline-block;
-            width: fit-content;
-            overflow: hidden;
-            --overlay-left: 0px;
-            --overlay-width: 100%;
-        }
-
-        .photo-map-modal .photo-map-frame {
-            position: relative;
-            display: inline-block;
-            width: fit-content;
-            overflow: hidden;
-            --overlay-left: 0px;
-            --overlay-width: 100%;
         }
 
         .ref-hover-popup.photo-map-popup .photo-map-cluster-item,
@@ -499,6 +469,10 @@
             margin: 0 auto 12px;
         }
 
+        .photo-map-modal .photo-map-modal-body > .photo-map-cluster-item.photo-map-cluster-item-card {
+            max-width: min(92vw, 1020px);
+        }
+
         .ref-hover-popup.photo-map-popup .photo-map-cluster-item .photo-map-img {
             width: auto;
             max-width: 100%;
@@ -509,6 +483,14 @@
         .photo-map-modal .photo-map-cluster:not(.photo-map-cluster-double) .photo-map-img,
         .photo-map-modal .photo-map-modal-body > .photo-map-cluster-item .photo-map-img {
             width: auto;
+            max-width: 100%;
+        }
+
+        .ref-hover-popup.photo-map-popup .photo-map-cluster:not(.photo-map-cluster-double) .photo-map-frame,
+        .ref-hover-popup.photo-map-popup > .photo-map-cluster-item .photo-map-frame,
+        .photo-map-modal .photo-map-cluster:not(.photo-map-cluster-double) .photo-map-frame,
+        .photo-map-modal .photo-map-modal-body > .photo-map-cluster-item .photo-map-frame {
+            width: fit-content;
             max-width: 100%;
         }
 
@@ -558,9 +540,222 @@
             text-align: center;
         }
 
+        .photo-map-frame.photo-map-frame-card {
+            position: relative;
+            display: block;
+            width: fit-content;
+            max-width: min(92vw, 1020px);
+            overflow: hidden;
+            background: #f7f7f7;
+            border: 1px solid #d8d5cc;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --overlay-left: 0px;
+            --overlay-width: 100%;
+        }
+
+        .photo-map-frame.photo-map-frame-card .photo-map-img {
+            display: block;
+            width: auto;
+            max-width: min(92vw, 1020px);
+            max-height: 72vh;
+            height: auto;
+            margin: 0;
+            border-radius: 0;
+            object-fit: contain;
+        }
+
+        .photo-map-frame.photo-map-frame-card .photo-map-place,
+        .photo-map-frame.photo-map-frame-card .photo-map-meta {
+            position: static;
+            width: auto;
+            left: auto;
+            top: auto;
+            bottom: auto;
+            padding: 0 14px;
+            color: #333;
+            text-shadow: none;
+            overflow: visible;
+            white-space: normal;
+            text-overflow: clip;
+            text-align: left;
+        }
+
+        .photo-map-frame.photo-map-frame-card .photo-map-place {
+            margin: 12px 0 4px;
+            font-weight: 400;
+            font-size: 1.3em;
+        }
+
+        .photo-map-frame.photo-map-frame-card .photo-map-meta {
+            margin: 0 0 14px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .travel-map-section {
+            margin-bottom: 20px;
+        }
+
+        .travel-gallery-wrap {
+            margin-top: 10px;
+        }
+
+        .travel-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .travel-gallery-item {
+            margin: 0;
+        }
+
+        .travel-gallery-item .photo-map-frame {
+            position: relative;
+            display: block;
+            width: 100%;
+            overflow: hidden;
+            border: 1px solid #d8d5cc;
+            border-radius: 6px;
+            background: #e9e9e9;
+            --overlay-left: 0px;
+            --overlay-width: 100%;
+        }
+
+        .travel-gallery-item .photo-map-img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            margin: 0;
+        }
+
+        .travel-gallery-item .photo-map-place,
+        .travel-gallery-item .photo-map-meta {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .travel-gallery-item .photo-map-meta {
+            font-size: 0.92rem;
+        }
+
+        .travel-gallery-pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .travel-gallery-btn {
+            border: 1px solid #b8b8b8;
+            background: #f7f7f7;
+            color: #333;
+            font-size: 0.95rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .travel-gallery-btn:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .travel-gallery-info {
+            color: #555;
+            font-size: 0.95rem;
+            min-width: 90px;
+            text-align: center;
+        }
+
+        .travel-lightbox-open {
+            overflow: hidden;
+        }
+
+        .travel-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 10001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .travel-lightbox.is-open {
+            display: flex;
+        }
+
+        .travel-lightbox-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(18, 18, 18, 0.72);
+        }
+
+        .travel-lightbox-card {
+            position: relative;
+            z-index: 1;
+            background: #f7f7f7;
+            border: 1px solid #b8b8b8;
+            border-radius: 8px;
+            max-width: min(95vw, 1100px);
+            max-height: 92vh;
+            overflow: auto;
+            padding: 14px;
+        }
+
+        .travel-lightbox-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            z-index: 2;
+            border: 1px solid #b8b8b8;
+            background: rgba(255, 255, 255, 0.92);
+            color: #333;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 34px;
+            height: 34px;
+            line-height: 1;
+            font-size: 1.3rem;
+            padding: 0;
+        }
+
+        .travel-lightbox-img {
+            display: block;
+            max-width: min(92vw, 1020px);
+            max-height: 72vh;
+            width: auto;
+            height: auto;
+            margin: 0 auto 10px;
+            border-radius: 0px;
+        }
+
+        .travel-lightbox-title {
+            margin: 0 0 4px;
+            color: #222;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .travel-lightbox-meta {
+            margin: 0;
+            color: #555;
+            font-size: 0.95rem;
+            text-align: center;
+            word-break: break-word;
+        }
+
         @media (max-width: 700px) {
             .photo-map {
                 height: 300px;
+            }
+
+            .travel-gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
             }
 
             .ref-hover-popup.photo-map-popup {
@@ -577,6 +772,11 @@
 
             .photo-map-modal .photo-map-img {
                 max-width: 70vw;
+            }
+
+            .photo-map-frame.photo-map-frame-card .photo-map-img {
+                max-width: 88vw;
+                max-height: 66vh;
             }
 
             .ref-hover-popup.photo-map-popup .photo-map-cluster,
