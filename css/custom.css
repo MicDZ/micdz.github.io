@@ -187,6 +187,8 @@
 
         .photo-map-section {
             position: relative;
+            display: grid;
+            grid-template-rows: auto auto;
         }
 
         .photo-map {
@@ -201,11 +203,24 @@
         }
 
         .photo-map-pane {
-            display: none;
+            grid-row: 1;
+            grid-column: 1;
+            opacity: 0;
+            transform: none;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.52s cubic-bezier(0.65, 0, 0.35, 1),
+                visibility 0s linear 0.52s;
+            will-change: opacity;
         }
 
         .photo-map-pane.is-active {
-            display: block;
+            opacity: 1;
+            transform: none;
+            visibility: visible;
+            pointer-events: auto;
+            transition: opacity 0.52s cubic-bezier(0.65, 0, 0.35, 1),
+                visibility 0s linear 0s;
         }
 
         .photo-map .datamaps-bubbles,
@@ -217,6 +232,32 @@
         .photo-map .bubble {
             pointer-events: all;
             cursor: pointer;
+        }
+
+        .photo-map-github-arrow {
+            pointer-events: none;
+        }
+
+        .photo-map-github-arrow-line {
+            stroke: #2ea043;
+            stroke-width: 2;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 1px rgba(46, 160, 67, 0.45));
+        }
+
+        .photo-map-github-arrow-head {
+            fill: #2ea043;
+        }
+
+        .photo-map-github-arrow-label {
+            fill: #1f6f33;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: "Avenir Next", "Segoe UI", sans-serif;
+            paint-order: stroke;
+            stroke: #ffffff;
+            stroke-width: 2;
+            stroke-linejoin: round;
         }
 
         .photo-map-controls {
@@ -263,6 +304,7 @@
             /* font-size: 1.1rem; */
             color: #666;
             margin-bottom: 12px;
+            grid-row: 2;
         
         }
 
@@ -986,10 +1028,6 @@
         background: #efefef;
         color: #555;
         box-sizing: border-box;
-    }
-
-    .rest-label {
-        /* font-weight: 600; */
     }
 
     .calendar-now-line {

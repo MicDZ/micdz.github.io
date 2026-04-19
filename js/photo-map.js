@@ -29,6 +29,23 @@
     console.log.apply(console, args);
   }
 
+  function traceNow() {
+    return (typeof performance !== 'undefined' && typeof performance.now === 'function')
+      ? Number(performance.now().toFixed(1))
+      : Date.now();
+  }
+
+  function traceLog(label, payload) {
+    if (window.PHOTO_MAP_TRACE === false) return;
+    const meta = {
+      t: traceNow()
+    };
+    if (typeof mapState !== 'undefined' && mapState && mapState.active) {
+      meta.activePane = mapState.active;
+    }
+    console.log('[photo-map:trace]', label, Object.assign(meta, payload || {}));
+  }
+
   function bringToFront(selection) {
     selection.each(function () {
       if (this && this.parentNode) {
@@ -42,6 +59,7 @@
     const bubbleLayer = map.svg.select('.datamaps-bubbles, .bubbles');
     const outlineLayer = map.svg.select('g.china-outline');
     const hitLayer = map.svg.select('g.china-outline-hit');
+    const overlayLayer = map.svg.select('g.photo-map-overlay');
     const svgNode = map.svg.node ? map.svg.node() : null;
     if (!svgNode) return;
 
@@ -58,6 +76,9 @@
         svgNode.appendChild(bubbleLayer.node());
         bubbleLayer.style('pointer-events', 'all');
         bubbleLayer.selectAll('.datamaps-bubble, .bubble').style('pointer-events', 'all');
+      }
+      if (!overlayLayer.empty()) {
+        svgNode.appendChild(overlayLayer.node());
       }
     };
 
@@ -243,10 +264,33 @@
     usaDC: null
   };
 
+  let americasMapPromise = null;
+  let eastAsiaMapPromise = null;
+
   const mapState = {
     active: 'world',
     selectedStates: new Set()
   };
+
+  function bindPaneTransitionTrace(name, el) {
+    if (!el || el.__photoMapTraceBound) return;
+    el.__photoMapTraceBound = true;
+    const onTransition = (evt, stage) => {
+      if (!evt) return;
+      if (evt.propertyName !== 'opacity' && evt.propertyName !== 'transform' && evt.propertyName !== 'visibility') return;
+      traceLog(`pane-${stage}`, {
+        pane: name,
+        property: evt.propertyName,
+        isActiveClass: el.classList.contains('is-active')
+      });
+    };
+    el.addEventListener('transitionstart', (evt) => onTransition(evt, 'transitionstart'));
+    el.addEventListener('transitionend', (evt) => onTransition(evt, 'transitionend'));
+    el.addEventListener('transitioncancel', (evt) => onTransition(evt, 'transitioncancel'));
+  }
+
+  bindPaneTransitionTrace('world', mapEls.world);
+  bindPaneTransitionTrace('eastAsia', mapEls.eastAsia);
 
   const AMERICAS = new Set([
     'CAN', 'USA', 'MEX', 'GTM', 'BLZ', 'HND', 'SLV', 'NIC', 'CRI', 'PAN',
@@ -274,8 +318,402 @@
   };
 
   const resetControl = document.querySelector('[data-map-action="back-world-inner"]');
+  const paneTransitionDuration = 520;
+  const chinaZoomDuration = 800;
+  const usaZoomDuration = 420;
+  const githubUser = 'MicDZ';
+  const githubProfileUrl = `https://api.github.com/users/${githubUser}`;
+  const githubProfilePageUrl = `https://github.com/${githubUser}`;
+  const githubGeocodeUrl = 'https://nominatim.openstreetmap.org/search';
+  const githubLocationCacheKey = 'photoMap.githubLocation.v1';
+  const githubLocationCacheTtlMs = 6 * 60 * 60 * 1000;
+  let githubLiveLocation = null;
+
+  function readGithubLocationCache() {
+    try {
+      if (typeof localStorage === 'undefined') return null;
+      const raw = localStorage.getItem(githubLocationCacheKey);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== 'object') return null;
+      if (!parsed.locationText || typeof parsed.locationText !== 'string') return null;
+      if (typeof parsed.lat !== 'number' || typeof parsed.lng !== 'number') return null;
+      return parsed;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function writeGithubLocationCache(cache) {
+    try {
+      if (typeof localStorage === 'undefined') return;
+      localStorage.setItem(githubLocationCacheKey, JSON.stringify(cache));
+    } catch (_) {
+      // Ignore cache write failures.
+    }
+  }
+
+  function toGithubMarker(cache) {
+    if (!cache) return null;
+    return {
+      name: `${githubUser} (GitHub)`,
+      locationText: cache.locationText,
+      latitude: cache.lat,
+      longitude: cache.lng,
+      fetchedAt: cache.fetchedAt || Date.now()
+    };
+  }
+
+  function fetchGithubProfileLocationText() {
+    return fetch(githubProfileUrl, {
+      cache: 'no-store',
+      headers: {
+        Accept: 'application/vnd.github+json'
+      }
+    }).then((res) => {
+      if (!res.ok) {
+        throw new Error(`GitHub API error: ${res.status}`);
+      }
+      return res.json();
+    }).then((profile) => {
+      const text = profile && typeof profile.location === 'string' ? profile.location.trim() : '';
+      return text;
+    });
+  }
+
+  function geocodeLocationText(locationText) {
+    const url = `${githubGeocodeUrl}?format=json&limit=1&q=${encodeURIComponent(locationText)}`;
+    return fetch(url, {
+      cache: 'no-store'
+    }).then((res) => {
+      if (!res.ok) {
+        throw new Error(`Geocode API error: ${res.status}`);
+      }
+      return res.json();
+    }).then((rows) => {
+      if (!Array.isArray(rows) || !rows.length) return null;
+      const first = rows[0] || {};
+      const lat = Number(first.lat);
+      const lng = Number(first.lon);
+      if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+      return { lat, lng };
+    });
+  }
+
+  function updateGithubLocationMarker() {
+    const cached = readGithubLocationCache();
+    return fetchGithubProfileLocationText()
+      .then((locationText) => {
+        if (!locationText) return null;
+        const isCacheFresh = cached && cached.locationText === locationText && (Date.now() - (cached.fetchedAt || 0) < githubLocationCacheTtlMs);
+        if (isCacheFresh) {
+          return toGithubMarker(cached);
+        }
+        return geocodeLocationText(locationText)
+          .then((geo) => {
+            if (!geo) {
+              if (cached && cached.locationText === locationText) return toGithubMarker(cached);
+              return null;
+            }
+            const nextCache = {
+              locationText,
+              lat: geo.lat,
+              lng: geo.lng,
+              fetchedAt: Date.now()
+            };
+            writeGithubLocationCache(nextCache);
+            return toGithubMarker(nextCache);
+          });
+      })
+      .catch((err) => {
+        console.warn('[photo-map] github location update failed', err);
+        return cached ? toGithubMarker(cached) : null;
+      })
+      .then((marker) => {
+        githubLiveLocation = marker;
+        return marker;
+      });
+  }
+
+  function refreshAllMapBubbles() {
+    Object.keys(mapInstances).forEach((key) => {
+      if (!mapInstances[key]) return;
+      if (!mapInstances[key].__bubbleConfig) return;
+      refreshMapBubbles(key);
+    });
+  }
+
+  function scheduleEastAsiaBubbleRefresh(map, delay) {
+    if (!map) {
+      refreshMapBubbles('eastAsia');
+      return;
+    }
+    if (map.__eastAsiaBubbleRefreshTimer) {
+      clearTimeout(map.__eastAsiaBubbleRefreshTimer);
+      map.__eastAsiaBubbleRefreshTimer = null;
+    }
+    map.__eastAsiaBubbleRefreshTimer = setTimeout(() => {
+      map.__eastAsiaBubbleRefreshTimer = null;
+      refreshMapBubbles('eastAsia');
+    }, Math.max(0, delay));
+  }
+
+  function scheduleSwitchOnce(map, delay, fn) {
+    if (!map) {
+      fn();
+      return;
+    }
+    if (map.__paneSwitchTimer) {
+      clearTimeout(map.__paneSwitchTimer);
+      map.__paneSwitchTimer = null;
+    }
+    const token = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    map.__paneSwitchToken = token;
+    map.__paneSwitchTimer = setTimeout(() => {
+      if (map.__paneSwitchToken !== token) return;
+      map.__paneSwitchTimer = null;
+      map.__paneSwitchToken = null;
+      fn();
+    }, Math.max(0, delay));
+  }
+
+  function zoomToGeoAndSwitch(sourceMap, geo, targetPaneKey, startSwitch) {
+    if (!sourceMap || !sourceMap.svg || !geo) return startSwitch();
+    const projection = sourceMap.projection || (sourceMap.path && sourceMap.path.projection ? sourceMap.path.projection() : null);
+    if (!projection) return startSwitch();
+    const path = d3.geo.path().projection(projection);
+    const boundsBox = path.bounds(geo);
+    if (!boundsBox || isNaN(boundsBox[0][0])) return startSwitch();
+
+    const traceId = `${sourceMap.__name || mapState.active || 'unknown'}->${targetPaneKey}:${Date.now()}`;
+    
+    const svgNode = sourceMap.svg.node();
+    const width = svgNode ? svgNode.clientWidth : 0;
+    const height = svgNode ? svgNode.clientHeight : 0;
+    if (!width || !height) return startSwitch();
+
+    const dx = boundsBox[1][0] - boundsBox[0][0];
+    const dy = boundsBox[1][1] - boundsBox[0][1];
+    const x = (boundsBox[0][0] + boundsBox[1][0]) / 2;
+    const y = (boundsBox[0][1] + boundsBox[1][1]) / 2;
+    
+    const scale = Math.max(1, Math.min(8, 0.8 / Math.max(dx / width, dy / height)));
+    const translate = [width / 2 - scale * x, height / 2 - scale * y];
+    const zoomDuration = 500;
+    sourceMap.__zoomScale = scale;
+    sourceMap.__zoomTranslate = translate;
+    traceLog('zoomToGeoAndSwitch-start', {
+      traceId,
+      sourceMap: sourceMap.__name || 'unknown',
+      targetPaneKey,
+      geoId: geo && geo.id ? geo.id : null,
+      scale,
+      translate
+    });
+    
+    const zoomTargets = sourceMap.svg.selectAll('.datamaps-subunits, .datamaps-bubbles, .bubbles, g.china-outline, g.china-outline-hit, g.photo-map-overlay');
+    zoomTargets
+      .transition().duration(zoomDuration).ease('cubic-in-out')
+      .attr('transform', `translate(${translate[0]},${translate[1]})scale(${scale})`);
+      
+    const bubbles = sourceMap.svg.selectAll('.datamaps-bubble, .bubble');
+    bubbles.each(function (d) {
+      if (d && d.__baseRadius == null) {
+        d.__baseRadius = d.radius || Number(d3.select(this).attr('r')) || 0;
+      }
+    });
+    bubbles.transition().duration(zoomDuration).ease('cubic-in-out').attr('r', (d) => {
+        return (d.__baseRadius || d.radius || 0) / scale;
+    });
+
+    let switched = false;
+    const runSwitch = () => {
+      if (switched) return;
+      switched = true;
+      traceLog('zoomToGeoAndSwitch-beforeSwitch', {
+        traceId,
+        sourceMap: sourceMap.__name || 'unknown',
+        targetPaneKey
+      });
+      startSwitch();
+      traceLog('zoomToGeoAndSwitch-afterSwitch', {
+        traceId,
+        sourceMap: sourceMap.__name || 'unknown',
+        targetPaneKey,
+        activeAfterSwitch: mapState.active
+      });
+      setTimeout(() => {
+        // Reset transforms after it's hidden
+        sourceMap.svg.selectAll('.datamaps-subunits, .datamaps-bubbles, .bubbles, g.china-outline, g.china-outline-hit, g.photo-map-overlay')
+          .attr('transform', '');
+        bubbles.attr('r', (d) => d.__baseRadius || d.radius || 0);
+        traceLog('zoomToGeoAndSwitch-resetHiddenSource', {
+          traceId,
+          sourceMap: sourceMap.__name || 'unknown',
+          targetPaneKey
+        });
+      }, 800);
+    };
+
+    // Use a single switch trigger to avoid end-of-transition jitter from multi-element end events.
+    scheduleSwitchOnce(sourceMap, zoomDuration + 20, runSwitch);
+  }
+
+  function zoomOutAndSwitch(sourceMap, targetPaneKey, startSwitch) {
+    if (!sourceMap || !sourceMap.svg || !sourceMap.__zoomScale) return startSwitch();
+    const zoomDuration = 500;
+    sourceMap.__zoomScale = 1;
+    sourceMap.__zoomTranslate = null;
+    
+    const zoomTargets = sourceMap.svg.selectAll('.datamaps-subunits, .datamaps-bubbles, .bubbles, g.china-outline, g.china-outline-hit, g.photo-map-overlay');
+    zoomTargets
+      .transition().duration(zoomDuration).ease('cubic-in-out')
+      .attr('transform', 'translate(0,0)scale(1)');
+      
+    const bubbles = sourceMap.svg.selectAll('.datamaps-bubble, .bubble');
+    bubbles.transition().duration(zoomDuration).ease('cubic-in-out').attr('r', (d) => d.__baseRadius || d.radius || 0);
+
+    let switched = false;
+    const runSwitch = () => {
+      if (switched) return;
+      switched = true;
+      startSwitch();
+    };
+
+    scheduleSwitchOnce(sourceMap, zoomDuration + 20, runSwitch);
+  }
+
+  function bindUsaStateInteractions(datamap, locations, currentMapKey) {
+    if (!datamap || !datamap.svg) return;
+    let hoverState = null;
+    const setStateFill = (stateId, fillKey) => {
+      if (!stateId) return;
+      datamap.updateChoropleth({ [stateId]: { fillKey } });
+    };
+    const setHoverState = (stateId) => {
+      if (hoverState && hoverState !== stateId) {
+        setStateFill(hoverState, 'defaultFill');
+      }
+      hoverState = stateId;
+      setStateFill(stateId, 'stateHighlight');
+    };
+    const clearHoverState = (stateId) => {
+      if (!hoverState) return;
+      if (!stateId || hoverState === stateId) {
+        setStateFill(hoverState, 'defaultFill');
+        hoverState = null;
+      }
+    };
+
+    datamap.svg.selectAll('.datamaps-subunit')
+      .on('mouseover', function (geo) {
+        if (!geo || !geo.id) return;
+        if (!USA_FOCUS_STATES.has(geo.id)) return;
+        setHoverState(geo.id);
+      })
+      .on('mouseout', function (geo) {
+        if (!geo || !geo.id) return;
+        if (!USA_FOCUS_STATES.has(geo.id)) return;
+        clearHoverState(geo.id);
+      })
+      .on('click', function (geo) {
+        if (d3.event && typeof d3.event.stopPropagation === 'function') {
+          d3.event.stopPropagation();
+        }
+        if (!geo || !geo.id) return;
+        const focusConfig = USA_FOCUS_STATES.get(geo.id);
+        if (!focusConfig) return;
+        zoomUsaState(datamap, geo);
+      });
+
+    datamap.svg.on('mouseleave', function () {
+      clearHoverState();
+    });
+
+    datamap.svg.on('click.usaReset', function () {
+      if (d3.event && d3.event.defaultPrevented) return;
+      if (!datamap.__usaFocusedState) return;
+      resetUsaStateZoom(datamap);
+    });
+  }
+
+  function applyUsaZoom(map, scale, translate, animate) {
+    if (!map || !map.svg) return;
+    const tx = translate[0];
+    const ty = translate[1];
+    const zoomTargets = map.svg.selectAll('.datamaps-subunits, .datamaps-bubbles, .bubbles, g.photo-map-overlay');
+    const bubbles = map.svg.selectAll('.datamaps-bubble, .bubble');
+
+    // Stop in-flight transforms so rapid state switching remains smooth.
+    zoomTargets.interrupt();
+    bubbles.interrupt();
+
+    bubbles.each(function (d) {
+      if (d && d.__baseRadius == null) {
+        d.__baseRadius = d.radius || Number(d3.select(this).attr('r')) || 0;
+      }
+    });
+
+    if (animate && usaZoomDuration > 0) {
+      zoomTargets
+        .transition().duration(usaZoomDuration).ease('cubic-in-out')
+        .attr('transform', `translate(${tx},${ty})scale(${scale})`);
+      bubbles
+        .transition().duration(usaZoomDuration).ease('cubic-in-out')
+        .attr('r', (d) => {
+          if (!d || !d.__baseRadius) return d && d.radius ? d.radius : 0;
+          return d.__baseRadius / scale;
+        });
+    } else {
+      zoomTargets.attr('transform', `translate(${tx},${ty})scale(${scale})`);
+      bubbles.attr('r', (d) => {
+        if (!d || !d.__baseRadius) return d && d.radius ? d.radius : 0;
+        return d.__baseRadius / scale;
+      });
+    }
+
+    map.__zoomScale = scale;
+    map.__zoomTranslate = translate;
+    ensureBubbleOnTop(map);
+  }
+
+  function zoomUsaState(map, geo) {
+    if (!map || !map.svg || !geo) return;
+    const projection = map.projection || (map.path && map.path.projection ? map.path.projection() : null);
+    if (!projection) return;
+    const path = d3.geo.path().projection(projection);
+    const boundsBox = path.bounds(geo);
+    if (!boundsBox || isNaN(boundsBox[0][0])) return;
+
+    const svgNode = map.svg.node();
+    const width = svgNode ? svgNode.clientWidth : 0;
+    const height = svgNode ? svgNode.clientHeight : 0;
+    if (!width || !height) return;
+
+    const dx = boundsBox[1][0] - boundsBox[0][0];
+    const dy = boundsBox[1][1] - boundsBox[0][1];
+    const x = (boundsBox[0][0] + boundsBox[1][0]) / 2;
+    const y = (boundsBox[0][1] + boundsBox[1][1]) / 2;
+    const scale = Math.max(1, Math.min(8, 0.88 / Math.max(dx / width, dy / height)));
+    const translate = [width / 2 - scale * x, height / 2 - scale * y];
+
+    map.__usaFocusedState = geo.id;
+    applyUsaZoom(map, scale, translate, true);
+  }
+
+  function resetUsaStateZoom(map) {
+    if (!map || !map.svg) return;
+    map.__usaFocusedState = null;
+    applyUsaZoom(map, 1, [0, 0], true);
+  }
 
   function setActivePane(name) {
+    traceLog('setActivePane-enter', { nextPane: name });
+
+    if (mapState.active === 'americas' && name !== 'americas' && mapInstances.americas && mapInstances.americas.__usaFocusedState) {
+      resetUsaStateZoom(mapInstances.americas);
+    }
+
     mapState.active = name;
     Object.entries(mapEls).forEach(([key, el]) => {
       if (!el) return;
@@ -286,47 +724,80 @@
       resetControl.setAttribute('aria-hidden', name === 'world' ? 'true' : 'false');
     }
 
+    const immediatePaneUpdate = new Set([
+      'americas',
+      'eastAsia',
+      'southeastAsia',
+      'europe',
+      'usaCalifornia',
+      'usaNevada',
+      'usaNewYork',
+      'usaDC'
+    ]);
+    const paneUpdateDelay = immediatePaneUpdate.has(name) ? 0 : paneTransitionDuration;
+
     if (name === 'americas' && mapInstances.americas) {
-      setTimeout(() => mapInstances.americas.resize(), 0);
-      setTimeout(() => refreshMapBubbles('americas'), 0);
+      setTimeout(() => mapInstances.americas.resize(), paneUpdateDelay);
+      setTimeout(() => refreshMapBubbles('americas'), paneUpdateDelay);
     }
     if (name === 'eastAsia' && mapInstances.eastAsia) {
-      setTimeout(() => mapInstances.eastAsia.resize(), 0);
-      setTimeout(() => refreshMapBubbles('eastAsia'), 0);
-      setTimeout(() => ensureChinaOutline(mapInstances.eastAsia), 0);
+      setTimeout(() => mapInstances.eastAsia.resize(), paneUpdateDelay);
+      setTimeout(() => refreshMapBubbles('eastAsia'), paneUpdateDelay);
+      setTimeout(() => ensureChinaOutline(mapInstances.eastAsia), paneUpdateDelay);
     }
     if (name === 'southeastAsia' && mapInstances.southeastAsia) {
-      setTimeout(() => mapInstances.southeastAsia.resize(), 0);
-      setTimeout(() => refreshMapBubbles('southeastAsia'), 0);
+      setTimeout(() => mapInstances.southeastAsia.resize(), paneUpdateDelay);
+      setTimeout(() => refreshMapBubbles('southeastAsia'), paneUpdateDelay);
     }
     if (name === 'europe' && mapInstances.europe) {
-      setTimeout(() => mapInstances.europe.resize(), 0);
-      setTimeout(() => refreshMapBubbles('europe'), 0);
+      setTimeout(() => mapInstances.europe.resize(), paneUpdateDelay);
+      setTimeout(() => refreshMapBubbles('europe'), paneUpdateDelay);
     }
     if (name === 'usaCalifornia' && mapInstances.usaCalifornia) {
-      setTimeout(() => mapInstances.usaCalifornia.resize(), 0);
-      setTimeout(() => refreshMapBubbles('usaCalifornia'), 0);
+      setTimeout(() => mapInstances.usaCalifornia.resize(), paneUpdateDelay);
+      setTimeout(() => refreshMapBubbles('usaCalifornia'), paneUpdateDelay);
     }
     if (name === 'usaNevada' && mapInstances.usaNevada) {
-      setTimeout(() => mapInstances.usaNevada.resize(), 0);
-      setTimeout(() => refreshMapBubbles('usaNevada'), 0);
+      setTimeout(() => mapInstances.usaNevada.resize(), paneUpdateDelay);
+      setTimeout(() => refreshMapBubbles('usaNevada'), paneUpdateDelay);
     }
     if (name === 'usaNewYork' && mapInstances.usaNewYork) {
-      setTimeout(() => mapInstances.usaNewYork.resize(), 0);
-      setTimeout(() => refreshMapBubbles('usaNewYork'), 0);
+      setTimeout(() => mapInstances.usaNewYork.resize(), paneUpdateDelay);
+      setTimeout(() => refreshMapBubbles('usaNewYork'), paneUpdateDelay);
     }
     if (name === 'usaDC' && mapInstances.usaDC) {
-      setTimeout(() => mapInstances.usaDC.resize(), 0);
-      setTimeout(() => refreshMapBubbles('usaDC'), 0);
+      setTimeout(() => mapInstances.usaDC.resize(), paneUpdateDelay);
+      setTimeout(() => refreshMapBubbles('usaDC'), paneUpdateDelay);
     }
+
+    const activePanes = Object.entries(mapEls)
+      .filter(([, el]) => el && el.classList.contains('is-active'))
+      .map(([key]) => key);
+    traceLog('setActivePane-exit', {
+      nextPane: name,
+      activePanes
+    });
   }
 
   function bindControlEvents(locations) {
     if (resetControl) {
       resetControl.addEventListener('click', () => {
+        if (mapState.active === 'americas') {
+          const americasMap = mapInstances.americas;
+          if (americasMap && americasMap.__usaFocusedState) {
+            resetUsaStateZoom(americasMap);
+            return;
+          }
+        }
+
         if (mapState.active === 'usaCalifornia' || mapState.active === 'usaNevada' ||
             mapState.active === 'usaNewYork' || mapState.active === 'usaDC') {
-          setActivePane('americas');
+          const map = mapInstances[mapState.active];
+          if (map && map.__zoomScale) {
+             zoomOutAndSwitch(map, 'americas', () => setActivePane('americas'));
+          } else {
+             setActivePane('americas');
+          }
           return;
         }
 
@@ -338,7 +809,12 @@
           }
         }
 
-        setActivePane('world');
+        const map = mapInstances[mapState.active];
+        if (map && map.__zoomScale) {
+            zoomOutAndSwitch(map, 'world', () => setActivePane('world'));
+        } else {
+            zoomOutAndSwitch(mapInstances.americas, 'world', () => setActivePane('world'));
+        }
       });
     }
   }
@@ -488,6 +964,79 @@
     });
   }
 
+  function renderGithubMarkerArrow(map, filterFn) {
+    if (!map || !map.svg) return;
+    let overlayLayer = map.svg.select('g.photo-map-overlay');
+    if (overlayLayer.empty()) {
+      overlayLayer = map.svg.append('g').attr('class', 'photo-map-overlay');
+    }
+    overlayLayer.style('pointer-events', 'none');
+    const svgNode = map.svg.node ? map.svg.node() : null;
+    if (svgNode && overlayLayer.node()) {
+      svgNode.appendChild(overlayLayer.node());
+    }
+
+    const arrowGroup = overlayLayer.selectAll('g.photo-map-github-arrow').data(githubLiveLocation ? [githubLiveLocation] : []);
+    arrowGroup.exit().remove();
+    if (!githubLiveLocation) return;
+
+    const markerPoint = {
+      lat: githubLiveLocation.latitude,
+      lng: githubLiveLocation.longitude
+    };
+    if (filterFn && !filterFn(markerPoint)) {
+      overlayLayer.selectAll('g.photo-map-github-arrow').remove();
+      return;
+    }
+
+    const projection = map && (map.projection || (map.path && map.path.projection && map.path.projection()));
+    if (!projection) {
+      overlayLayer.selectAll('g.photo-map-github-arrow').remove();
+      return;
+    }
+    const projected = projection([markerPoint.lng, markerPoint.lat]);
+    if (!projected || Number.isNaN(projected[0]) || Number.isNaN(projected[1])) {
+      overlayLayer.selectAll('g.photo-map-github-arrow').remove();
+      return;
+    }
+
+    const tipX = projected[0];
+    const tipY = projected[1];
+    const tailX = tipX + 22;
+    const tailY = tipY + 18;
+    const dx = tipX - tailX;
+    const dy = tipY - tailY;
+    const len = Math.max(1, Math.sqrt(dx * dx + dy * dy));
+    const ux = dx / len;
+    const uy = dy / len;
+    const headSize = 8;
+    const headWidth = 4;
+    const baseX = tipX - ux * headSize;
+    const baseY = tipY - uy * headSize;
+    const px = -uy * headWidth;
+    const py = ux * headWidth;
+    const headPath = `M ${tipX} ${tipY} L ${baseX + px} ${baseY + py} L ${baseX - px} ${baseY - py} Z`;
+
+    const enter = arrowGroup.enter()
+      .append('g')
+      .attr('class', 'photo-map-github-arrow');
+    enter.append('line').attr('class', 'photo-map-github-arrow-line');
+    enter.append('path').attr('class', 'photo-map-github-arrow-head');
+    enter.append('text').attr('class', 'photo-map-github-arrow-label').text('I am here');
+
+    const merged = overlayLayer.selectAll('g.photo-map-github-arrow');
+    merged.select('line.photo-map-github-arrow-line')
+      .attr('x1', tailX)
+      .attr('y1', tailY)
+      .attr('x2', tipX)
+      .attr('y2', tipY);
+    merged.select('path.photo-map-github-arrow-head')
+      .attr('d', headPath);
+    merged.select('text.photo-map-github-arrow-label')
+      .attr('x', tipX + 10)
+      .attr('y', tipY - 10);
+  }
+
   function renderMapBubbles(mapName, map, locations, filterFn, radius) {
     const bubbles = buildClusteredBubbles(locations, mapName, map, filterFn, radius);
     map.svg.selectAll('.datamaps-bubble, .bubble').remove();
@@ -497,7 +1046,9 @@
       bubbleLayer.style('pointer-events', 'all');
       ensureBubbleOnTop(map);
     }
-    map.svg.selectAll('.datamaps-bubble, .bubble').style('pointer-events', 'all');
+    renderGithubMarkerArrow(map, filterFn);
+    map.svg.selectAll('.datamaps-bubble, .bubble')
+      .style('pointer-events', 'all');
     bindBubbleEvents(map);
     map.__bubbleConfig = { mapName, locations, filterFn, radius };
     map.__name = mapName;
@@ -591,6 +1142,11 @@
       .on('mouseover', function (d) {
         const evt = d3.event;
         if (!d) return;
+        if (d.__isGithubMarker) {
+          const label = d.place_name ? String(d.place_name) : 'Unknown';
+          showPopup(`<div class="photo-map-github-popup"><strong>${githubUser}</strong><div>${label}</div></div>`, evt);
+          return;
+        }
         if (window.PHOTO_MAP_DEBUG) {
           debugLog('bubble mouseover', {
             map: map && map.__name ? map.__name : 'unknown',
@@ -618,6 +1174,12 @@
           d3.event.stopPropagation();
         }
         if (!d) return;
+        if (d.__isGithubMarker) {
+          if (typeof window !== 'undefined' && typeof window.open === 'function') {
+            window.open(githubProfilePageUrl, '_blank', 'noopener,noreferrer');
+          }
+          return;
+        }
         const items = Array.isArray(d.items) && d.items.length ? d.items : [d];
         const validItems = items.filter((item) => item && item.photo_src);
         if (!validItems.length) return;
@@ -671,6 +1233,7 @@
       fills: {
         defaultFill: '#d9d9d9',
         pin: '#c12f2f',
+        githubPin: '#2ea043',
         naHighlight: '#bdbdbd',
         eastHighlight: '#c7c7c7',
         seaHighlight: '#cfcfcf',
@@ -722,17 +1285,32 @@
       .on('click', function (geo) {
         if (!geo || !geo.id) return;
         if (AMERICAS.has(geo.id)) {
-          setActivePane('americas');
-          ensureAmericasMap(locations);
+          const startSwitch = () => {
+            zoomToGeoAndSwitch(map, geo, 'americas', () => {
+              setActivePane('americas');
+            });
+          };
+          ensureAmericasMap(locations).then(startSwitch);
         } else if (EAST_ASIA.has(geo.id)) {
-          setActivePane('eastAsia');
-          ensureEastAsiaMap(locations);
+          traceLog('world-click-eastAsia', { geoId: geo.id });
+          ensureEastAsiaMap(locations)
+            .then(() => {
+              setActivePane('eastAsia');
+            })
+            .catch((err) => {
+              console.warn('[photo-map] ensure eastAsia map failed', err);
+              setActivePane('eastAsia');
+            });
         } else if (SOUTHEAST_ASIA.has(geo.id)) {
-          setActivePane('southeastAsia');
           ensureSoutheastAsiaMap(locations);
+          zoomToGeoAndSwitch(map, geo, 'southeastAsia', () => {
+            setActivePane('southeastAsia');
+          });
         } else if (EUROPE.has(geo.id)) {
-          setActivePane('europe');
           ensureEuropeMap(locations);
+          zoomToGeoAndSwitch(map, geo, 'europe', () => {
+            setActivePane('europe');
+          });
         }
       });
 
@@ -770,15 +1348,17 @@
   window.addEventListener('orientationchange', scheduleResize);
 
   function ensureAmericasMap(locations) {
-    if (mapInstances.americas) return;
+    if (mapInstances.americas) return Promise.resolve(mapInstances.americas);
+    if (americasMapPromise) return americasMapPromise;
 
-    loadUsaDatamap().then((UsaDatamap) => {
+    americasMapPromise = loadUsaDatamap().then((UsaDatamap) => {
       const map = new UsaDatamap({
         element: mapEls.americas,
         scope: 'usa',
         fills: {
           defaultFill: '#d9d9d9',
           pin: '#c12f2f',
+          githubPin: '#2ea043',
           stateHighlight: '#bdbdbd'
         },
         geographyConfig: {
@@ -789,48 +1369,7 @@
           borderWidth: 0.6
         },
         done: function (datamap) {
-          let hoverState = null;
-          const setStateFill = (stateId, fillKey) => {
-            if (!stateId) return;
-            datamap.updateChoropleth({ [stateId]: { fillKey } });
-          };
-          const setHoverState = (stateId) => {
-            if (hoverState && hoverState !== stateId) {
-              setStateFill(hoverState, 'defaultFill');
-            }
-            hoverState = stateId;
-            setStateFill(stateId, 'stateHighlight');
-          };
-          const clearHoverState = (stateId) => {
-            if (!hoverState) return;
-            if (!stateId || hoverState === stateId) {
-              setStateFill(hoverState, 'defaultFill');
-              hoverState = null;
-            }
-          };
-
-          datamap.svg.selectAll('.datamaps-subunit')
-            .on('mouseover', function (geo) {
-              if (!geo || !geo.id) return;
-              if (!USA_FOCUS_STATES.has(geo.id)) return;
-              setHoverState(geo.id);
-            })
-            .on('mouseout', function (geo) {
-              if (!geo || !geo.id) return;
-              if (!USA_FOCUS_STATES.has(geo.id)) return;
-              clearHoverState(geo.id);
-            })
-            .on('click', function (geo) {
-              if (!geo || !geo.id) return;
-              const focusConfig = USA_FOCUS_STATES.get(geo.id);
-              if (!focusConfig) return;
-              setActivePane(focusConfig.mapKey);
-              ensureUsaFocusMap(locations, focusConfig);
-            });
-
-          datamap.svg.on('mouseleave', function () {
-            clearHoverState();
-          });
+          bindUsaStateInteractions(datamap, locations, null);
         }
       });
 
@@ -843,17 +1382,30 @@
 
       mapInstances.americas = map;
       setTimeout(() => map.resize(), 0);
+      return map;
+    }).catch((err) => {
+      americasMapPromise = null;
+      throw err;
     });
+
+    return americasMapPromise;
   }
 
   function ensureEastAsiaMap(locations) {
-    if (mapInstances.eastAsia) return;
+    if (mapInstances.eastAsia) {
+      traceLog('ensureEastAsiaMap-hit-cache', { hasMap: true });
+      return ensureChinaOutline(mapInstances.eastAsia).then(() => mapInstances.eastAsia);
+    }
+    if (eastAsiaMapPromise) return eastAsiaMapPromise;
+
+    traceLog('ensureEastAsiaMap-create-start', { hasMap: false });
 
     const map = new WorldDatamap({
       element: mapEls.eastAsia,
       fills: {
         defaultFill: '#d9d9d9',
-        pin: '#c12f2f'
+        pin: '#c12f2f',
+        githubPin: '#2ea043'
       },
       geographyConfig: {
         highlightOnHover: false,
@@ -879,18 +1431,57 @@
     };
 
     renderMapBubbles('eastAsia', map, locations, filterFn, 7);
-    ensureChinaOutline(map);
 
     mapInstances.eastAsia = map;
+    traceLog('ensureEastAsiaMap-create-done', { hasMap: true });
     setTimeout(() => map.resize(), 0);
+
+    eastAsiaMapPromise = ensureChinaOutline(map)
+      .then(() => map)
+      .catch((err) => {
+        eastAsiaMapPromise = null;
+        throw err;
+      });
+
+    return eastAsiaMapPromise;
+  }
+
+  function prewarmEastAsiaMap(locations) {
+    if (!Array.isArray(locations) || !locations.length) return;
+    const runner = () => {
+      if (mapInstances.eastAsia) return;
+      traceLog('prewarm-eastAsia-start', { hasMap: false });
+      ensureEastAsiaMap(locations);
+      traceLog('prewarm-eastAsia-end', { hasMap: Boolean(mapInstances.eastAsia) });
+    };
+
+    if (typeof requestIdleCallback === 'function') {
+      requestIdleCallback(runner, { timeout: 1200 });
+    } else {
+      setTimeout(runner, 200);
+    }
   }
 
   function ensureChinaOutline(map) {
-    if (!map) return;
-    loadChinaGeo().then((geoData) => {
-      if (!geoData) return;
-      drawChinaOutline(map, geoData);
-    });
+    if (!map) return Promise.resolve(false);
+    if (map.__chinaOutlinePromise) return map.__chinaOutlinePromise;
+
+    map.__chinaOutlinePromise = loadChinaGeo()
+      .then((geoData) => {
+        if (!geoData) return false;
+        drawChinaOutline(map, geoData);
+        return true;
+      })
+      .catch((err) => {
+        console.warn('[photo-map] ensure china outline failed', err);
+        return false;
+      })
+      .then((result) => {
+        map.__chinaOutlinePromise = null;
+        return result;
+      });
+
+    return map.__chinaOutlinePromise;
   }
 
   function drawChinaOutline(map, geoData) {
@@ -1048,7 +1639,7 @@
     map.__zoomScale = scale;
     map.__zoomTranslate = translate;
     applyChinaZoom(map, scale, translate);
-    refreshMapBubbles('eastAsia');
+    scheduleEastAsiaBubbleRefresh(map, chinaZoomDuration + 20);
   }
 
   function resetChinaZoom(map) {
@@ -1059,14 +1650,15 @@
       debugLog('china zoom reset');
     }
     applyChinaZoom(map, 1, [0, 0]);
-    refreshMapBubbles('eastAsia');
+    scheduleEastAsiaBubbleRefresh(map, chinaZoomDuration + 20);
   }
 
   function applyChinaZoom(map, scale, translate) {
+    const zoomDuration = chinaZoomDuration;
     const tx = translate[0];
     const ty = translate[1];
-    map.svg.selectAll('.datamaps-subunits, g.china-outline, g.china-outline-hit, .datamaps-bubbles, .bubbles')
-      .transition().duration(450)
+    map.svg.selectAll('.datamaps-subunits, g.china-outline, g.china-outline-hit, .datamaps-bubbles, .bubbles, g.photo-map-overlay')
+      .transition().duration(zoomDuration).ease('cubic-in-out')
       .attr('transform', `translate(${tx},${ty})scale(${scale})`);
 
     if (window.PHOTO_MAP_DEBUG) {
@@ -1081,7 +1673,7 @@
     });
 
     bubbles
-      .transition().duration(450)
+      .transition().duration(zoomDuration).ease('cubic-in-out')
       .attr('r', (d) => {
         if (!d || !d.__baseRadius) return d && d.radius ? d.radius : 0;
         return d.__baseRadius / scale;
@@ -1092,7 +1684,7 @@
   function applyChinaZoomImmediate(map, scale, translate) {
     const tx = translate[0];
     const ty = translate[1];
-    map.svg.selectAll('.datamaps-subunits, g.china-outline, g.china-outline-hit, .datamaps-bubbles, .bubbles')
+    map.svg.selectAll('.datamaps-subunits, g.china-outline, g.china-outline-hit, .datamaps-bubbles, .bubbles, g.photo-map-overlay')
       .attr('transform', `translate(${tx},${ty})scale(${scale})`);
 
     const bubbles = map.svg.selectAll('.datamaps-bubble, .bubble');
@@ -1116,7 +1708,8 @@
       element: mapEls.southeastAsia,
       fills: {
         defaultFill: '#d9d9d9',
-        pin: '#c12f2f'
+        pin: '#c12f2f',
+        githubPin: '#2ea043'
       },
       geographyConfig: {
         highlightOnHover: false,
@@ -1154,7 +1747,8 @@
       element: mapEls.europe,
       fills: {
         defaultFill: '#d9d9d9',
-        pin: '#c12f2f'
+        pin: '#c12f2f',
+        githubPin: '#2ea043'
       },
       geographyConfig: {
         highlightOnHover: false,
@@ -1195,6 +1789,7 @@
         fills: {
           defaultFill: '#d9d9d9',
           pin: '#c12f2f',
+          githubPin: '#2ea043',
           stateHighlight: '#bdbdbd'
         },
         geographyConfig: {
@@ -1202,6 +1797,9 @@
           popupOnHover: false,
           borderColor: '#b8b8b8',
           borderWidth: 0.6
+        },
+        done: function (datamap) {
+          bindUsaStateInteractions(datamap, locations, config.mapKey);
         },
         setProjection: function (element) {
           const width = element.offsetWidth;
@@ -1299,12 +1897,16 @@
         mapEls.world.innerHTML = '<div class="photo-map-empty">No geotagged photos yet.</div>';
         return;
       }
+
       renderWorldMap(locations);
       bindControlEvents(locations);
-      scheduleResize();
+      prewarmEastAsiaMap(locations);
+      updateGithubLocationMarker().then(() => {
+        refreshAllMapBubbles();
+      });
     })
     .catch((err) => {
-      console.warn('Failed to load photo map data.', err);
+      console.warn('[photo-map] locations fetch failed', err);
       mapEls.world.innerHTML = '<div class="photo-map-empty">Failed to load map data.</div>';
     });
 })();

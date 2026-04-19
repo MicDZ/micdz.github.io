@@ -210,7 +210,9 @@
   if (!container) return;
 
   const icsUrl = (container.dataset.icsUrl || '/asset/calendar.ics').trim();
-  const defaultTimeZone = 'America/Los_Angeles';
+  const githubUser = (container.dataset.githubUser || '').trim();
+  const fallbackTimeZone = 'America/Los_Angeles';
+  let defaultTimeZone = fallbackTimeZone;
   const defaultStartHour = 9;
   const defaultEndHour = 18;
   const slotHeight = 60;
@@ -225,6 +227,77 @@
 
   function toZonedDate(date) {
     return new Date(date.toLocaleString('en-US', { timeZone }));
+  }
+
+  function isValidTimeZone(tz) {
+    if (!tz) return false;
+    try {
+      Intl.DateTimeFormat('en-US', { timeZone: tz }).format(new Date());
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  async function fetchJson(url, options) {
+    const resp = await fetch(url, options || {});
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    return resp.json();
+  }
+
+  async function resolveDefaultTimeZoneFromGithub(user) {
+    if (!user) return null;
+
+    const cacheKey = `weeklyCalendar:defaultTimeZone:${user}`;
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed && isValidTimeZone(parsed.tz) && Number(parsed.expiresAt) > Date.now()) {
+          return parsed.tz;
+        }
+      }
+    } catch (_) {
+      // Ignore cache read failures and continue network resolution.
+    }
+
+    const profile = await fetchJson(`https://api.github.com/users/${encodeURIComponent(user)}`, {
+      headers: {
+        Accept: 'application/vnd.github+json'
+      },
+      cache: 'no-store'
+    });
+    const rawLocation = typeof profile.location === 'string' ? profile.location.trim() : '';
+    if (!rawLocation) return null;
+
+    const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${encodeURIComponent(rawLocation)}`;
+    const geoRows = await fetchJson(geocodeUrl, {
+      headers: {
+        Accept: 'application/json'
+      },
+      cache: 'no-store'
+    });
+    if (!Array.isArray(geoRows) || geoRows.length === 0) return null;
+
+    const lat = Number(geoRows[0].lat);
+    const lon = Number(geoRows[0].lon);
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+
+    const tzApi = `https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(lat)}&longitude=${encodeURIComponent(lon)}&current=temperature_2m&timezone=auto&forecast_days=1`;
+    const tzData = await fetchJson(tzApi, { cache: 'no-store' });
+    const resolvedTz = typeof tzData.timezone === 'string' ? tzData.timezone.trim() : '';
+    if (!isValidTimeZone(resolvedTz)) return null;
+
+    try {
+      localStorage.setItem(cacheKey, JSON.stringify({
+        tz: resolvedTz,
+        expiresAt: Date.now() + 24 * 60 * 60 * 1000
+      }));
+    } catch (_) {
+      // Ignore cache write failures.
+    }
+
+    return resolvedTz;
   }
 
   function startOfWeek(date) {
@@ -594,9 +667,19 @@
 
   async function init() {
     try {
-      const resp = await fetch(icsUrl, { cache: 'no-store' });
-      if (!resp.ok) throw new Error('ICS fetch failed');
-      const text = await resp.text();
+      const [icsText, resolvedDefaultTz] = await Promise.all([
+        fetch(icsUrl, { cache: 'no-store' }).then((resp) => {
+          if (!resp.ok) throw new Error('ICS fetch failed');
+          return resp.text();
+        }),
+        resolveDefaultTimeZoneFromGithub(githubUser).catch(() => null)
+      ]);
+
+      if (isValidTimeZone(resolvedDefaultTz)) {
+        defaultTimeZone = resolvedDefaultTz;
+      }
+
+      const text = icsText;
       eventsCache = parseIcs(text).filter((ev) => ev.start && ev.end);
       applyTimeConfig(false);
       renderWeek(0);
