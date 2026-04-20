@@ -665,6 +665,9 @@
       }
     });
 
+    map.__zoomScale = scale;
+    map.__zoomTranslate = translate;
+
     if (animate && usaZoomDuration > 0) {
       zoomTargets
         .transition().duration(usaZoomDuration).ease('cubic-in-out')
@@ -683,8 +686,9 @@
       });
     }
 
-    map.__zoomScale = scale;
-    map.__zoomTranslate = translate;
+    if (map.__bubbleConfig) {
+      renderGithubMarkerArrow(map, map.__bubbleConfig.filterFn);
+    }
     ensureBubbleOnTop(map);
   }
 
@@ -1011,17 +1015,20 @@
       return;
     }
 
+    const zoomScale = map && map.__zoomScale && map.__zoomScale > 0 ? map.__zoomScale : 1;
+    const sizeScale = 1 / Math.pow(zoomScale, 1.12);
+
     const tipX = projected[0];
     const tipY = projected[1];
-    const tailX = tipX + 22;
-    const tailY = tipY + 18;
+    const tailX = tipX + 22 * sizeScale;
+    const tailY = tipY + 18 * sizeScale;
     const dx = tipX - tailX;
     const dy = tipY - tailY;
     const len = Math.max(1, Math.sqrt(dx * dx + dy * dy));
     const ux = dx / len;
     const uy = dy / len;
-    const headSize = 8;
-    const headWidth = 4;
+    const headSize = 8 * sizeScale;
+    const headWidth = 4 * sizeScale;
     const baseX = tipX - ux * headSize;
     const baseY = tipY - uy * headSize;
     const px = -uy * headWidth;
@@ -1040,12 +1047,15 @@
       .attr('x1', tailX)
       .attr('y1', tailY)
       .attr('x2', tipX)
-      .attr('y2', tipY);
+      .attr('y2', tipY)
+      .style('stroke-width', `${2 * sizeScale}px`);
     merged.select('path.photo-map-github-arrow-head')
       .attr('d', headPath);
     merged.select('text.photo-map-github-arrow-label')
-      .attr('x', tipX + 10)
-      .attr('y', tipY - 10);
+      .attr('x', tipX + 10 * sizeScale)
+      .attr('y', tipY - 10 * sizeScale)
+      .style('font-size', `${12 * sizeScale}px`)
+      .style('stroke-width', `${2 * sizeScale}px`);
   }
 
   function renderMapBubbles(mapName, map, locations, filterFn, radius) {
@@ -1689,6 +1699,9 @@
         if (!d || !d.__baseRadius) return d && d.radius ? d.radius : 0;
         return d.__baseRadius / scale;
       });
+    if (map.__bubbleConfig) {
+      renderGithubMarkerArrow(map, map.__bubbleConfig.filterFn);
+    }
     ensureBubbleOnTop(map);
   }
 
@@ -1709,6 +1722,9 @@
         if (!d || !d.__baseRadius) return d && d.radius ? d.radius : 0;
         return d.__baseRadius / scale;
       });
+    if (map.__bubbleConfig) {
+      renderGithubMarkerArrow(map, map.__bubbleConfig.filterFn);
+    }
     ensureBubbleOnTop(map);
   }
 
