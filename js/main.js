@@ -104,6 +104,9 @@
   document.body.appendChild(supPopup);
 
   document.querySelectorAll('sup').forEach(function(sup) {
+    // Allow specific superscripts to opt out when adjacent explanatory text already exists.
+    if (sup.hasAttribute('data-no-tooltip')) return;
+
     const text = sup.textContent.trim();
     let tooltipText = '';
     if (text === '*') {
@@ -211,6 +214,8 @@
 
   const icsUrl = (container.dataset.icsUrl || '/asset/calendar.ics').trim();
   const githubUser = (container.dataset.githubUser || '').trim();
+  const amapKey = (container.dataset.amapKey || '').trim();
+  const baiduAk = (container.dataset.baiduAk || '').trim();
   const fallbackTimeZone = 'America/Los_Angeles';
   let defaultTimeZone = fallbackTimeZone;
   const defaultStartHour = 9;
@@ -245,6 +250,65 @@
     return resp.json();
   }
 
+  function isLikelyMainlandChina(lat, lon, locationText) {
+    const inMainlandBounds = Number.isFinite(lat) && Number.isFinite(lon) && lat >= 18 && lat <= 54 && lon >= 73 && lon <= 135;
+    if (inMainlandBounds) return true;
+    const text = (locationText || '').trim();
+    if (!text) return false;
+    return /(中国|china|beijing|shanghai|guangzhou|shenzhen|hangzhou|chengdu|wuhan|xian|nanjing|chongqing|tianjin)/i.test(text);
+  }
+
+  async function resolveCoordsFromAmap(locationText, key) {
+    if (!locationText || !key) return null;
+    const geocodeUrl = `https://restapi.amap.com/v3/geocode/geo?address=${encodeURIComponent(locationText)}&output=json&key=${encodeURIComponent(key)}`;
+    const data = await fetchJson(geocodeUrl, {
+      headers: {
+        Accept: 'application/json'
+      },
+      cache: 'no-store'
+    });
+
+    if (!data || data.status !== '1' || !Array.isArray(data.geocodes) || data.geocodes.length === 0) return null;
+    const locText = typeof data.geocodes[0].location === 'string' ? data.geocodes[0].location : '';
+    const parts = locText.split(',');
+    if (parts.length !== 2) return null;
+    const lon = Number(parts[0]);
+    const lat = Number(parts[1]);
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+    return { lat, lon };
+  }
+
+  async function resolveTimeZoneFromBaidu(lat, lon, ak) {
+    if (!Number.isFinite(lat) || !Number.isFinite(lon) || !ak) return null;
+    const timestamp = Math.floor(Date.now() / 1000);
+    const tzApi = `https://api.map.baidu.com/timezone/v1?location=${encodeURIComponent(`${lat},${lon}`)}&timestamp=${timestamp}&coordtype=wgs84ll&ak=${encodeURIComponent(ak)}`;
+    const data = await fetchJson(tzApi, {
+      headers: {
+        Accept: 'application/json'
+      },
+      cache: 'no-store'
+    });
+
+    if (!data || Number(data.status) !== 0) return null;
+    const result = data.result || {};
+    const candidates = [
+      result.time_zone_id,
+      result.timezone_id,
+      result.timezone,
+      result.tz,
+      data.time_zone_id,
+      data.timezone_id,
+      data.timezone,
+      data.tz
+    ];
+    for (const item of candidates) {
+      if (typeof item === 'string' && item.trim()) {
+        return item.trim();
+      }
+    }
+    return null;
+  }
+
   async function resolveDefaultTimeZoneFromGithub(user) {
     if (!user) return null;
 
@@ -271,22 +335,24 @@
       // Ignore cache read failures and continue network resolution.
     }
 
-    const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${encodeURIComponent(rawLocation)}`;
-    const geoRows = await fetchJson(geocodeUrl, {
-      headers: {
-        Accept: 'application/json'
-      },
-      cache: 'no-store'
-    });
-    if (!Array.isArray(geoRows) || geoRows.length === 0) return null;
+    if (!amapKey && isLikelyMainlandChina(NaN, NaN, rawLocation)) {
+      return 'Asia/Shanghai';
+    }
 
-    const lat = Number(geoRows[0].lat);
-    const lon = Number(geoRows[0].lon);
+    const coords = await resolveCoordsFromAmap(rawLocation, amapKey);
+    if (!coords) {
+      if (isLikelyMainlandChina(NaN, NaN, rawLocation)) return 'Asia/Shanghai';
+      return null;
+    }
+
+    const lat = Number(coords.lat);
+    const lon = Number(coords.lon);
     if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
 
-    const tzApi = `https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(lat)}&longitude=${encodeURIComponent(lon)}&current=temperature_2m&timezone=auto&forecast_days=1`;
-    const tzData = await fetchJson(tzApi, { cache: 'no-store' });
-    const resolvedTz = typeof tzData.timezone === 'string' ? tzData.timezone.trim() : '';
+    let resolvedTz = await resolveTimeZoneFromBaidu(lat, lon, baiduAk);
+    if (!isValidTimeZone(resolvedTz) && isLikelyMainlandChina(lat, lon, rawLocation)) {
+      resolvedTz = 'Asia/Shanghai';
+    }
     if (!isValidTimeZone(resolvedTz)) return null;
 
     try {
