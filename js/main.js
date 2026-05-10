@@ -813,3 +813,62 @@
 
   syncText();
 })();
+
+// Bilibili video switcher (for news pages)
+(function () {
+  function parseVideos(root) {
+    const dataEl = root.querySelector('.video-switcher-data');
+    if (!dataEl) return null;
+    try {
+      const parsed = JSON.parse((dataEl.textContent || '').trim());
+      if (!Array.isArray(parsed) || parsed.length === 0) return null;
+      return parsed;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function initSwitcher(root) {
+    const videos = parseVideos(root);
+    if (!videos) return;
+
+    const iframe = root.querySelector('.video-switcher-iframe');
+    const prevBtn = root.querySelector('.video-switcher-prev');
+    const nextBtn = root.querySelector('.video-switcher-next');
+    const titleEl = root.querySelector('.video-switcher-meta-title');
+    const subtitleEl = root.querySelector('.video-switcher-meta-subtitle');
+    const countEl = root.querySelector('.video-switcher-meta-count');
+
+    let index = Number(root.dataset.initial || 0);
+    if (!Number.isFinite(index) || index < 0) index = 0;
+    index = index % videos.length;
+
+    function render() {
+      const item = videos[index] || {};
+      const src = typeof item.src === 'string' ? item.src.trim() : '';
+      if (iframe && src && iframe.src !== src) iframe.src = src;
+      if (titleEl) titleEl.textContent = (item.title || '').trim();
+      if (subtitleEl) subtitleEl.textContent = (item.subtitle || '').trim();
+      if (countEl) countEl.textContent = `${index + 1} / ${videos.length}`;
+    }
+
+    function step(delta) {
+      index = (index + delta + videos.length) % videos.length;
+      render();
+    }
+
+    const disabled = videos.length <= 1;
+    if (prevBtn) {
+      prevBtn.disabled = disabled;
+      prevBtn.addEventListener('click', () => { if (!disabled) step(-1); });
+    }
+    if (nextBtn) {
+      nextBtn.disabled = disabled;
+      nextBtn.addEventListener('click', () => { if (!disabled) step(1); });
+    }
+
+    render();
+  }
+
+  document.querySelectorAll('.video-switcher').forEach(initSwitcher);
+})();

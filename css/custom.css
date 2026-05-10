@@ -1602,6 +1602,86 @@ span {
     bottom: -10px;
     right: 15px;
 }
+
+.video-switcher {
+    margin: 1.5em 0;
+}
+
+.video-switcher-player {
+    position: relative;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.video-switcher-frame {
+    position: relative;
+    width: 100%;
+}
+
+.video-switcher-frame::before {
+    content: '';
+    display: block;
+    padding-top: 56.25%;
+}
+
+.video-switcher-iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.video-switcher-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border: 1px solid #b8b8b8;
+    background: rgba(247, 247, 247, 0.92);
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    line-height: 30px;
+    padding: 0;
+    z-index: 2;
+}
+
+.video-switcher-nav:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.video-switcher-prev {
+    left: 8px;
+}
+
+.video-switcher-next {
+    right: 8px;
+}
+
+.video-switcher-meta {
+    max-width: 980px;
+    margin: 10px auto 0;
+    text-align: center;
+}
+
+.video-switcher-meta-title {
+    font-size: 1.7rem;
+    font-weight: 650;
+}
+
+.video-switcher-meta-subtitle {
+    margin-top: 2px;
+    font-size: 1.4rem;
+}
+
+.video-switcher-meta-count {
+    margin-top: 6px;
+    font-size: 1.2rem;
+    color: #666;
+}
 .bibtexentry {
     font-family: 'Times New Roman', 'Noto Serif SC', serif;
     font-size: 1.3rem;
