@@ -1087,7 +1087,7 @@
     }
 
     .weekly-calendar.is-collapsed {
-        max-height: 220px;
+        max-height: 620px;
         overflow-y: auto;
     }
 
