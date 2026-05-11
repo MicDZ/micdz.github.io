@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="en,zh_cn,default">
-
-<head>
+<!DOCTYPE html><html lang="en,zh_cn,default"><head>
   <meta charset="utf-8">
   
   <title>《G.E.B》第一、二章读书笔记——形式系统 - MicDZ</title>
@@ -34,23 +31,13 @@
 </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="/img/h.jpeg">
-  <link rel="stylesheet" href="https://cdn.jsdmirror.com
-/npm/lxgw-wenkai-webfont@1.1.0/style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  <!-- KaTeX support -->
-  <link rel="stylesheet" href="https://cdn.jsdmirror.com
-/npm/katex@0.16.9/dist/katex.css" integrity="sha384-OH8qNTHoMMVNVcKdKewlipV4SErXqccxxlg6HC9Cwjr5oZu2AdBej1TndeCirael" crossorigin="anonymous">
-<script defer src="https://cdn.jsdmirror.com
-/npm/katex@0.16.9/dist/katex.js" integrity="sha384-ImWHyYvDPlRzwFnvLhG9Jcpm/7qL4SVIuJK0C6Rj+Mf7fpeNJCLCynC+EVz4kCSA" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"
-        integrity="sha512-EKW5YvKU3hpyyOcN6jQnAxO/L8gts+YdYV6Yymtl8pk9YlYFtqJgihORuRoBXK8/cOIlappdU6Ms8KdK6yBCgA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-</script>
-<link rel="stylesheet" href="https://cdn.jsdmirror.com
-/npm/pseudocode@2.4.1/build/pseudocode.min.css">
-<script src="https://cdn.jsdmirror.com
-/npm/pseudocode@2.4.1/build/pseudocode.min.js">
-</script>
+  
+  
+  <!-- KaTeX support for posts that already contain rendered math/pseudocode. -->
+  <link rel="preconnect" href="https://cdn.jsdmirror.com" crossorigin="">
+  <link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/katex@0.16.9/dist/katex.css" integrity="sha384-OH8qNTHoMMVNVcKdKewlipV4SErXqccxxlg6HC9Cwjr5oZu2AdBej1TndeCirael" crossorigin="anonymous">
+  
+  
 
 <!-- Prism support ./js/prism.js-->
   
@@ -66,9 +53,9 @@
 
     <div class="two columns" style="max-width: 50px">
       <h1 class="mt-2 mode">
-        <div onclick=setDarkMode(true) id="darkBtn"></div>
-        <div onclick=setDarkMode(false) id="lightBtn" class=hidden></div>
-        <script >
+        <div onclick="setDarkMode(true)" id="darkBtn"></div>
+        <div onclick="setDarkMode(false)" id="lightBtn" class="hidden"></div>
+        <script>
           if (localStorage.getItem('preferredTheme') == 'dark') {
             setDarkMode(true)
           }
@@ -92,7 +79,7 @@
      
     <div class="six columns ml-1">
       <h1 class="mt-2 site-title">
-        MicDZ&#39;s Blog
+        MicDZ's Blog
       </h1>
     </div>
   
@@ -191,7 +178,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="https://s2.loli.net/2025/01/08/9DzIx2POcjFKfnY.png" alt="1_yeEjmcZ9Oiw0wcTS4HlGqg.png" /></p>
+<p><img src="https://s2.loli.net/2025/01/08/9DzIx2POcjFKfnY.png" alt="1_yeEjmcZ9Oiw0wcTS4HlGqg.png" decoding="async"></p>
 <p>值得注意的是，中文版的MU谜题使用了“WJU”三个字母，而不是“MIU”。我将在后面的部分解释原因。</p>
 <h2 id="mu是一个定理吗"><a class="markdownIt-Anchor" href="#mu是一个定理吗"></a> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>U</mi></mrow><annotation encoding="application/x-tex">MU</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span></span></span></span>是一个定理吗？</h2>
 <p>很明显，MU谜题中的所有定理都具有<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">Mx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal">x</span></span></span></span>的形式，其中<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span>是由<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi></mrow><annotation encoding="application/x-tex">I</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi></mrow><annotation encoding="application/x-tex">U</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span></span></span></span>组成的字符串。原因是，没有任何推理规则可以在定理中添加<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span>或移除<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span>。</p>
@@ -225,7 +212,7 @@
 <h2 id="同构诱导意义"><a class="markdownIt-Anchor" href="#同构诱导意义"></a> 同构诱导意义</h2>
 <p>我们已经创建了两个形式系统“WIU”和“pq”系统，然而，这两个系统没有明显的“意义”。</p>
 <p>我们需要在形式系统和现实世界之间创建一种映射，以赋予系统意义。这被称为同构。</p>
-<p>例如，“pq”系统可以映射为两个数字的加法。<br />
+<p>例如，“pq”系统可以映射为两个数字的加法。<br>
 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable rowspacing="0.24999999999999992em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mi>q</mi></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>  </mtext><mo>⟺</mo><mtext>  </mtext><mo>=</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mi>p</mi></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>  </mtext><mo>⟺</mo><mtext>  </mtext><mo>+</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mo lspace="0em" rspace="0em">−</mo></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>  </mtext><mo>⟺</mo><mtext>  </mtext><mn>1</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>−</mo><mo>−</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>  </mtext><mo>⟺</mo><mtext>  </mtext><mn>2</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mo>−</mo><mo>−</mo><mo>−</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>  </mtext><mo>⟺</mo><mtext>  </mtext><mn>3</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi><mi mathvariant="normal">⋮</mi><mpadded height="+0em" voffset="0em"><mspace mathbackground="black" width="0em" height="1.5em"></mspace></mpadded></mi></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
     q &amp;\iff =\\
@@ -243,7 +230,7 @@
 <p>人们喜欢发明违反基本算术但说明“更深”真理的口号，例如“1+1=1（对于恋人）”，或“1+1+1=1（三位一体）”… 两滴雨滴在窗玻璃上合并；一朵云分裂成两朵云。如果你思考这个问题，你可能会提出一些涉及物体在空间中分离的标准，并确保每个物体都能清楚地与其他物体区分开来。</p>
 </blockquote>
 <p>数字作为现实会失常。然而，人们有一种古老而天生的感觉，认为数字不应该失常。</p>
-<p><img src="https://s2.loli.net/2025/01/08/6tBvfQGH59yzexr.jpg" alt="liberation.jpg!Large.jpg" /><br />
+<p><img src="https://s2.loli.net/2025/01/08/6tBvfQGH59yzexr.jpg" alt="liberation.jpg!Large.jpg" decoding="async"><br>
 解放，M.C. Escher</p>
 <p>数字的一种失常可能是无限序列。以<strong>欧几里得定理</strong>为例，该定理指出存在无限多个质数。</p>
 <p>该定理的证明是告诉人们，无论你选择的数字有多大，总有一个更大的质数。让我们选择数字<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>。我们可以构造一个新数字<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo stretchy="false">!</mo><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N!+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">!</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>。这个新数字不能被从<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>的任何数字整除。换句话说，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo stretchy="false">!</mo><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N!+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">!</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>只能被比<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>大的数字整除。所以它本身要么是质数，要么其质因式分解的数字大于<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>。</p>
@@ -317,10 +304,29 @@
 
     </p>
 
-    <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=250&t=n&d=tomGCTh1CxWc_-uuNllmA6Nl5mVnvkzy2svb86OrEyc&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff'></script>
+    <script>
+      (function () {
+        var mountPoint = document.currentScript.parentNode;
+        function loadClustrmaps() {
+          if (document.getElementById('clustrmaps')) return;
+          var script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.id = 'clustrmaps';
+          script.async = true;
+          script.src = '//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=250&t=n&d=tomGCTh1CxWc_-uuNllmA6Nl5mVnvkzy2svb86OrEyc&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff';
+          mountPoint.appendChild(script);
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadClustrmaps, { timeout: 3000 });
+        } else {
+          window.addEventListener('load', function () { setTimeout(loadClustrmaps, 1000); }, { once: true });
+        }
+      })();
+    </script>
     
     
-</div> 
+</div>
+ 
           </div>
     
         </div>
@@ -329,6 +335,7 @@
   
 <script src="/js/main.js"></script>
 
-</body>
 
-</html>
+
+
+</body></html>

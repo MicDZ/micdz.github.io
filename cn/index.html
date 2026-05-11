@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="en,zh_cn,default">
-
-<head>
+<!DOCTYPE html><html lang="en,zh_cn,default"><head>
   <meta charset="utf-8">
   
   <title>周晗 - MicDZ</title>
@@ -34,23 +31,9 @@
 </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="/img/h.jpeg">
-  <link rel="stylesheet" href="https://cdn.jsdmirror.com
-/npm/lxgw-wenkai-webfont@1.1.0/style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  <!-- KaTeX support -->
-  <link rel="stylesheet" href="https://cdn.jsdmirror.com
-/npm/katex@0.16.9/dist/katex.css" integrity="sha384-OH8qNTHoMMVNVcKdKewlipV4SErXqccxxlg6HC9Cwjr5oZu2AdBej1TndeCirael" crossorigin="anonymous">
-<script defer src="https://cdn.jsdmirror.com
-/npm/katex@0.16.9/dist/katex.js" integrity="sha384-ImWHyYvDPlRzwFnvLhG9Jcpm/7qL4SVIuJK0C6Rj+Mf7fpeNJCLCynC+EVz4kCSA" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"
-        integrity="sha512-EKW5YvKU3hpyyOcN6jQnAxO/L8gts+YdYV6Yymtl8pk9YlYFtqJgihORuRoBXK8/cOIlappdU6Ms8KdK6yBCgA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-</script>
-<link rel="stylesheet" href="https://cdn.jsdmirror.com
-/npm/pseudocode@2.4.1/build/pseudocode.min.css">
-<script src="https://cdn.jsdmirror.com
-/npm/pseudocode@2.4.1/build/pseudocode.min.js">
-</script>
+  
+  
+  
 
 <!-- Prism support ./js/prism.js-->
   
@@ -66,9 +49,9 @@
 
     <div class="two columns" style="max-width: 50px">
       <h1 class="mt-2 mode">
-        <div onclick=setDarkMode(true) id="darkBtn"></div>
-        <div onclick=setDarkMode(false) id="lightBtn" class=hidden></div>
-        <script >
+        <div onclick="setDarkMode(true)" id="darkBtn"></div>
+        <div onclick="setDarkMode(false)" id="lightBtn" class="hidden"></div>
+        <script>
           if (localStorage.getItem('preferredTheme') == 'dark') {
             setDarkMode(true)
           }
@@ -111,9 +94,9 @@
   <div>
     <div>
       <div class="row about_brief mb-2 myavatar" style="width: 20%; max-width: 150px;">
-        <img src="/img/h.jpeg" alt="myavatar">
+        <img src="/img/h.jpeg" alt="myavatar" width="150" height="150" decoding="async" fetchpriority="high">
       </div>
-      <div class="row" style="width: 75%;">
+      <div class="row profile-detail" style="width: 75%;">
       <p>研究领域：机器学习、计算机视觉、机器人，重点研究多模态和具身智能。</p>
       <p>Email: me at micdz dot cn</p>
       <p>GitHub: <a target="_blank" rel="noopener" href="https://github.com/micdz/">MicDZ</a></p>
@@ -122,8 +105,8 @@
 
     <h2>教育经历</h2>  
        <div class="article-list mb-3">
-      <div style="display: flex; align-items: center; text-align: right; max-width: 60px; max-height: 60px;" class="mr-2">
-        <img src="/img/icons/hust.png" style="max-height: 100%; border: none; box-shadow: none; background: none;">
+      <div style="display: flex; align-items: center; text-align: right; max-width: 60px; max-height: 60px;" class="mr-2 education-logo-frame">
+        <img src="/img/icons/hust.png" alt="HUST" width="60" height="60" decoding="async" style="max-height: 100%; border: none; box-shadow: none; background: none;">
       </div>
 
         <div class="education-info">
@@ -135,9 +118,9 @@
 
     </div>
     <div class="article-list mb-3">
-      <div style="display: flex; align-items: center; text-align: right; max-width: 60px; max-height: 60px;" class="mr-2">
+      <div style="display: flex; align-items: center; text-align: right; max-width: 60px; max-height: 60px;" class="mr-2 education-logo-frame">
         
-        <img src="/img/icons/ucsb.gif" style="max-height: 100%; border: none; box-shadow: none; background: none;">
+        <img src="/img/icons/ucsb.gif" alt="UCSB" width="60" height="60" loading="lazy" decoding="async" style="max-height: 100%; border: none; box-shadow: none; background: none;">
       </div>
           <div class="education-info">
           <div class="info">
@@ -215,13 +198,13 @@
   
               
                 <br>
-              <p>
+              </p><p>
                 Preprint ArXiv 2510.00491, 
   
               
               
                     2025 年 09 月
-              </p >
+              </p>
                 
               <div>
                 <p>
@@ -244,7 +227,7 @@
             </div>
               <div class="publication-figure">
               
-                <img src="https://micdz.github.io/Traj2Action/static/images/main.png" alt="myavatar" style="max-height: 100%; max-width: 200px;" >
+                <img src="https://micdz.github.io/Traj2Action/static/images/main.png" alt="publication" loading="lazy" decoding="async" style="max-height: 100%; max-width: 200px;">
               
               </div>
           </div>
@@ -301,17 +284,17 @@
                   Xin Yang<sup>†<sup> 
                 
             
-            </span>
+            </sup></sup></span>
   
               
                 <br>
-              <p>
+              </p><p>
                 ACL'25 Findings, 
   
               
               
                     2025 年 02 月
-              </p >
+              </p>
                 
               <div>
                 <p>
@@ -334,7 +317,7 @@
             </div>
               <div class="publication-figure">
               
-                <img src="/MANBench/static/images/teaser.jpg" alt="myavatar" style="max-height: 100%; max-width: 200px;" >
+                <img src="/MANBench/static/images/teaser.jpg" alt="publication" loading="lazy" decoding="async" style="max-height: 100%; max-width: 200px;">
               
               </div>
           </div>
@@ -344,20 +327,20 @@
     <h2>研究与访问经历</h2>
     <div class="scrollableDiv">
     <div class="article-list mb-3">
-      <div style="display: flex; align-items: center; text-align: right; max-width: 80px; max-height: 80px;" class="mr-2">
-        <img src="/img/icons/maple.png" style="max-height: 100%; border: none; box-shadow: none; background: none;">
+      <div style="display: flex; align-items: center; text-align: right; max-width: 80px; max-height: 80px;" class="mr-2 org-logo-frame">
+        <img src="/img/icons/maple.png" alt="MAPLE" width="80" height="80" loading="lazy" decoding="async" style="max-height: 100%; border: none; box-shadow: none; background: none;">
       </div>
-      <div  >
+      <div>
         <div class="research-info">
          <p><b>MAPLE，机器感知与学习实验室，西湖大学</b></p>
          <p class="info left">2025年5月 - 至今，访问学生</p>
-          <p> 导师：<a target="_blank" rel="noopener" href="https://www.westlake.edu.cn/faculty/guojun-qi.html">齐国君教授</a> (Fellow of IEEE & IAPR) 和<a target="_blank" rel="noopener" href="https://mlyarthur.github.io/">麻力元博士</a></p> <p>与博士生曹瑾瑾合作</p>
+          <p> 导师：<a target="_blank" rel="noopener" href="https://www.westlake.edu.cn/faculty/guojun-qi.html">齐国君教授</a> (Fellow of IEEE &amp; IAPR) 和<a target="_blank" rel="noopener" href="https://mlyarthur.github.io/">麻力元博士</a></p> <p>与博士生曹瑾瑾合作</p>
         </div>
       </div>
     </div>
     <div class="article-list mb-3">
-      <div style="display: flex; align-items: center; text-align: right; max-width: 80px; max-height: 80px;" class="mr-2">
-        <img src="/img/icons/eic.png" style="max-height: 100%; border: none; box-shadow: none; background: none;">
+      <div style="display: flex; align-items: center; text-align: right; max-width: 80px; max-height: 80px;" class="mr-2 org-logo-frame">
+        <img src="/img/icons/eic.png" alt="EIC" width="80" height="80" loading="lazy" decoding="async" style="max-height: 100%; border: none; box-shadow: none; background: none;">
       </div>
       <div>
         <div class="research-info">
@@ -367,10 +350,10 @@
       </div>
     </div>
         <div class="article-list mb-3">
-      <div style="display: flex; align-items: center; text-align: right; max-width: 80px; max-height: 80px;" class="mr-2">
-        <img src="/img/icons/langya.png" style="max-height: 100%; border: none; box-shadow: none; background: none;">
+      <div style="display: flex; align-items: center; text-align: right; max-width: 80px; max-height: 80px;" class="mr-2 org-logo-frame">
+        <img src="/img/icons/langya.png" alt="LangYa" width="80" height="80" loading="lazy" decoding="async" style="max-height: 100%; border: none; box-shadow: none; background: none;">
       </div>
-      <div  >
+      <div>
         <div class="research-info">
           <p><b>狼牙，华中科技大学RoboMaster战队</b></p> <p class="info left">2022年10月 - 2024年9月，视觉组成员</p>
           <p>导师：曾喻江博士</p>
@@ -397,7 +380,7 @@
         
           <p class="info left date">2024 年 09 月</p>
           <p class="line">
-          <a href="/cn/news/qs.html" >
+          <a href="/cn/news/qs.html">
               
               嵌入式芯片与系统设计大赛
               
@@ -411,7 +394,7 @@
         
           <p class="info left date">2024 年 09 月</p>
           <p class="line">
-          <a href="/cn/news/rm.html" >
+          <a href="/cn/news/rm.html">
               
               RoboMaster 机甲大师超级对抗赛
               
@@ -452,7 +435,7 @@
         
          <p class="info left date">2024 年 09 月</p>
           <p class="line">
-         <a href="/cn/news/qs.html" >
+         <a href="/cn/news/qs.html">
               
               嵌入式芯片与系统设计大赛
               </a><span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
@@ -465,7 +448,7 @@
         
          <p class="info left date">2024 年 09 月</p>
           <p class="line">
-         <a href="/cn/news/rm.html" >
+         <a href="/cn/news/rm.html">
               
               RoboMaster 机甲大师超级对抗赛
               </a><span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
@@ -490,7 +473,7 @@
         
          <p class="info left date">2024 年 08 月</p> 
           <p class="line">
-          <a href="/cn/news/rm3.html" >
+          <a href="/cn/news/rm3.html">
               
               RoboMaster 开源奖
               
@@ -515,7 +498,7 @@
         
          <p class="info left date">2024 年 05 月</p> 
           <p class="line">
-          <a href="/cn/news/rm2.html" >
+          <a href="/cn/news/rm2.html">
               
               RoboMaster 机甲大师超级对抗赛 区域赛
               
@@ -564,25 +547,25 @@
 
     <div class="article-list mb-2 spacing">
       <p class="info left date">2024 年 10 月</p>
-      <p >本科生国家奖学金<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b>人民币 10000</b></p>
+      <p>本科生国家奖学金<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b>人民币 10000</b></p>
   </div>
     <div class="article-list mb-2 spacing">
       <p class="info left date">2024 年 10 月</p>
-      <p >校三好学生<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b>人民币 2000</b></p>
+      <p>校三好学生<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b>人民币 2000</b></p>
   </div>
   </div>
   <div id="allHonors" style="display: none;" class="scrollableDiv">
       <div class="article-list mb-2 spacing">
       <p class="info left date">2024 年 10 月</p>
-      <p >本科生国家奖学金<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span> <b>人民币 10000</b></p>
+      <p>本科生国家奖学金<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span> <b>人民币 10000</b></p>
   </div>
     <div class="article-list mb-2 spacing">
       <p class="info left date">2024 年 10 月</p>
-      <p >校三好学生<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b>人民币 2000</b></p>
+      <p>校三好学生<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b>人民币 2000</b></p>
   </div>
   <div class="article-list mb-2 spacing">
       <p class="info left date">2023 年 10 月</p>
-      <p >校三好学生<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b>人民币 2000</b></p>
+      <p>校三好学生<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b>人民币 2000</b></p>
   </div>
   <div class="article-list mb-2 spacing">
           <p class="info left date">2022 年 5 月</p> 
@@ -622,7 +605,7 @@
     
     <div class="article-list mb-2 spacing">
         <p class="info left date">2025 年 01 月08日</p>
-        <a href="/cn/GEB-Chp12.html" >
+        <a href="/cn/GEB-Chp12.html">
             
             《G.E.B》第一、二章读书笔记——形式系统
             
@@ -634,7 +617,7 @@
     
     <div class="article-list mb-2 spacing">
         <p class="info left date">2024 年 12 月28日</p>
-        <a href="/cn/Guide-to-Godel%E2%80%99s-Incompleteness-Theorems.html" >
+        <a href="/cn/Guide-to-Godel%E2%80%99s-Incompleteness-Theorems.html">
             
             哥德尔不完备定理指南
             
@@ -646,7 +629,7 @@
     
     <div class="article-list mb-2 spacing">
         <p class="info left date">2024 年 03 月05日</p>
-        <a href="/cn/posesolver.html" >
+        <a href="/cn/posesolver.html">
             
             姿态解算常用知识
             
@@ -658,7 +641,7 @@
     
     <div class="article-list mb-2 spacing">
         <p class="info left date">2024 年 01 月15日</p>
-        <a href="/cn/Republic-Chp2.html" >
+        <a href="/cn/Republic-Chp2.html">
             
             《理想国》第二章读书笔记——正义的两个极端
             
@@ -670,7 +653,7 @@
     
     <div class="article-list mb-2 spacing">
         <p class="info left date">2024 年 01 月11日</p>
-        <a href="/cn/Republic-Chp1.html" >
+        <a href="/cn/Republic-Chp1.html">
             
             《理想国》第一章读书笔记——何为正义？
             
@@ -690,6 +673,7 @@
   
   
   <h4 class="right"> <a href="/cn/archives.html">所有文章</a></h4>
+
             <!-- </div> -->
             <div class="row mt-2">
     
@@ -715,10 +699,29 @@
 
     </p>
 
-    <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=250&t=n&d=tomGCTh1CxWc_-uuNllmA6Nl5mVnvkzy2svb86OrEyc&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff'></script>
+    <script>
+      (function () {
+        var mountPoint = document.currentScript.parentNode;
+        function loadClustrmaps() {
+          if (document.getElementById('clustrmaps')) return;
+          var script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.id = 'clustrmaps';
+          script.async = true;
+          script.src = '//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=250&t=n&d=tomGCTh1CxWc_-uuNllmA6Nl5mVnvkzy2svb86OrEyc&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff';
+          mountPoint.appendChild(script);
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadClustrmaps, { timeout: 3000 });
+        } else {
+          window.addEventListener('load', function () { setTimeout(loadClustrmaps, 1000); }, { once: true });
+        }
+      })();
+    </script>
     
     
-</div> 
+</div>
+ 
           </div>
     
         </div>
@@ -727,6 +730,7 @@
   
 <script src="/js/main.js"></script>
 
-</body>
 
-</html>
+
+
+</body></html>

@@ -1,22 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
-
-@font-face {
-    font-family: 'Noto Serif SC';
-    src: url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap');  
-   /* 限制仅中文使用该字体 */
-   unicode-range: U+4E00-9FA5; 
-}
-
-@font-face {
-    font-family: 'Libre Baskerville';
-    src: url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
-    /* 限制仅英文使用该字体 */
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC,
-}
-  
     html {
     overflow: auto;
     }
@@ -1030,6 +1011,18 @@
         margin: 8px 0 6px;
     }
 
+    .calendar-options {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .calendar-options.is-hidden,
+    .weekly-calendar.is-hidden {
+        display: none;
+    }
+
     .calendar-navs {
         display: flex;
         gap: 8px;
@@ -1546,6 +1539,56 @@ img {
     right: 20px;
     width: 100%;
 }
+
+.myavatar img {
+    width: min(100%, 150px);
+    height: auto !important;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.education-logo-frame,
+.org-logo-frame {
+    flex: 0 0 auto;
+    justify-content: center;
+}
+
+.education-logo-frame img,
+.org-logo-frame img {
+    display: block;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain;
+}
+
+.education-logo-frame img {
+    max-width: 60px !important;
+    max-height: 60px !important;
+}
+
+.org-logo-frame img {
+    max-width: 80px !important;
+    max-height: 80px !important;
+}
+
+@media (max-width: 550px) {
+    .myavatar {
+        position: absolute;
+        top: 0;
+        right: 20px;
+        width: clamp(96px, 20vw, 150px) !important;
+        margin: 0;
+    }
+
+    .myavatar img {
+        width: 100%;
+    }
+
+    .education-logo-frame,
+    .org-logo-frame {
+        align-items: center;
+    }
+}
 .katex {
     font-size: 1.6rem !important;
     line-height: 1.5;
@@ -1563,44 +1606,53 @@ span {
 .handwritten-quote {
     font-family: 'Caveat', cursive;
     font-style: italic;
-    font-size: 1.8rem;
-    line-height: 1.3;
+    font-size: clamp(1.45rem, 2vw, 1.8rem);
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0 3.1rem;
+    text-align: center;
+    white-space: nowrap;
 }
 
 .home-quote {
-    font-family: 'Caveat', cursive;
-    font-style: italic;
-    font-size: 1.5rem;
-    line-height: 1.4;
-    text-align: center;
-    margin: 1.5em 0px;
-}
-
-.corner-quotes {
     position: relative;
-    padding: 14px 34px 14px;
+    width: fit-content;
+    max-width: 100%;
+    margin: 1.5em auto;
+    min-height: 4.5rem;
 }
 
-.corner-quotes::before,
-.corner-quotes::after {
+.home-quote-mark {
     position: absolute;
     font-family: 'Caveat', cursive;
-    font-style: italic;
-    font-size: 2.2em;
+    font-size: 2rem;
+    font-weight: 700;
     line-height: 1;
-    pointer-events: none;
 }
 
-.corner-quotes::before {
-    content: "“";
-    top: 0px;
-    left: 0px;
+.home-quote-mark-open {
+    top: -0.25rem;
+    left: 0.5rem;
 }
 
-.corner-quotes::after {
-    content: "”";
-    bottom: -10px;
-    right: 15px;
+.home-quote-mark-close {
+    right: 0.5rem;
+    bottom: -0.35rem;
+}
+
+@media (max-width: 760px) {
+    .home-quote {
+        width: 100%;
+        margin-right: 0;
+        margin-left: 0;
+        transform: none;
+    }
+
+    .handwritten-quote {
+        padding: 0 2rem;
+        white-space: normal;
+    }
 }
 
 .video-switcher {

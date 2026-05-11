@@ -567,7 +567,8 @@
     });
   }
 
-  function renderEvents(events, weekStart, dayCols) {
+  function renderEvents(events, weekStart, dayCols, options) {
+    const showRestBlocks = Boolean(options && options.showRestBlocks);
     const weekEnd = addDays(weekStart, 7);
     const visible = events.filter((ev) => {
       if (!ev.start || !ev.end) return false;
@@ -602,6 +603,7 @@
         const summaryText = (ev.summary || '').trim();
         const isRest = summaryText.toLowerCase().includes('rest');
         if (isRest) {
+          if (!showRestBlocks) continue;
           const restBlock = document.createElement('div');
           restBlock.className = 'calendar-rest-block';
           const restLabel = document.createElement('div');
@@ -674,6 +676,9 @@
   let weekOffset = 0;
   let currentWeekStart = null;
   let currentDayCols = null;
+  let initStarted = false;
+  let viewExpanded = false;
+  let useLocalTimeZone = false;
 
   function hasEventsInWeek(weekStart) {
     const weekEnd = addDays(weekStart, 7);
@@ -707,21 +712,25 @@
     const dayCols = buildCalendarShell(weekStart);
     currentWeekStart = weekStart;
     currentDayCols = dayCols;
-    renderEvents(eventsCache, weekStart, dayCols);
+    renderEvents(eventsCache, weekStart, dayCols, { showRestBlocks: viewExpanded });
     renderNowIndicator(weekStart, dayCols);
     addClickToEmail(dayCols, weekStart);
     updatePrevButton(weekStart);
     updateNextButton(weekStart);
   }
 
-  function applyTimeConfig(useLocalTimeZone) {
+  function applyTimeConfig() {
     if (useLocalTimeZone) {
       const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone || defaultTimeZone;
       timeZone = localTz;
+    } else {
+      timeZone = defaultTimeZone;
+    }
+
+    if (viewExpanded) {
       startHour = 0;
       endHour = 24;
     } else {
-      timeZone = defaultTimeZone;
       startHour = defaultStartHour;
       endHour = defaultEndHour;
     }
@@ -749,7 +758,7 @@
 
       const text = icsText;
       eventsCache = parseIcs(text).filter((ev) => ev.start && ev.end);
-      applyTimeConfig(false);
+      applyTimeConfig();
       renderWeek(0);
     } catch (e) {
       const error = document.createElement('div');
@@ -759,32 +768,47 @@
     }
   }
 
+  function ensureInit() {
+    if (initStarted) return;
+    initStarted = true;
+    init();
+  }
+
   const prevBtn = document.getElementById('calendarPrevBtn');
   const nextBtn = document.getElementById('calendarNextBtn');
   const tzToggle = document.getElementById('calendarTzToggle');
   if (prevBtn) {
     prevBtn.addEventListener('click', () => {
+      ensureInit();
       if (prevBtn.disabled) return;
       renderWeek(weekOffset - 1);
     });
   }
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
+      ensureInit();
       renderWeek(weekOffset + 1);
     });
   }
 
   if (tzToggle) {
     tzToggle.addEventListener('change', () => {
-      applyTimeConfig(tzToggle.checked);
+      useLocalTimeZone = tzToggle.checked;
+      ensureInit();
+      applyTimeConfig();
       renderWeek(weekOffset);
     });
   }
 
-  init();
+  window.initWeeklyCalendar = ensureInit;
+  window.setWeeklyCalendarExpanded = function setWeeklyCalendarExpanded(isExpanded) {
+    viewExpanded = Boolean(isExpanded);
+    applyTimeConfig();
+    if (initStarted) renderWeek(weekOffset);
+  };
 
   setInterval(() => {
-    if (!currentWeekStart || !currentDayCols) return;
+    if (!initStarted || !currentWeekStart || !currentDayCols) return;
     renderNowIndicator(currentWeekStart, currentDayCols);
   }, 60000);
 })();
@@ -793,21 +817,47 @@
 (function () {
   const container = document.getElementById('weeklyCalendar');
   const btn = document.getElementById('calendarToggleBtn');
+  const options = document.getElementById('calendarOptions');
   if (!container || !btn) return;
 
-  const collapsedClass = 'is-collapsed';
+  const hiddenClass = 'is-hidden';
   const expandedClass = 'is-expanded';
+  const collapsedClass = 'is-collapsed';
+  let visible = !container.classList.contains(hiddenClass);
+  let expanded = container.classList.contains(expandedClass);
 
   function syncText() {
-    const expanded = container.classList.contains(expandedClass);
-    btn.textContent = expanded ? 'Hide calendar' : 'Click to view calendar';
+    if (!visible) {
+      btn.textContent = 'Click to view calendar';
+    } else {
+      btn.textContent = expanded ? 'Collapse calendar' : 'Expand calendar';
+    }
   }
 
   btn.addEventListener('click', (e) => {
     e.preventDefault();
-    const isExpanded = container.classList.contains(expandedClass);
-    container.classList.toggle(expandedClass, !isExpanded);
-    container.classList.toggle(collapsedClass, isExpanded);
+
+    if (!visible) {
+      visible = true;
+      expanded = false;
+      container.classList.remove(hiddenClass);
+      container.classList.add(collapsedClass);
+      container.classList.remove(expandedClass);
+      if (options) options.classList.remove(hiddenClass);
+      window.initWeeklyCalendar();
+      if (typeof window.setWeeklyCalendarExpanded === 'function') {
+        window.setWeeklyCalendarExpanded(false);
+      }
+      syncText();
+      return;
+    }
+
+    expanded = !expanded;
+    container.classList.toggle(expandedClass, expanded);
+    container.classList.toggle(collapsedClass, !expanded);
+    if (typeof window.setWeeklyCalendarExpanded === 'function') {
+      window.setWeeklyCalendarExpanded(expanded);
+    }
     syncText();
   });
 

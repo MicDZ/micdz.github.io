@@ -31,21 +31,13 @@
 </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="/img/h.jpeg">
-  <link rel="stylesheet" href="https://cdn.jsdmirror.com
-/npm/lxgw-wenkai-webfont@1.1.0/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  <!-- KaTeX support -->
-  <link rel="stylesheet" href="https://cdn.jsdmirror.com
-/npm/katex@0.16.9/dist/katex.css" integrity="sha384-OH8qNTHoMMVNVcKdKewlipV4SErXqccxxlg6HC9Cwjr5oZu2AdBej1TndeCirael" crossorigin="anonymous">
-<script defer="" src="https://cdn.jsdmirror.com
-/npm/katex@0.16.9/dist/katex.js" integrity="sha384-ImWHyYvDPlRzwFnvLhG9Jcpm/7qL4SVIuJK0C6Rj+Mf7fpeNJCLCynC+EVz4kCSA" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js" integrity="sha512-EKW5YvKU3hpyyOcN6jQnAxO/L8gts+YdYV6Yymtl8pk9YlYFtqJgihORuRoBXK8/cOIlappdU6Ms8KdK6yBCgA==" crossorigin="anonymous" referrerpolicy="no-referrer">
-</script>
-<link rel="stylesheet" href="https://cdn.jsdmirror.com
-/npm/pseudocode@2.4.1/build/pseudocode.min.css">
-<script src="https://cdn.jsdmirror.com
-/npm/pseudocode@2.4.1/build/pseudocode.min.js">
-</script>
+  
+  
+  <!-- KaTeX support for posts that already contain rendered math/pseudocode. -->
+  <link rel="preconnect" href="https://cdn.jsdmirror.com" crossorigin="">
+  <link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/katex@0.16.9/dist/katex.css" integrity="sha384-OH8qNTHoMMVNVcKdKewlipV4SErXqccxxlg6HC9Cwjr5oZu2AdBej1TndeCirael" crossorigin="anonymous">
+  
+  
 
 <!-- Prism support ./js/prism.js-->
   
@@ -168,7 +160,7 @@
 <p>We may create a new set of theoroms <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">Px</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">x</span></span></span></span> with the rules “if <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">Cx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">x</span></span></span></span> is not a theorem, then <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">Px</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">x</span></span></span></span> is a theorem”. The fatal flaw here is that checking whether <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">Cx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">x</span></span></span></span> is not theorem is not an explicitly typographical operation. To know whether a theorem is not of a system, we have to go <em>outside</em> of the system.</p>
 <h2 id="figure-and-ground">3.&nbsp;<a class="markdownIt-Anchor" href="#figure-and-ground"></a> Figure and Ground</h2>
 <p>The relation between prime numbers and composite numbers makes people recall the famous artistic distinction between <em>figure</em> and <em>ground</em>. This concept is not only applicable to the field of painting, but also to the field of music, literature, and even mathematics.</p>
-<p><img src="https://pic1.imgdb.cn/item/67b875b2d0e0a243d40169c5.png" alt=""></p>
+<p><img src="https://pic1.imgdb.cn/item/67b875b2d0e0a243d40169c5.png" alt="" decoding="async"></p>
 <p>This picture shows a theorems tree. The tree provides a considerable visual representation of the relationship between the theorems and the negations of theorems. More importantly, it reveals the <em>Gödel’s Incompleteness Theorems</em> in a more intuitive way. There exists theorems that are neither provable nor disprovable within the system which are unreachable truths.</p>
 <h2 id="recursively-enumerable-sets-vs-recursive-sets">4.&nbsp;<a class="markdownIt-Anchor" href="#recursively-enumerable-sets-vs-recursive-sets"></a> Recursively Enumerable Sets vs. Recursive Sets</h2>
 <p>It is intuitive to think that a <em>figure and its ground carry exactly the same amount of information</em>. However, in the field of mathematics, this is not the case. It is fact that, there exist formal systems whose negative space is not the positive set of any formal system. In a more thechnical term, there exist recursively enumerable sets that are not recursive. We could conclude that typographical decision procedures do not exist for all system.</p>
@@ -667,10 +659,29 @@
 
     </span></p>
 
-    <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?cl=ffffff&amp;w=250&amp;t=n&amp;d=tomGCTh1CxWc_-uuNllmA6Nl5mVnvkzy2svb86OrEyc&amp;co=2d78ad&amp;cmo=3acc3a&amp;cmn=ff5353&amp;ct=ffffff"></script>
+    <script>
+      (function () {
+        var mountPoint = document.currentScript.parentNode;
+        function loadClustrmaps() {
+          if (document.getElementById('clustrmaps')) return;
+          var script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.id = 'clustrmaps';
+          script.async = true;
+          script.src = '//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=250&t=n&d=tomGCTh1CxWc_-uuNllmA6Nl5mVnvkzy2svb86OrEyc&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff';
+          mountPoint.appendChild(script);
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadClustrmaps, { timeout: 3000 });
+        } else {
+          window.addEventListener('load', function () { setTimeout(loadClustrmaps, 1000); }, { once: true });
+        }
+      })();
+    </script>
     
     
-</div> 
+</div>
+ 
           </div>
     
         </div>
@@ -678,6 +689,7 @@
       </div>
   
 <script src="/js/main.js"></script>
+
 
 
 
