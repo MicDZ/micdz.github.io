@@ -253,6 +253,8 @@
   const defaultEndHour = 18;
   const slotHeight = 60;
   const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const compactDatePattern = /^\d{8}$/;
+  const dateTimePattern = /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})?(Z)?$/;
 
   let timeZone = defaultTimeZone;
   let startHour = defaultStartHour;
@@ -448,13 +450,13 @@
 
   function parseIcsDate(value) {
     const v = value.trim();
-    if (/^\d{8}$/.test(v)) {
+    if (compactDatePattern.test(v)) {
       const y = Number(v.slice(0, 4));
       const m = Number(v.slice(4, 6)) - 1;
       const d = Number(v.slice(6, 8));
       return new Date(y, m, d);
     }
-    const match = v.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})?(Z)?$/);
+    const match = v.match(dateTimePattern);
     if (!match) return null;
     const y = Number(match[1]);
     const m = Number(match[2]) - 1;
@@ -468,11 +470,10 @@
   }
 
   function parseIcs(text) {
-    const lines = unfoldIcs(text);
     const events = [];
     let current = null;
 
-    for (const line of lines) {
+    for (const line of unfoldIcs(text)) {
       if (line === 'BEGIN:VEVENT') {
         current = {};
         continue;
@@ -492,17 +493,92 @@
       const value = line.slice(idx + 1);
       const name = namePart.split(';')[0];
 
-      if (name === 'DTSTART') current.start = parseIcsDate(value);
-      if (name === 'DTEND') current.end = parseIcsDate(value);
-      if (name === 'SUMMARY') current.summary = value;
-      if (name === 'DESCRIPTION') current.description = value;
-      if (name === 'LOCATION') current.location = value;
+      switch (name) {
+        case 'DTSTART':
+          current.start = parseIcsDate(value);
+          break;
+        case 'DTEND':
+          current.end = parseIcsDate(value);
+          break;
+        case 'SUMMARY':
+          current.summary = value;
+          break;
+        case 'DESCRIPTION':
+          current.description = value;
+          break;
+        case 'LOCATION':
+          current.location = value;
+          break;
+        default:
+          break;
+      }
     }
     return events;
   }
 
+  function getPreparedEvents() {
+    if (zonedEventsTimeZone === timeZone) return zonedEventsCache;
+
+    zonedEventsCache = eventsCache
+      .map((ev) => {
+        if (!ev.start || !ev.end) return null;
+        const zonedStart = toZonedDate(ev.start);
+        const zonedEnd = toZonedDate(ev.end);
+        const zonedStartMs = zonedStart.getTime();
+        const zonedEndMs = zonedEnd.getTime();
+        if (!Number.isFinite(zonedStartMs) || !Number.isFinite(zonedEndMs) || zonedEndMs <= zonedStartMs) return null;
+
+        const summaryText = (ev.summary || '').trim();
+        return {
+          ...ev,
+          summaryText,
+          isRest: summaryText.toLowerCase().includes('rest'),
+          zonedStart,
+          zonedEnd,
+          zonedStartMs,
+          zonedEndMs
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a.zonedStartMs - b.zonedStartMs);
+
+    let maxEndMs = -Infinity;
+    for (const ev of zonedEventsCache) {
+      maxEndMs = Math.max(maxEndMs, ev.zonedEndMs);
+      ev.maxEndMs = maxEndMs;
+    }
+    zonedEventsTimeZone = timeZone;
+    return zonedEventsCache;
+  }
+
+  function firstEventStartingAfter(events, timeMs) {
+    let lo = 0;
+    let hi = events.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (events[mid].zonedStartMs < timeMs) lo = mid + 1;
+      else hi = mid;
+    }
+    return lo;
+  }
+
+  function getEventsInRange(startMs, endMs) {
+    const events = getPreparedEvents();
+    const out = [];
+    const stop = firstEventStartingAfter(events, endMs);
+
+    for (let i = stop - 1; i >= 0; i--) {
+      const ev = events[i];
+      if (ev.zonedEndMs > startMs) out.push(ev);
+      if (i > 0 && events[i - 1].maxEndMs <= startMs) break;
+    }
+    out.sort((a, b) => a.zonedStartMs - b.zonedStartMs);
+    return out;
+  }
+
   function buildCalendarShell(weekStart) {
     container.innerHTML = '';
+    container.classList.remove('is-loading');
 
     const header = document.createElement('div');
     header.className = 'calendar-header';
@@ -552,6 +628,72 @@
     return dayCols;
   }
 
+  function renderLoadingWeek(offset) {
+    weekOffset = offset;
+    applyTimeConfig();
+    const weekStart = addDays(startOfWeek(toZonedDate(new Date())), weekOffset * 7);
+    const dayCols = buildCalendarShell(weekStart);
+    const labels = ['Busy Window', 'Focus Block', 'Meeting', 'Reserved', 'Deep Work', 'Office Hour'];
+
+    container.classList.add('is-loading');
+    currentWeekStart = weekStart;
+    currentDayCols = dayCols;
+
+    dayCols.forEach((col) => {
+      const frag = document.createDocumentFragment();
+      const count = 2 + Math.floor(Math.random() * 3);
+
+      for (let i = 0; i < count; i++) {
+        const maxDuration = Math.max(1, endHour - startHour);
+        const durationHours = 0.75 + Math.random() * 1.5;
+        const startOffset = Math.random() * Math.max(0.5, maxDuration - durationHours);
+        const top = startOffset * slotHeight;
+        const height = Math.max(32, durationHours * slotHeight);
+        const titleText = labels[Math.floor(Math.random() * labels.length)];
+        const startLabelHour = startHour + Math.floor(startOffset);
+        const startLabelMinute = Math.random() > 0.5 ? '30' : '00';
+
+        const block = document.createElement('div');
+        block.className = 'calendar-event calendar-loading-block';
+        block.style.top = `${top}px`;
+        block.style.height = `${height}px`;
+
+        const title = document.createElement('div');
+        title.className = 'event-title';
+        title.textContent = titleText;
+
+        const meta = document.createElement('div');
+        meta.className = 'event-meta';
+        meta.textContent = `${pad(startLabelHour)}:${startLabelMinute} - Loading`;
+
+        block.appendChild(title);
+        block.appendChild(meta);
+        frag.appendChild(block);
+      }
+
+      col.replaceChildren(frag);
+    });
+
+    const overlay = document.createElement('div');
+    overlay.className = 'calendar-loading-overlay';
+    overlay.setAttribute('role', 'status');
+    overlay.setAttribute('aria-live', 'polite');
+
+    const mark = document.createElement('div');
+    mark.className = 'calendar-loading-mark';
+    mark.textContent = 'M';
+
+    const text = document.createElement('div');
+    text.className = 'calendar-loading-text';
+    text.textContent = 'Loading calendar';
+
+    overlay.appendChild(mark);
+    overlay.appendChild(text);
+    container.appendChild(overlay);
+    updatePrevButton(weekStart);
+    updateNextButton(weekStart);
+  }
+
   function getObfuscatedEmail() {
     const codes = [109, 101, 64, 109, 105, 99, 100, 122, 46, 99, 110];
     return String.fromCharCode.apply(null, codes);
@@ -598,43 +740,44 @@
     });
   }
 
-  function renderEvents(events, weekStart, dayCols, options) {
+  function renderEvents(weekStart, dayCols, options) {
     const showRestBlocks = Boolean(options && options.showRestBlocks);
     const weekEnd = addDays(weekStart, 7);
-    const visible = events.filter((ev) => {
-      if (!ev.start || !ev.end) return false;
-      const evStart = toZonedDate(ev.start);
-      const evEnd = toZonedDate(ev.end);
-      return evEnd > weekStart && evStart < weekEnd;
-    });
-
-    for (const col of dayCols) col.innerHTML = '';
+    const weekStartMs = weekStart.getTime();
+    const weekEndMs = weekEnd.getTime();
+    const visible = getEventsInRange(weekStartMs, weekEndMs);
+    const dayBounds = [];
+    const fragments = dayCols.map(() => document.createDocumentFragment());
 
     for (const ev of visible) {
+      if (ev.isRest && !showRestBlocks) continue;
+
       for (let i = 0; i < 7; i++) {
-        const dayStart = addDays(weekStart, i);
-        dayStart.setHours(startHour, 0, 0, 0);
-        const dayEnd = addDays(weekStart, i);
-        dayEnd.setHours(endHour, 0, 0, 0);
+        let bounds = dayBounds[i];
+        if (!bounds) {
+          const dayStart = addDays(weekStart, i);
+          dayStart.setHours(startHour, 0, 0, 0);
+          const dayEnd = addDays(weekStart, i);
+          dayEnd.setHours(endHour, 0, 0, 0);
+          bounds = dayBounds[i] = {
+            startDate: dayStart,
+            startMs: dayStart.getTime(),
+            endMs: dayEnd.getTime()
+          };
+        }
 
-        const evStart = toZonedDate(ev.start);
-        const evEnd = toZonedDate(ev.end);
+        if (ev.zonedEndMs <= bounds.startMs || ev.zonedStartMs >= bounds.endMs) continue;
 
-        if (evEnd <= dayStart || evStart >= dayEnd) continue;
-
-        const segStart = new Date(Math.max(evStart, dayStart));
-        const segEnd = new Date(Math.min(evEnd, dayEnd));
+        const segStart = new Date(Math.max(ev.zonedStartMs, bounds.startMs));
+        const segEnd = new Date(Math.min(ev.zonedEndMs, bounds.endMs));
         if (segEnd <= segStart) continue;
 
-        const minutesFromStart = (segStart - dayStart) / 60000;
+        const minutesFromStart = (segStart - bounds.startDate) / 60000;
         const durationMinutes = (segEnd - segStart) / 60000;
         const top = (minutesFromStart / 60) * slotHeight;
         const height = Math.max(18, (durationMinutes / 60) * slotHeight);
 
-        const summaryText = (ev.summary || '').trim();
-        const isRest = summaryText.toLowerCase().includes('rest');
-        if (isRest) {
-          if (!showRestBlocks) continue;
+        if (ev.isRest) {
           const restBlock = document.createElement('div');
           restBlock.className = 'calendar-rest-block';
           const restLabel = document.createElement('div');
@@ -643,7 +786,7 @@
           restBlock.appendChild(restLabel);
           restBlock.style.top = `${top}px`;
           restBlock.style.height = `${height}px`;
-          dayCols[i].appendChild(restBlock);
+          fragments[i].appendChild(restBlock);
           continue;
         }
 
@@ -651,7 +794,7 @@
         card.className = 'calendar-event';
         const title = document.createElement('div');
         title.className = 'event-title';
-        title.textContent = summaryText || 'Untitled';
+        title.textContent = ev.summaryText || 'Untitled';
 
         const meta = document.createElement('div');
         meta.className = 'event-meta';
@@ -667,9 +810,13 @@
         }
         card.style.top = `${top}px`;
         card.style.height = `${height}px`;
-        dayCols[i].appendChild(card);
+        fragments[i].appendChild(card);
       }
     }
+
+    dayCols.forEach((col, i) => {
+      col.replaceChildren(fragments[i]);
+    });
   }
 
   function clearNowIndicators(dayCols) {
@@ -710,20 +857,22 @@
   let initStarted = false;
   let viewExpanded = false;
   let useLocalTimeZone = false;
+  let zonedEventsCache = [];
+  let zonedEventsTimeZone = '';
+  let isLoadingCalendar = false;
 
   function hasEventsInWeek(weekStart) {
     const weekEnd = addDays(weekStart, 7);
-    return eventsCache.some((ev) => {
-      if (!ev.start || !ev.end) return false;
-      const evStart = toZonedDate(ev.start);
-      const evEnd = toZonedDate(ev.end);
-      return evEnd > weekStart && evStart < weekEnd;
-    });
+    return getEventsInRange(weekStart.getTime(), weekEnd.getTime()).length > 0;
   }
 
   function updatePrevButton(weekStart) {
     const prevBtn = document.getElementById('calendarPrevBtn');
     if (!prevBtn) return;
+    if (isLoadingCalendar) {
+      prevBtn.disabled = true;
+      return;
+    }
     const prevWeekStart = addDays(weekStart, -7);
     const hasPrev = hasEventsInWeek(prevWeekStart);
     prevBtn.disabled = !hasPrev;
@@ -732,6 +881,10 @@
   function updateNextButton(weekStart) {
     const nextBtn = document.getElementById('calendarNextBtn');
     if (!nextBtn) return;
+    if (isLoadingCalendar) {
+      nextBtn.disabled = true;
+      return;
+    }
     const nextWeekStart = addDays(weekStart, 7);
     const hasNext = hasEventsInWeek(nextWeekStart);
     nextBtn.disabled = !hasNext;
@@ -743,7 +896,7 @@
     const dayCols = buildCalendarShell(weekStart);
     currentWeekStart = weekStart;
     currentDayCols = dayCols;
-    renderEvents(eventsCache, weekStart, dayCols, { showRestBlocks: viewExpanded });
+    renderEvents(weekStart, dayCols, { showRestBlocks: viewExpanded });
     renderNowIndicator(weekStart, dayCols);
     addClickToEmail(dayCols, weekStart);
     updatePrevButton(weekStart);
@@ -756,6 +909,10 @@
       timeZone = localTz;
     } else {
       timeZone = defaultTimeZone;
+    }
+    if (zonedEventsTimeZone && zonedEventsTimeZone !== timeZone) {
+      zonedEventsTimeZone = '';
+      zonedEventsCache = [];
     }
 
     if (viewExpanded) {
@@ -787,11 +944,16 @@
         defaultTimeZone = resolvedDefaultTz;
       }
 
-      const text = icsText;
-      eventsCache = parseIcs(text).filter((ev) => ev.start && ev.end);
+      eventsCache = parseIcs(icsText).filter((ev) => ev.start && ev.end);
+      zonedEventsTimeZone = '';
+      zonedEventsCache = [];
+      isLoadingCalendar = false;
       applyTimeConfig();
       renderWeek(0);
     } catch (e) {
+      isLoadingCalendar = false;
+      container.classList.remove('is-loading');
+      container.innerHTML = '';
       const error = document.createElement('div');
       error.className = 'calendar-error';
       error.textContent = 'Calendar unavailable.';
@@ -802,7 +964,14 @@
   function ensureInit() {
     if (initStarted) return;
     initStarted = true;
-    init();
+    isLoadingCalendar = true;
+    renderLoadingWeek(0);
+    const startInit = () => init();
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(startInit);
+    } else {
+      setTimeout(startInit, 0);
+    }
   }
 
   const prevBtn = document.getElementById('calendarPrevBtn');
@@ -811,6 +980,7 @@
   if (prevBtn) {
     prevBtn.addEventListener('click', () => {
       ensureInit();
+      if (isLoadingCalendar) return;
       if (prevBtn.disabled) return;
       renderWeek(weekOffset - 1);
     });
@@ -818,6 +988,7 @@
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
       ensureInit();
+      if (isLoadingCalendar) return;
       renderWeek(weekOffset + 1);
     });
   }
@@ -835,7 +1006,13 @@
   window.setWeeklyCalendarExpanded = function setWeeklyCalendarExpanded(isExpanded) {
     viewExpanded = Boolean(isExpanded);
     applyTimeConfig();
-    if (initStarted) renderWeek(weekOffset);
+    if (initStarted) {
+      if (isLoadingCalendar) {
+        renderLoadingWeek(weekOffset);
+      } else {
+        renderWeek(weekOffset);
+      }
+    }
   };
 
   setInterval(() => {

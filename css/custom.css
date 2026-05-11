@@ -995,6 +995,7 @@
     .weekly-calendar {
         --slot-height: 60px;
         --hours: 9;
+        position: relative;
         margin: 12px 0 24px;
         border: 1px solid #ddd;
         border-radius: 6px;
@@ -1188,6 +1189,93 @@
         box-sizing: border-box;
     }
 
+    .calendar-loading-block {
+        border-color: #d7d7d7;
+        border-left-color: #a6a6a6;
+        background: linear-gradient(90deg, #eeeeee 0%, #f8f8f8 48%, #eeeeee 100%);
+        background-size: 220% 100%;
+        color: #777;
+        animation: calendar-loading-shimmer 1.4s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    .calendar-loading-block .event-title,
+    .calendar-loading-block .event-meta {
+        filter: blur(3px);
+        opacity: 0.58;
+        user-select: none;
+    }
+
+    .calendar-loading-overlay {
+        position: absolute;
+        left: 72px;
+        right: 0;
+        top: 58px;
+        bottom: 0;
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.42);
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    .calendar-loading-mark {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 1px solid #cfcfcf;
+        background: #fff;
+        color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Times New Roman', 'Noto Serif SC', serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+        position: relative;
+    }
+
+    .calendar-loading-mark::after {
+        content: '';
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        border-top-color: #4a4a4a;
+        animation: calendar-loading-spin 0.9s linear infinite;
+    }
+
+    .calendar-loading-text {
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid #e2e2e2;
+        color: #444;
+        font-family: 'Times New Roman', 'Noto Serif SC', serif;
+        font-size: 0.95rem;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    @keyframes calendar-loading-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes calendar-loading-shimmer {
+        0% {
+            background-position: 120% 0;
+        }
+        100% {
+            background-position: -120% 0;
+        }
+    }
+
     .calendar-rest-block {
         position: absolute;
         left: 0;
@@ -1272,6 +1360,9 @@
         .calendar-header,
         .calendar-body {
             grid-template-columns: 60px repeat(7, minmax(120px, 1fr));
+        }
+        .calendar-loading-overlay {
+            left: 60px;
         }
         .time-slot {
             font-size: 0.8rem;
