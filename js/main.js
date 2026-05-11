@@ -1,3 +1,34 @@
+// Accessibility fixes for third-party controls rendered after page load.
+(function () {
+  function labelBlueprintIconButtons(root) {
+    var buttons = (root || document).querySelectorAll('button.bp6-button:not([aria-label]):not([aria-labelledby])');
+    buttons.forEach(function(button, index) {
+      if (button.textContent.trim()) return;
+      var label = button.getAttribute('title') ||
+        button.getAttribute('data-tooltip') ||
+        button.getAttribute('aria-description') ||
+        'Toggle option ' + (index + 1);
+      button.setAttribute('aria-label', label);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { labelBlueprintIconButtons(document); });
+  } else {
+    labelBlueprintIconButtons(document);
+  }
+
+  if ('MutationObserver' in window) {
+    new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.nodeType === 1) labelBlueprintIconButtons(node);
+        });
+      });
+    }).observe(document.documentElement, { childList: true, subtree: true });
+  }
+})();
+
 // Abstract popup and sup tooltip functionality
 (function () {
   const popup = document.createElement('div');
