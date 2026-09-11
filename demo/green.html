@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave Propagation vs Back-Projection (Fixed Layout)</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh; /* Full viewport height */
+            display: flex; /* Use Flexbox */
+            flex-direction: column; /* Stack items vertically */
+            overflow: hidden; /* Prevent scrollbars */
+        }
+
+        /* The Control Card */
+        #controls {
+            /* No longer absolute. It sits at the top naturally. */
+            background: rgba(22, 27, 34, 1); /* Solid background */
+            padding: 15px 25px;
+            border-bottom: 1px solid #30363d; /* Separator line */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            text-align: center;
+            flex-shrink: 0; /* Prevent the card from shrinking */
+            z-index: 10;
+            width: 100%; /* Full width strip */
+            box-sizing: border-box;
+        }
+
+        /* Container for content inside the card to keep it centered/tidy */
+        .controls-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h2 { margin: 0 0 10px 0; font-size: 1.2rem; }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            cursor: pointer;
+            background: #21262d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        button:hover { background: #30363d; }
+        
+        button.active {
+            background: #1f6feb;
+            color: white;
+            border-color: #1f6feb;
+        }
+
+        #math-display {
+            font-family: 'Courier New', monospace;
+            color: #58a6ff;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            min-height: 40px;
+        }
+
+        .legend {
+            font-size: 0.8rem;
+            color: #8b949e;
+            margin-top: 5px;
+        }
+
+        /* The Canvas Area */
+        #canvas-container {
+            flex-grow: 1; /* Take up all remaining space */
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="controls">
+        <div class="controls-content">
+            <h2>Imaging System Propagation</h2>
+            <div class="btn-group">
+                <button id="btn-forward" class="active" onclick="setMode('forward')">Forward (Transmission)</button>
+                <button id="btn-backward" onclick="setMode('backward')">Backward (Reconstruction)</button>
+            </div>
+            <div id="math-display">
+                Current: g(r) = s(r) * h(r)
+            </div>
+            <div class="legend">
+                <span style="color: #ff7b72;">● Target</span> &nbsp;|&nbsp; 
+                <span style="color: #3fb950;">● Wavefronts</span> &nbsp;|&nbsp; 
+                <span style="color: #d2a8ff;">○ Receiver Array</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="canvas-container">
+        <canvas id="simCanvas"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const container = document.getElementById('canvas-container');
+        const ctx = canvas.getContext('2d');
+        const mathDisplay = document.getElementById('math-display');
+
+        let width, height, centerX, centerY;
+        let mode = 'forward'; // 'forward' or 'backward'
+        let waves = [];
+        let frameCount = 0;
+
+        // Configuration
+        const WAVE_SPEED = 3;
+        const SPAWN_RATE = 20; 
+        
+        // Dynamic Radius based on screen size
+        let MAX_RADIUS = 300; 
+        
+        function resize() {
+            // Get the size of the container (the space below the card)
+            width = container.clientWidth;
+            height = container.clientHeight;
+            
+            // Set canvas internal resolution
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Center is now relative to the canvas area, not the window
+            centerX = width / 2;
+            centerY = height / 2;
+
+            // Adjust ring size to fit nicely
+            MAX_RADIUS = Math.min(width, height) / 2 - 20;
+        }
+
+        window.addEventListener('resize', resize);
+        // Initial call after DOM load to ensure container has size
+        setTimeout(resize, 0);
+
+        class Wave {
+            constructor(mode) {
+                this.mode = mode;
+                if (mode === 'forward') {
+                    this.r = 0;
+                    this.active = true;
+                } else {
+                    this.r = MAX_RADIUS;
+                    this.active = true;
+                }
+            }
+
+            update() {
+                if (this.mode === 'forward') {
+                    this.r += WAVE_SPEED;
+                    if (this.r > MAX_RADIUS) this.active = false;
+                } else {
+                    this.r -= WAVE_SPEED;
+                    if (this.r <= 0) {
+                        this.r = 0; 
+                        this.active = false;
+                    }
+                }
+            }
+
+            draw(ctx) {
+                if (this.r <= 0) return;
+
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, this.r, 0, Math.PI * 2);
+                
+                let opacity;
+                const normalizeR = this.r / MAX_RADIUS;
+
+                if (this.mode === 'forward') {
+                    opacity = 1 - normalizeR; 
+                    if (opacity < 0) opacity = 0;
+                    ctx.strokeStyle = `rgba(63, 185, 80, ${opacity})`; 
+                    ctx.lineWidth = 2;
+                } else {
+                    opacity = 1 - normalizeR;
+                    if (opacity < 0) opacity = 0;
+                    
+                    if (this.r < 40) {
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+                        ctx.lineWidth = 4;
+                    } else {
+                        ctx.strokeStyle = `rgba(88, 166, 255, ${opacity * 0.8})`; 
+                        ctx.lineWidth = 2;
+                    }
+                }
+                
+                ctx.stroke();
+            }
+        }
+
+        function setMode(newMode) {
+            mode = newMode;
+            waves = []; 
+            frameCount = 0;
+            
+            document.getElementById('btn-forward').classList.toggle('active', mode === 'forward');
+            document.getElementById('btn-backward').classList.toggle('active', mode === 'backward');
+
+            if (mode === 'forward') {
+                mathDisplay.innerHTML = "Physics: Wave Diverging<br>Math: h(r) ~ exp(jkr)";
+            } else {
+                mathDisplay.innerHTML = "Math: Wave Converging (Back-Projection)<br>Math: h*(r) ~ exp(-jkr)";
+            }
+        }
+
+        function drawScene() {
+            ctx.fillStyle = '#0d1117';
+            ctx.fillRect(0, 0, width, height);
+
+            if (width && height) { // Only draw if we have dimensions
+                // Draw Receivers Ring
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, MAX_RADIUS, 0, Math.PI * 2);
+                ctx.strokeStyle = '#d2a8ff'; 
+                ctx.setLineDash([5, 15]);
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Draw Target
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 5, 0, Math.PI * 2);
+                ctx.fillStyle = '#ff7b72'; 
+                ctx.fill();
+                
+                // Waves
+                for (let i = waves.length - 1; i >= 0; i--) {
+                    let w = waves[i];
+                    w.update();
+                    w.draw(ctx);
+                    if (!w.active) {
+                        waves.splice(i, 1);
+                    }
+                }
+
+                // Spawn
+                if (frameCount % SPAWN_RATE === 0) {
+                    waves.push(new Wave(mode));
+                }
+                
+                // Flash effect
+                if (mode === 'backward') {
+                     const hit = waves.some(w => w.r <= WAVE_SPEED * 1.5 && w.r > 0);
+                     if (hit) {
+                         ctx.beginPath();
+                         ctx.arc(centerX, centerY, 15, 0, Math.PI * 2);
+                         ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                         ctx.fill();
+                         
+                         ctx.beginPath();
+                         ctx.arc(centerX, centerY, 30, 0, Math.PI * 2);
+                         ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                         ctx.lineWidth = 2;
+                         ctx.stroke();
+                     }
+                }
+            }
+
+            frameCount++;
+            requestAnimationFrame(drawScene);
+        }
+
+        drawScene();
+
+    </script>
+</body>
+</html>

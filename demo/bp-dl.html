@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Neural Net: Batch Training</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            background-color: #050505;
+            color: #c9d1d9;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        header {
+            background: #161b22;
+            padding: 12px 20px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 20;
+        }
+
+        h1 { margin: 0; font-size: 1.1rem; color: #58a6ff; font-weight: 600; }
+        .subtitle { font-size: 0.8rem; color: #8b949e; margin-top: 4px; }
+
+        .controls-area { display: flex; align-items: center; gap: 12px; }
+        .control-group { display: flex; gap: 6px; align-items: center; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 6px; }
+        label { font-size: 0.75rem; color: #8b949e; cursor: pointer; font-weight: 500;}
+        input[type="range"] { width: 60px; accent-color: #58a6ff; }
+        select { background: #21262d; color: #c9d1d9; border: 1px solid #30363d; border-radius: 4px; font-size: 0.8rem; padding: 2px 4px; }
+        
+        button {
+            padding: 6px 12px;
+            cursor: pointer;
+            background: #21262d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+            font-family: inherit;
+        }
+        button:hover { background: #30363d; border-color: #8b949e; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-green { color: #7ee787; border-color: #2ea043; }
+        .btn-purple { color: #d2a8ff; border-color: #a371f7; }
+        .btn-blue { color: #58a6ff; border-color: #1f6feb; }
+
+        #canvas-wrapper { flex: 1; position: relative; width: 100%; height: 100%; background: #0d1117; }
+        canvas { display: block; width: 100%; height: 100%; }
+
+        .math-panel {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 80%; max-width: 800px; background: rgba(22, 27, 34, 0.95);
+            border: 1px solid #30363d; border-radius: 8px; padding: 15px 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); pointer-events: none; backdrop-filter: blur(5px);
+        }
+        .math-content { font-size: 1.1rem; color: #c9d1d9; text-align: center; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+
+        .data-display { position: absolute; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+        .info-box {
+            background: rgba(13, 17, 23, 0.9); padding: 10px 15px; border-radius: 6px;
+            font-family: monospace; font-size: 0.85rem; border: 1px solid #30363d;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3); text-align: right; min-width: 140px;
+        }
+        .target-box { border-right: 3px solid #3fb950; color: #3fb950; }
+        .loss-box { border-right: 3px solid #ff7b72; color: #ff7b72; }
+        .sub-text { font-size: 0.75rem; color: #8b949e; margin-top: 4px;}
+
+        .legend {
+            position: absolute; top: 20px; left: 20px; font-size: 0.85rem; color: #8b949e;
+            line-height: 1.8; background: rgba(13, 17, 23, 0.8); padding: 12px 16px;
+            border-radius: 6px; pointer-events: none; border: 1px solid #30363d;
+        }
+        .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; position: relative; top: -1px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>Back Propagation Demo</h1>
+            <div class="subtitle">Architecture: [2, 8, 1]</div>
+        </div>
+        
+        <div class="controls-area">
+            <div class="control-group">
+                <label>Speed</label>
+                <input type="range" id="speedRange" min="1" max="10" value="6">
+            </div>
+            
+            <div class="control-group">
+                <label>Batch</label>
+                <select id="batchSelect">
+                    <option value="1">1</option>
+                    <option value="10">10</option>
+                    <option value="50" selected>50</option>
+                    <option value="100">100</option>
+                    <option value="1000">1000</option>
+                    <option value="5000">5000</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <input type="checkbox" id="chk-seq">
+                <label for="chk-seq">Seq</label>
+            </div>
+
+            <button id="btn-fwd" class="btn-green" onclick="triggerForward()">Fwd</button>
+            <button id="btn-bwd" class="btn-purple" onclick="triggerBackward()" disabled>Bwd</button>
+            <button id="btn-upd" class="btn-blue" onclick="triggerUpdate()" disabled>Upd</button>
+            
+            <div style="width:1px; height:20px; background:#30363d; margin:0 5px;"></div>
+            <button id="btn-auto" onclick="toggleAuto()">Auto</button>
+            <button onclick="resetNet()">Reset</button>
+        </div>
+    </header>
+
+    <div id="canvas-wrapper">
+        <canvas id="netCanvas"></canvas>
+        
+        <div class="legend" id="legend">
+            <div><span class="dot" style="background:#3fb950"></span> Forward $\alpha^{(l)}$</div>
+            <div><span class="dot" style="background:#a371f7"></span> Backward $\delta^{(l)}$</div>
+            <div><span class="dot" style="background:#30363d; border: 1px solid #58a6ff"></span> Weights</div>
+        </div>
+
+        <div class="data-display">
+            <div class="info-box target-box" id="target-val">Batch Info...</div>
+            <div class="info-box loss-box" id="loss-val">Batch Loss: 0.0000</div>
+        </div>
+
+        <div class="math-panel">
+            <div class="math-content" id="math-formula">
+                $$ \text{Deep Network: } 2 \to 4 \to 8 \to 4 \to 1 $$
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('netCanvas');
+        const ctx = canvas.getContext('2d');
+        const mathFormula = document.getElementById('math-formula');
+        const lossVal = document.getElementById('loss-val');
+        const targetVal = document.getElementById('target-val');
+        const speedRange = document.getElementById('speedRange');
+        const batchSelect = document.getElementById('batchSelect');
+        const chkSeq = document.getElementById('chk-seq');
+        const btnAuto = document.getElementById('btn-auto');
+
+        let width, height; 
+        let animationId;
+
+        // --- Config: Deep Network ---
+        const LAYERS = [2, 4, 1]; 
+        let neurons = [];
+        let connections = [];
+        
+        // Data State
+        let BATCH_DATA = [];
+        let BATCH_SIZE = 50; 
+        
+        // Params
+        let LEARNING_RATE = 0.5; 
+        
+        let currentState = 'IDLE'; 
+        let pulses = []; 
+        let baseSpeed = 0.02; 
+        let autoTrain = false;
+
+        // const sigmoid = x => 1 / (1 + Math.exp(-x));
+        // const sigmoidPrime = x => { let s = sigmoid(x); return s * (1 - s); };
+        const sigmoid = x => (x > 0 ? x : 0.01 * x);
+        const sigmoidPrime = x => (x > 0 ? 1 : 0.01);
+
+        function resize() {
+            const parent = canvas.parentElement;
+            const dpr = window.devicePixelRatio || 1;
+            width = parent.clientWidth;
+            height = parent.clientHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            canvas.style.width = width + "px";
+            canvas.style.height = height + "px";
+            ctx.scale(dpr, dpr);
+        }
+
+        class Neuron {
+            constructor(layerIdx, idx, x, y) {
+                this.l = layerIdx;
+                this.i = idx;
+                this.x = x;
+                this.y = y;
+                
+                this.z = 0; 
+                this.a = 0; 
+                this.delta = 0; 
+                this.b = Math.random() * 0.2 - 0.1;
+                this.gradBSum = 0;
+                this.tempDeltaSum = 0; 
+                this.showTempDelta = false; 
+            }
+
+            draw(ctx) {
+                const intensity = this.a; 
+                
+                ctx.beginPath();
+                // Slightly smaller radius to accommodate 8-neuron layer
+                ctx.arc(this.x, this.y, 16, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(88, 166, 255, ${0.1 + intensity * 0.6})`;
+                ctx.fill();
+                
+                ctx.lineWidth = 2;
+                if (this.l === 0) ctx.strokeStyle = '#fff';
+                else if (this.l === LAYERS.length - 1) ctx.strokeStyle = '#ff7b72';
+                else ctx.strokeStyle = '#58a6ff';
+                
+                if (currentState === 'UPDATING') {
+                     ctx.shadowBlur = 15;
+                     ctx.shadowColor = '#58a6ff';
+                } else {
+                    ctx.shadowBlur = 0;
+                }
+                ctx.stroke();
+
+                // 1. Activation
+                ctx.fillStyle = '#fff';
+                ctx.font = '600 10px system-ui'; 
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.shadowBlur = 0; 
+                ctx.fillText(this.a.toFixed(2), this.x, this.y);
+
+                // 2. Accumulator (Sequential)
+                if (this.showTempDelta) {
+                    ctx.fillStyle = '#d2a8ff';
+                    ctx.font = '600 10px system-ui';
+                    ctx.fillText("Σ:" + this.formatNumber(this.tempDeltaSum), this.x, this.y - 28);
+                }
+
+                // 3. Delta (FIXED: Threshold lowered significantly)
+                if (Math.abs(this.delta) > 1e-7 && currentState !== 'FORWARD') {
+                    ctx.fillStyle = '#d2a8ff';
+                    ctx.font = '600 10px system-ui';
+                    // Use intelligent formatting
+                    let txt = "δ:" + this.formatNumber(this.delta);
+                    ctx.fillText(txt, this.x, this.y + 28);
+                }
+
+                // 4. Bias
+                if (this.l > 0) {
+                    ctx.fillStyle = '#8b949e';
+                    ctx.font = '9px system-ui';
+                    let yOffset = (Math.abs(this.delta) > 1e-7 && currentState !== 'FORWARD') ? 40 : 28;
+                    ctx.fillText(`b:${this.b.toFixed(2)}`, this.x, this.y + yOffset);
+                }
+            }
+
+            // --- Intelligent Number Formatter ---
+            formatNumber(num) {
+                let absVal = Math.abs(num);
+                if (absVal === 0) return "0.00";
+                if (absVal < 0.01) {
+                    // Scientific notation for small gradients (Vanishing Gradient Viz)
+                    return num.toExponential(1); // e.g. "2.1e-4"
+                }
+                return num.toFixed(2);
+            }
+        }
+
+        class Connection {
+            constructor(n1, n2) {
+                this.from = n1;
+                this.to = n2;
+                this.w = Math.random() * 2 - 1;
+                this.gradWSum = 0;
+                this.flash = 0;
+            }
+
+            draw(ctx) {
+                ctx.beginPath();
+                ctx.moveTo(this.from.x, this.from.y);
+                ctx.lineTo(this.to.x, this.to.y);
+                
+                const width = Math.min(4, Math.max(1.0, Math.abs(this.w) * 3));
+                ctx.lineWidth = width;
+                
+                if (this.flash > 0) {
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${this.flash})`;
+                    this.flash *= 0.9;
+                    if (this.flash < 0.05) this.flash = 0; 
+                } else {
+                    ctx.strokeStyle = this.w > 0 ? 'rgba(255, 255, 255, 0.3)' : 'rgba(255, 80, 80, 0.3)';
+                }
+                ctx.shadowBlur = 0;
+                ctx.stroke();
+
+                // Only draw weight text if layers aren't too dense (optional optimization)
+                // With 8 neurons, drawing all weights is messy. Let's draw them small.
+                let midX = (this.from.x + this.to.x) / 2;
+                let midY = (this.from.y + this.to.y) / 2;
+                
+                // Only draw text for active/strong connections or if mouse hover (future)
+                // For now, draw tiny box
+                if (Math.abs(this.w) > 0.1) {
+                    ctx.fillStyle = 'rgba(13, 17, 23, 0.9)';
+                    ctx.fillRect(midX - 10, midY - 6, 20, 12);
+                    ctx.fillStyle = this.w > 0 ? '#a2d2ff' : '#ffadad';
+                    ctx.font = '8px system-ui'; 
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(this.w.toFixed(1), midX, midY);
+                }
+            }
+        }
+
+        class Pulse {
+            constructor(connection, type, value, onFinish) {
+                this.conn = connection;
+                this.type = type; 
+                this.val = value; 
+                this.progress = 0;
+                this.done = false;
+                this.onFinish = onFinish;
+            }
+
+            update() {
+                let multiplier = parseInt(speedRange.value) / 2; 
+                this.progress += baseSpeed * multiplier;
+                if (this.progress >= 1) {
+                    this.done = true;
+                    if (this.onFinish) this.onFinish();
+                }
+            }
+
+            draw(ctx) {
+                const start = this.type === 'FORWARD' ? this.conn.from : this.conn.to;
+                const end = this.type === 'FORWARD' ? this.conn.to : this.conn.from;
+                const curX = start.x + (end.x - start.x) * this.progress;
+                const curY = start.y + (end.y - start.y) * this.progress;
+
+                ctx.beginPath();
+                let r = 2 + Math.min(5, Math.abs(this.val) * 3);
+                ctx.arc(curX, curY, r, 0, Math.PI*2);
+                if (this.type === 'FORWARD') {
+                    ctx.fillStyle = '#3fb950'; ctx.shadowColor = '#3fb950';
+                } else {
+                    ctx.fillStyle = '#a371f7'; ctx.shadowColor = '#a371f7';
+                }
+                ctx.shadowBlur = 10; ctx.fill(); ctx.shadowBlur = 0;
+            }
+        }
+
+        function init() {
+            resize();
+            createNetwork();
+            generateBatchData();
+            window.addEventListener('resize', () => { resize(); createNetwork(); setVisualsToSample(0); });
+            loop();
+        }
+
+        function generateBatchData() {
+            BATCH_SIZE = parseInt(batchSelect.value);
+            BATCH_DATA = [];
+            let posCount = 0;
+            for(let i=0; i<BATCH_SIZE; i++) {
+                let x1 = Math.random();
+                let x2 = Math.random();
+                let sum = x1 + x2;
+                let target = (sum > 1.0) ? 1.0 : 0.0;
+                if(target === 1.0) posCount++;
+                BATCH_DATA.push({ inputs: [x1, x2], target: target });
+            }
+            targetVal.innerHTML = `<div>Size: ${BATCH_SIZE}</div><div class="sub-text">Pos: ${posCount}, Neg: ${BATCH_SIZE - posCount}</div>`;
+            setVisualsToSample(0);
+        }
+
+        function setVisualsToSample(idx) {
+            if(BATCH_DATA.length > idx) {
+                neurons[0][0].a = BATCH_DATA[idx].inputs[0];
+                neurons[0][1].a = BATCH_DATA[idx].inputs[1];
+            }
+        }
+
+        function forwardMath(inputArray) {
+            for(let i=0; i<neurons[0].length; i++) neurons[0][i].a = inputArray[i];
+            for(let l=1; l<LAYERS.length; l++) {
+                for(let n of neurons[l]) {
+                    let sum = 0;
+                    const feeds = connections.filter(c => c.to === n);
+                    for(let c of feeds) sum += c.w * c.from.a;
+                    n.z = sum + n.b;
+                    n.a = sigmoid(n.z);
+                }
+            }
+            return neurons[LAYERS.length-1][0].a;
+        }
+
+        function createNetwork() {
+            neurons = []; connections = [];
+            const layerSpacing = width / (LAYERS.length + 1);
+            const topMargin = 60; 
+            const usableHeight = height - topMargin;
+
+            for(let l=0; l<LAYERS.length; l++) {
+                let layerNeurons = [];
+                let count = LAYERS[l];
+                let nodeSpacing = usableHeight / (count + 1);
+                for(let i=0; i<count; i++) {
+                    let x = layerSpacing * (l + 1);
+                    let y = topMargin + nodeSpacing * (i + 1);
+                    layerNeurons.push(new Neuron(l, i, x, y));
+                }
+                neurons.push(layerNeurons);
+            }
+            for(let l=0; l<LAYERS.length - 1; l++) {
+                for(let n1 of neurons[l]) {
+                    for(let n2 of neurons[l+1]) {
+                        connections.push(new Connection(n1, n2));
+                    }
+                }
+            }
+        }
+
+        function triggerForward() {
+            if (currentState !== 'IDLE') return;
+            currentState = 'FORWARD';
+            document.getElementById('btn-fwd').disabled = true;
+            generateBatchData();
+            neurons.forEach(l => l.forEach(n => { n.delta = 0; n.showTempDelta = false; }));
+            
+            let totalLoss = 0;
+            BATCH_DATA.forEach(sample => {
+                let out = forwardMath(sample.inputs);
+                totalLoss += 0.5 * Math.pow(out - sample.target, 2);
+            });
+            lossVal.innerText = `Batch Loss: ${(totalLoss / BATCH_SIZE).toFixed(5)}`;
+            forwardMath(BATCH_DATA[0].inputs);
+            
+            renderMath("$$ \\alpha^{(l)} = \\sigma(W^{(l)}\\alpha^{(l-1)} + b^{(l)}) $$");
+            animateForwardLayer(0);
+        }
+
+        function animateForwardLayer(layerIdx) {
+            if (layerIdx >= LAYERS.length - 1) { finishForward(); return; }
+            const layerConns = connections.filter(c => c.from.l === layerIdx);
+            let arrivedCount = 0;
+            layerConns.forEach(c => {
+                pulses.push(new Pulse(c, 'FORWARD', c.from.a, () => {
+                    arrivedCount++;
+                    if(arrivedCount === layerConns.length) animateForwardLayer(layerIdx + 1);
+                }));
+            });
+        }
+
+        function finishForward() {
+            currentState = 'IDLE';
+            document.getElementById('btn-bwd').disabled = false;
+            if(autoTrain) setTimeout(triggerBackward, 300);
+        }
+
+        function triggerBackward() {
+            if (currentState !== 'IDLE') return;
+            currentState = 'BACKWARD';
+            document.getElementById('btn-bwd').disabled = true;
+            renderMath("$$ \\delta^{(l)} = (W^{(l+1)})^T \\delta^{(l+1)} \\odot \\sigma' $$");
+
+            connections.forEach(c => c.gradWSum = 0);
+            neurons.forEach(l => l.forEach(n => n.gradBSum = 0));
+
+            BATCH_DATA.forEach(sample => {
+                forwardMath(sample.inputs);
+                const outputNeuron = neurons[LAYERS.length-1][0];
+                outputNeuron.delta = (outputNeuron.a - sample.target) * sigmoidPrime(outputNeuron.z);
+                outputNeuron.gradBSum += outputNeuron.delta;
+
+                for(let l = LAYERS.length - 2; l >= 0; l--) {
+                    for(let n of neurons[l]) {
+                        let sum = 0;
+                        const outgoing = connections.filter(c => c.from === n);
+                        for(let c of outgoing) {
+                            sum += c.to.delta * c.w;
+                            c.gradWSum += c.to.delta * n.a; 
+                        }
+                        n.delta = sum * sigmoidPrime(n.z);
+                        if (l > 0) n.gradBSum += n.delta; 
+                    }
+                }
+            });
+
+            forwardMath(BATCH_DATA[0].inputs);
+            // Re-calc deltas for visual only (Sample 0)
+            const outputNeuron = neurons[LAYERS.length-1][0];
+            outputNeuron.delta = (outputNeuron.a - BATCH_DATA[0].target) * sigmoidPrime(outputNeuron.z);
+            for(let l = LAYERS.length - 2; l >= 0; l--) {
+                for(let n of neurons[l]) {
+                    let sum = 0;
+                    const outgoing = connections.filter(c => c.from === n);
+                    for(let c of outgoing) sum += c.to.delta * c.w;
+                    n.delta = sum * sigmoidPrime(n.z);
+                }
+            }
+
+            if (chkSeq.checked) {
+                neurons.forEach(l => l.forEach(n => { n.tempDeltaSum = 0; }));
+                startSequentialBackprop(LAYERS.length - 2);
+            } else {
+                animateBackwardLayerParallel(LAYERS.length - 2);
+            }
+        }
+
+        function animateBackwardLayerParallel(layerIdx) {
+            if (layerIdx < 0) { finishBackward(); return; }
+            const layerConns = connections.filter(c => c.from.l === layerIdx);
+            let arrivedCount = 0;
+            if (layerConns.length === 0) { animateBackwardLayerParallel(layerIdx - 1); return; }
+            layerConns.forEach(c => {
+                let signalVal = c.to.delta * c.w;
+                pulses.push(new Pulse(c, 'BACKWARD', signalVal, () => {
+                    arrivedCount++;
+                    if(arrivedCount === layerConns.length) animateBackwardLayerParallel(layerIdx - 1);
+                }));
+            });
+        }
+
+        function startSequentialBackprop(layerIdx) {
+            if (layerIdx < 0) { finishBackward(); return; }
+            processNeuronsSequentially(neurons[layerIdx], 0, () => startSequentialBackprop(layerIdx - 1));
+        }
+
+        function processNeuronsSequentially(neuronList, index, onLayerDone) {
+            if (index >= neuronList.length) { onLayerDone(); return; }
+            const neuron = neuronList[index];
+            neuron.showTempDelta = true; 
+            neuron.tempDeltaSum = 0;
+            const incomingBackwardConns = connections.filter(c => c.from === neuron);
+            processConnectionsSequentially(incomingBackwardConns, 0, neuron, () => {
+                setTimeout(() => {
+                    neuron.showTempDelta = false; 
+                    processNeuronsSequentially(neuronList, index + 1, onLayerDone);
+                }, 100); 
+            });
+        }
+
+        function processConnectionsSequentially(connList, cIndex, targetNeuron, onNeuronDone) {
+            if (cIndex >= connList.length) { onNeuronDone(); return; }
+            const conn = connList[cIndex];
+            const signalVal = conn.to.delta * conn.w;
+            pulses.push(new Pulse(conn, 'BACKWARD', signalVal, () => {
+                targetNeuron.tempDeltaSum += signalVal;
+                processConnectionsSequentially(connList, cIndex + 1, targetNeuron, onNeuronDone);
+            }));
+        }
+
+        function finishBackward() {
+            currentState = 'IDLE';
+            document.getElementById('btn-upd').disabled = false;
+            if(autoTrain) setTimeout(triggerUpdate, 300);
+        }
+
+        function triggerUpdate() {
+            if (currentState !== 'IDLE') return;
+            currentState = 'UPDATING';
+            document.getElementById('btn-upd').disabled = true;
+            renderMath("$$ W \\leftarrow W - \\eta \\frac{1}{N} \\sum \\nabla W $$");
+
+            for(let c of connections) {
+                let avgGrad = c.gradWSum / BATCH_SIZE;
+                c.w -= LEARNING_RATE * avgGrad;
+                c.flash = 1.0;
+            }
+            for(let layer of neurons) {
+                if(layer[0].l === 0) continue;
+                for(let n of layer) {
+                    let avgGrad = n.gradBSum / BATCH_SIZE;
+                    n.b -= LEARNING_RATE * avgGrad;
+                }
+            }
+            setTimeout(() => {
+                currentState = 'IDLE';
+                document.getElementById('btn-fwd').disabled = false;
+                if(autoTrain) setTimeout(triggerForward, 300);
+            }, 800);
+        }
+
+        function toggleAuto() {
+            autoTrain = !autoTrain;
+            if(autoTrain) {
+                btnAuto.innerText = "Auto: ON"; btnAuto.classList.add("btn-blue");
+                if(currentState === 'IDLE' && !document.getElementById('btn-fwd').disabled) triggerForward();
+            } else {
+                btnAuto.innerText = "Auto"; btnAuto.classList.remove("btn-blue");
+            }
+        }
+
+        function resetNet() {
+            autoTrain = false;
+            btnAuto.innerText = "Auto"; btnAuto.classList.remove("btn-blue");
+            neurons.forEach(l => l.forEach(n => {
+                n.a = 0; n.z=0; n.delta=0; n.tempDeltaSum=0; n.showTempDelta=false;
+                n.b = Math.random() * 0.2 - 0.1; n.gradBSum = 0;
+            }));
+            connections.forEach(c => { c.w = Math.random() * 2 - 1; c.flash = 0; c.gradWSum = 0; });
+            generateBatchData();
+            currentState = 'IDLE';
+            document.getElementById('btn-fwd').disabled = false;
+            document.getElementById('btn-bwd').disabled = true;
+            document.getElementById('btn-upd').disabled = true;
+            lossVal.innerText = "Batch Loss: 0.0000";
+            renderMath("$$ \\text{System Reset.} $$");
+        }
+
+        function loop() {
+            ctx.fillStyle = '#0d1117'; ctx.fillRect(0, 0, width, height); 
+            // Labels
+            ctx.fillStyle = '#8b949e'; ctx.font = '600 12px system-ui'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+            for(let l=0; l<LAYERS.length; l++) {
+                if(neurons[l].length) ctx.fillText(l===0?"Input":l===LAYERS.length-1?"Output":`Hidden ${l}`, neurons[l][0].x, 20);
+            }
+            
+            connections.forEach(c => c.draw(ctx));
+            for(let i = pulses.length - 1; i >= 0; i--) {
+                let p = pulses[i]; p.update(); p.draw(ctx); if(p.done) pulses.splice(i, 1);
+            }
+            neurons.forEach(l => l.forEach(n => n.draw(ctx)));
+            animationId = requestAnimationFrame(loop);
+        }
+
+        function renderMath(latex) {
+            if (typeof renderMathInElement === 'undefined') { mathFormula.innerHTML = latex; return; }
+            mathFormula.innerHTML = latex;
+            renderMathInElement(mathFormula, { delimiters: [ {left: "$$", right: "$$", display: true} ] });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, { delimiters: [ {left: "$$", right: "$$", display: true}, {left: "$", right: "$", display: false} ] });
+            init();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1193 @@
+// Accessibility fixes for third-party controls rendered after page load.
+(function () {
+  function labelBlueprintIconButtons(root) {
+    var buttons = (root || document).querySelectorAll('button.bp6-button:not([aria-label]):not([aria-labelledby])');
+    buttons.forEach(function(button, index) {
+      if (button.textContent.trim()) return;
+      var label = button.getAttribute('title') ||
+        button.getAttribute('data-tooltip') ||
+        button.getAttribute('aria-description') ||
+        'Toggle option ' + (index + 1);
+      button.setAttribute('aria-label', label);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { labelBlueprintIconButtons(document); });
+  } else {
+    labelBlueprintIconButtons(document);
+  }
+
+  if ('MutationObserver' in window) {
+    new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.nodeType === 1) labelBlueprintIconButtons(node);
+        });
+      });
+    }).observe(document.documentElement, { childList: true, subtree: true });
+  }
+})();
+
+// Abstract popup and sup tooltip functionality
+(function () {
+  const popup = document.createElement('div');
+  popup.className = 'ref-hover-popup';
+  document.body.appendChild(popup);
+
+  const isTouch = (('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches);
+
+  let currentLink = null;
+  let hoverOnPopup = false;
+  let hideTimer = null;
+
+  function clearHideTimer() {
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+  }
+  function scheduleHide() {
+    clearHideTimer();
+    hideTimer = setTimeout(() => { if (!hoverOnPopup) hide(); }, 120);
+  }
+
+  // 仅在非触摸设备启用 hover 留驻
+  popup.addEventListener('mouseenter', () => { if (!isTouch) { hoverOnPopup = true; clearHideTimer(); }});
+  popup.addEventListener('mouseleave', () => { if (!isTouch) { hoverOnPopup = false; scheduleHide(); }});
+
+  function positionAt(link) {
+    const margin = 8;
+    popup.style.visibility = 'hidden';
+    popup.style.display = 'block';
+
+    const rects = link.getClientRects();
+    const linkRect = rects.length ? rects[rects.length - 1] : link.getBoundingClientRect();
+    const popupRect = popup.getBoundingClientRect();
+    const vw = document.documentElement.clientWidth;
+    const vh = document.documentElement.clientHeight;
+
+    let left = linkRect.left;
+    let top = linkRect.bottom + margin;
+
+    if (left + popupRect.width > vw - margin) left = Math.max(margin, vw - popupRect.width - margin);
+    if (top + popupRect.height > vh - margin) top = linkRect.top - popupRect.height - margin;
+    if (left < margin) left = margin;
+    if (top < margin) top = Math.min(vh - popupRect.height - margin, linkRect.bottom + margin);
+
+    popup.style.left = left + 'px';
+    popup.style.top = top + 'px';
+    popup.style.visibility = '';
+  }
+
+  function show(link) {
+    const text = (link.dataset.abstract || '').trim();
+    if (!text) return;
+    clearHideTimer();
+    popup.textContent = text; // 防注入
+    positionAt(link);
+    popup.style.display = 'block';
+    currentLink = link;
+  }
+
+  function hide() {
+    popup.style.display = 'none';
+    popup.textContent = '';
+    clearHideTimer();
+    currentLink = null;
+  }
+
+  function bind(link) {
+    // 非触摸：支持 hover 显示、移出延迟隐藏
+    if (!isTouch) {
+      link.addEventListener('mouseenter', () => { hoverOnPopup = false; show(link); });
+      link.addEventListener('mouseleave', scheduleHide);
+      link.addEventListener('focus', () => show(link));
+      link.addEventListener('blur', scheduleHide);
+    }
+    // 触摸与桌面共用：点击切换开关
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (popup.style.display === 'block' && currentLink === link) {
+        hide();
+      } else {
+        show(link);
+      }
+    });
+  }
+
+  document.querySelectorAll('.abstract-link').forEach(bind);
+
+  // 点击空白处关闭（避免点链接自身或弹窗内误关闭）
+  document.addEventListener('click', (e) => {
+    if (popup.style.display !== 'block') return;
+    const t = e.target;
+    if (t.closest('.ref-hover-popup')) return;
+    if (t.closest('.abstract-link')) return;
+    hide();
+  });
+
+  // 滚动关闭：仅桌面启用，避免移动端点击后立刻收起
+  if (!isTouch) window.addEventListener('scroll', hide, { passive: true });
+  window.addEventListener('resize', hide);
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(); });
+
+  // Sup tooltip
+  const supPopup = document.createElement('div');
+  supPopup.className = 'sup-tooltip';
+  document.body.appendChild(supPopup);
+
+  document.querySelectorAll('sup').forEach(function(sup) {
+    // Allow specific superscripts to opt out when adjacent explanatory text already exists.
+    if (sup.hasAttribute('data-no-tooltip')) return;
+
+    const text = sup.textContent.trim();
+    let tooltipText = '';
+    if (text === '*') {
+      tooltipText = 'Equal Contribution';
+    } else if (text === '†') {
+      tooltipText = 'Corresponding Author';
+    }
+    if (tooltipText) {
+      sup.addEventListener('mouseenter', function() {
+        supPopup.textContent = tooltipText;
+        supPopup.style.visibility = 'hidden';
+        supPopup.style.display = 'block';
+        supPopup.style.left = '-9999px';
+        supPopup.style.top = '-9999px';
+        const rect = sup.getBoundingClientRect();
+        const popupRect = supPopup.getBoundingClientRect();
+        const vw = document.documentElement.clientWidth;
+        const vh = document.documentElement.clientHeight;
+        const margin = 8;
+        let left = rect.left;
+        let top = rect.bottom + margin;
+        if (left + popupRect.width > vw - margin) left = Math.max(margin, vw - popupRect.width - margin);
+        if (top + popupRect.height > vh - margin) top = rect.top - popupRect.height - margin;
+        if (left < margin) left = margin;
+        if (top < margin) top = Math.min(vh - popupRect.height - margin, rect.bottom + margin);
+        supPopup.style.left = left + 'px';
+        supPopup.style.top = top + 'px';
+        supPopup.style.visibility = '';
+      });
+      sup.addEventListener('mouseleave', function() {
+        supPopup.style.display = 'none';
+      });
+    }
+  });
+})();
+
+// Avatar decryption functionality
+(function () {
+  const el = document.getElementById('avatarImg');
+  if (!el) return;
+
+  const encUrl = (el.dataset.encryptedUrl || '').trim();
+  const b64BlobInline = (el.dataset.encryptedBlob || '').trim();
+  const b64Iv = (el.dataset.encryptedIv || '').trim();
+  const mime = (el.dataset.mime || 'image/png').trim();
+
+  if ((!encUrl && !b64BlobInline) || !b64Iv) return;
+
+  // 支持 ?key=xxx 或 #key=xxx
+  const hsKey = new URLSearchParams((window.location.hash || '').replace(/^#/, '')).get('key');
+  // console.log('hsKey:', hsKey);
+  const pass = (hsKey || '').trim();
+  if (!pass) return;
+  // console.log('Attempting to decrypt avatar with provided key...');
+  const b64Normalize = (b64) => {
+    let s = (b64 || '').replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
+    const pad = s.length % 4;
+    if (pad) s += '='.repeat(4 - pad);
+    return s;
+  };
+
+  const b64ToU8 = (b64) => {
+    const str = atob(b64Normalize(b64));
+    const out = new Uint8Array(str.length);
+    for (let i = 0; i < str.length; i++) out[i] = str.charCodeAt(i);
+    return out;
+  };
+
+  (async () => {
+    try {
+      // 拉取/获取密文
+      let cipherU8;
+      if (encUrl) {
+        const resp = await fetch(encUrl, { cache: 'no-store' });
+        if (!resp.ok) throw new Error('fetch encrypted blob failed');
+        const txt = await resp.text();              // 服务器提供的 base64 文本
+        cipherU8 = b64ToU8(txt);
+      } else {
+        cipherU8 = b64ToU8(b64BlobInline);          // 回退到内嵌 base64
+      }
+
+      // 口令派生密钥并解密
+      const passBytes = new TextEncoder().encode(pass);
+      const hash = await crypto.subtle.digest('SHA-256', passBytes); // 32B key
+      const key = await crypto.subtle.importKey('raw', hash, 'AES-GCM', false, ['decrypt']);
+      const iv = b64ToU8(b64Iv);
+      // console.log('iv:', iv);
+      const plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, cipherU8);
+      // console.log('Avatar decrypted successfully.');
+      // 替换头像
+      const url = URL.createObjectURL(new Blob([plainBuf], { type: mime || 'application/octet-stream' }));
+      el.src = url;
+      el.addEventListener('load', () => setTimeout(() => URL.revokeObjectURL(url), 3000), { once: true });
+    } catch (e) {
+      // 解密失败或获取失败则保持公开头像
+      console.error('Decrypt avatar failed:', e);
+    }
+  })();
+})();
+
+// Weekly calendar from ICS
+(function () {
+  const container = document.getElementById('weeklyCalendar');
+  if (!container) return;
+
+  const icsUrl = (container.dataset.icsUrl || '').trim();
+  if (!icsUrl) return;
+  const githubUser = (container.dataset.githubUser || '').trim();
+  const amapKey = (container.dataset.amapKey || '').trim();
+  const baiduAk = (container.dataset.baiduAk || '').trim();
+  const fallbackTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+  let defaultTimeZone = fallbackTimeZone;
+  const defaultStartHour = 9;
+  const defaultEndHour = 18;
+  const slotHeight = 60;
+  const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const compactDatePattern = /^\d{8}$/;
+  const dateTimePattern = /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})?(Z)?$/;
+
+  let timeZone = defaultTimeZone;
+  let startHour = defaultStartHour;
+  let endHour = defaultEndHour;
+
+  container.style.setProperty('--slot-height', slotHeight + 'px');
+  container.style.setProperty('--hours', endHour - startHour);
+
+  function toZonedDate(date) {
+    return new Date(date.toLocaleString('en-US', { timeZone }));
+  }
+
+  function isValidTimeZone(tz) {
+    if (!tz) return false;
+    try {
+      Intl.DateTimeFormat('en-US', { timeZone: tz }).format(new Date());
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  async function fetchJson(url, options) {
+    const resp = await fetch(url, options || {});
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    return resp.json();
+  }
+
+  function isLikelyMainlandChina(lat, lon, locationText) {
+    const inMainlandBounds = Number.isFinite(lat) && Number.isFinite(lon) && lat >= 18 && lat <= 54 && lon >= 73 && lon <= 135;
+    if (inMainlandBounds) return true;
+    const text = (locationText || '').trim();
+    if (!text) return false;
+    return /(中国|china|beijing|shanghai|guangzhou|shenzhen|hangzhou|chengdu|wuhan|xian|nanjing|chongqing|tianjin)/i.test(text);
+  }
+
+  async function resolveCoordsFromAmap(locationText, key) {
+    if (!locationText || !key) return null;
+    const geocodeUrl = `https://restapi.amap.com/v3/geocode/geo?address=${encodeURIComponent(locationText)}&output=json&key=${encodeURIComponent(key)}`;
+    const data = await fetchJson(geocodeUrl, {
+      headers: {
+        Accept: 'application/json'
+      },
+      cache: 'no-store'
+    });
+
+    if (!data || data.status !== '1' || !Array.isArray(data.geocodes) || data.geocodes.length === 0) return null;
+    const locText = typeof data.geocodes[0].location === 'string' ? data.geocodes[0].location : '';
+    const parts = locText.split(',');
+    if (parts.length !== 2) return null;
+    const lon = Number(parts[0]);
+    const lat = Number(parts[1]);
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+    return { lat, lon };
+  }
+
+  async function resolveCoordsFromNominatim(locationText) {
+    if (!locationText) return null;
+    const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${encodeURIComponent(locationText)}`;
+    const data = await fetchJson(geocodeUrl, {
+      headers: {
+        Accept: 'application/json'
+      },
+      cache: 'no-store'
+    });
+
+    if (!Array.isArray(data) || data.length === 0) return null;
+    const lat = Number(data[0].lat);
+    const lon = Number(data[0].lon);
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+    return { lat, lon };
+  }
+
+  async function resolveTimeZoneFromTimeApi(lat, lon) {
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+    const tzApi = `https://timeapi.io/api/timezone/coordinate?latitude=${encodeURIComponent(lat)}&longitude=${encodeURIComponent(lon)}`;
+    const data = await fetchJson(tzApi, {
+      headers: {
+        Accept: 'application/json'
+      },
+      cache: 'no-store'
+    });
+    return data && typeof data.timeZone === 'string' ? data.timeZone.trim() : null;
+  }
+
+  function resolveKnownLocationTimeZone(locationText) {
+    const text = (locationText || '').trim();
+    if (!text) return null;
+    if (/(abu\s*dhabi|dubai|united arab emirates|\buae\b|阿布扎比|迪拜|阿联酋|الإمارات)/i.test(text)) {
+      return 'Asia/Dubai';
+    }
+    if (isLikelyMainlandChina(NaN, NaN, text)) return 'Asia/Shanghai';
+    return null;
+  }
+
+  async function resolveTimeZoneFromBaidu(lat, lon, ak) {
+    if (!Number.isFinite(lat) || !Number.isFinite(lon) || !ak) return null;
+    const timestamp = Math.floor(Date.now() / 1000);
+    const tzApi = `https://api.map.baidu.com/timezone/v1?location=${encodeURIComponent(`${lat},${lon}`)}&timestamp=${timestamp}&coordtype=wgs84ll&ak=${encodeURIComponent(ak)}`;
+    const data = await fetchJson(tzApi, {
+      headers: {
+        Accept: 'application/json'
+      },
+      cache: 'no-store'
+    });
+
+    if (!data || Number(data.status) !== 0) return null;
+    const result = data.result || {};
+    const candidates = [
+      result.time_zone_id,
+      result.timezone_id,
+      result.timezone,
+      result.tz,
+      data.time_zone_id,
+      data.timezone_id,
+      data.timezone,
+      data.tz
+    ];
+    for (const item of candidates) {
+      if (typeof item === 'string' && item.trim()) {
+        return item.trim();
+      }
+    }
+    return null;
+  }
+
+  async function resolveDefaultTimeZoneFromGithub(user) {
+    if (!user) return null;
+
+    const profile = await fetchJson(`https://api.github.com/users/${encodeURIComponent(user)}`, {
+      headers: {
+        Accept: 'application/vnd.github+json'
+      },
+      cache: 'no-store'
+    });
+    const rawLocation = typeof profile.location === 'string' ? profile.location.trim() : '';
+    if (!rawLocation) return null;
+
+    // v2 invalidates locations that may have been misresolved by the previous
+    // China-only geocoding path.
+    const cacheKey = `weeklyCalendar:defaultTimeZone:v2:${user}`;
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        const sameLocation = parsed && typeof parsed.location === 'string' && parsed.location === rawLocation;
+        if (sameLocation && isValidTimeZone(parsed.tz) && Number(parsed.expiresAt) > Date.now()) {
+          return parsed.tz;
+        }
+      }
+    } catch (_) {
+      // Ignore cache read failures and continue network resolution.
+    }
+
+    const knownTimeZone = resolveKnownLocationTimeZone(rawLocation);
+    if (isValidTimeZone(knownTimeZone)) return knownTimeZone;
+
+    let coords = null;
+    try {
+      coords = await resolveCoordsFromNominatim(rawLocation);
+    } catch (_) {
+      // Fall back to the existing provider if global geocoding is unavailable.
+    }
+    if (!coords) {
+      try {
+        coords = await resolveCoordsFromAmap(rawLocation, amapKey);
+      } catch (_) {
+        // Continue to the location-text fallback below.
+      }
+    }
+    if (!coords) {
+      if (isLikelyMainlandChina(NaN, NaN, rawLocation)) return 'Asia/Shanghai';
+      return null;
+    }
+
+    const lat = Number(coords.lat);
+    const lon = Number(coords.lon);
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+
+    let resolvedTz = null;
+    try {
+      resolvedTz = await resolveTimeZoneFromTimeApi(lat, lon);
+    } catch (_) {
+      // Fall back to the existing provider below.
+    }
+    if (!isValidTimeZone(resolvedTz)) {
+      try {
+        resolvedTz = await resolveTimeZoneFromBaidu(lat, lon, baiduAk);
+      } catch (_) {
+        // Continue to the mainland-China fallback below.
+      }
+    }
+    if (!isValidTimeZone(resolvedTz) && isLikelyMainlandChina(lat, lon, rawLocation)) {
+      resolvedTz = 'Asia/Shanghai';
+    }
+    if (!isValidTimeZone(resolvedTz)) return null;
+
+    try {
+      localStorage.setItem(cacheKey, JSON.stringify({
+        location: rawLocation,
+        tz: resolvedTz,
+        expiresAt: Date.now() + 24 * 60 * 60 * 1000
+      }));
+    } catch (_) {
+      // Ignore cache write failures.
+    }
+
+    return resolvedTz;
+  }
+
+  function startOfWeek(date) {
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    const day = (d.getDay() + 6) % 7; // Monday = 0
+    d.setDate(d.getDate() - day);
+    return d;
+  }
+
+  function addDays(date, n) {
+    const d = new Date(date);
+    d.setDate(d.getDate() + n);
+    return d;
+  }
+
+  function formatDate(d) {
+    return `${d.getMonth() + 1}/${d.getDate()}`;
+  }
+
+  function formatDateISO(d) {
+    const y = d.getFullYear();
+    const m = pad(d.getMonth() + 1);
+    const day = pad(d.getDate());
+    return `${y}-${m}-${day}`;
+  }
+
+  function pad(n) {
+    return String(n).padStart(2, '0');
+  }
+
+  function formatTime(d) {
+    return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  function unfoldIcs(text) {
+    const lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
+    const out = [];
+    for (const line of lines) {
+      if (!line) continue;
+      if ((line.startsWith(' ') || line.startsWith('\t')) && out.length) {
+        out[out.length - 1] += line.slice(1);
+      } else {
+        out.push(line);
+      }
+    }
+    return out;
+  }
+
+  function parseIcsDate(value) {
+    const v = value.trim();
+    if (compactDatePattern.test(v)) {
+      const y = Number(v.slice(0, 4));
+      const m = Number(v.slice(4, 6)) - 1;
+      const d = Number(v.slice(6, 8));
+      return new Date(y, m, d);
+    }
+    const match = v.match(dateTimePattern);
+    if (!match) return null;
+    const y = Number(match[1]);
+    const m = Number(match[2]) - 1;
+    const d = Number(match[3]);
+    const hh = Number(match[4]);
+    const mm = Number(match[5]);
+    const ss = Number(match[6] || '0');
+    const isUtc = Boolean(match[7]);
+    if (isUtc) return new Date(Date.UTC(y, m, d, hh, mm, ss));
+    return new Date(y, m, d, hh, mm, ss);
+  }
+
+  function parseIcs(text) {
+    const events = [];
+    let current = null;
+
+    for (const line of unfoldIcs(text)) {
+      if (line === 'BEGIN:VEVENT') {
+        current = {};
+        continue;
+      }
+      if (line === 'END:VEVENT') {
+        if (current && current.start) {
+          if (!current.end) current.end = new Date(current.start.getTime() + 60 * 60 * 1000);
+          events.push(current);
+        }
+        current = null;
+        continue;
+      }
+      if (!current) continue;
+      const idx = line.indexOf(':');
+      if (idx === -1) continue;
+      const namePart = line.slice(0, idx).toUpperCase();
+      const value = line.slice(idx + 1);
+      const name = namePart.split(';')[0];
+
+      switch (name) {
+        case 'DTSTART':
+          current.start = parseIcsDate(value);
+          break;
+        case 'DTEND':
+          current.end = parseIcsDate(value);
+          break;
+        case 'SUMMARY':
+          current.summary = value;
+          break;
+        case 'DESCRIPTION':
+          current.description = value;
+          break;
+        case 'LOCATION':
+          current.location = value;
+          break;
+        default:
+          break;
+      }
+    }
+    return events;
+  }
+
+  function getPreparedEvents() {
+    if (zonedEventsTimeZone === timeZone) return zonedEventsCache;
+
+    zonedEventsCache = eventsCache
+      .map((ev) => {
+        if (!ev.start || !ev.end) return null;
+        const zonedStart = toZonedDate(ev.start);
+        const zonedEnd = toZonedDate(ev.end);
+        const zonedStartMs = zonedStart.getTime();
+        const zonedEndMs = zonedEnd.getTime();
+        if (!Number.isFinite(zonedStartMs) || !Number.isFinite(zonedEndMs) || zonedEndMs <= zonedStartMs) return null;
+
+        const summaryText = (ev.summary || '').trim();
+        return {
+          ...ev,
+          summaryText,
+          isRest: summaryText.toLowerCase().includes('rest'),
+          zonedStart,
+          zonedEnd,
+          zonedStartMs,
+          zonedEndMs
+        };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a.zonedStartMs - b.zonedStartMs);
+
+    let maxEndMs = -Infinity;
+    for (const ev of zonedEventsCache) {
+      maxEndMs = Math.max(maxEndMs, ev.zonedEndMs);
+      ev.maxEndMs = maxEndMs;
+    }
+    zonedEventsTimeZone = timeZone;
+    return zonedEventsCache;
+  }
+
+  function firstEventStartingAfter(events, timeMs) {
+    let lo = 0;
+    let hi = events.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (events[mid].zonedStartMs < timeMs) lo = mid + 1;
+      else hi = mid;
+    }
+    return lo;
+  }
+
+  function getEventsInRange(startMs, endMs) {
+    const events = getPreparedEvents();
+    const out = [];
+    const stop = firstEventStartingAfter(events, endMs);
+
+    for (let i = stop - 1; i >= 0; i--) {
+      const ev = events[i];
+      if (ev.zonedEndMs > startMs) out.push(ev);
+      if (i > 0 && events[i - 1].maxEndMs <= startMs) break;
+    }
+    out.sort((a, b) => a.zonedStartMs - b.zonedStartMs);
+    return out;
+  }
+
+  function buildCalendarShell(weekStart) {
+    container.innerHTML = '';
+    container.classList.remove('is-loading');
+
+    const header = document.createElement('div');
+    header.className = 'calendar-header';
+    const empty = document.createElement('div');
+    empty.className = 'time-header';
+    header.appendChild(empty);
+
+    const today = toZonedDate(new Date());
+    today.setHours(0, 0, 0, 0);
+
+    for (let i = 0; i < 7; i++) {
+      const day = addDays(weekStart, i);
+      day.setHours(0, 0, 0, 0);
+      const cell = document.createElement('div');
+      cell.className = 'day-header';
+      if (day.getTime() === today.getTime()) {
+        cell.classList.add('is-today');
+      }
+      cell.innerHTML = `${dayNames[i]}<span class="day-date">${formatDate(day)}</span>`;
+      header.appendChild(cell);
+    }
+    container.appendChild(header);
+
+    const body = document.createElement('div');
+    body.className = 'calendar-body';
+
+    const timeCol = document.createElement('div');
+    timeCol.className = 'time-col';
+    for (let h = startHour; h < endHour; h++) {
+      const slot = document.createElement('div');
+      slot.className = 'time-slot';
+      slot.textContent = `${pad(h)}:00`;
+      timeCol.appendChild(slot);
+    }
+    body.appendChild(timeCol);
+
+    const dayCols = [];
+    for (let i = 0; i < 7; i++) {
+      const col = document.createElement('div');
+      col.className = 'day-col';
+      col.dataset.day = String(i);
+      body.appendChild(col);
+      dayCols.push(col);
+    }
+
+    container.appendChild(body);
+    return dayCols;
+  }
+
+  function renderLoadingWeek(offset) {
+    weekOffset = offset;
+    applyTimeConfig();
+    const weekStart = addDays(startOfWeek(toZonedDate(new Date())), weekOffset * 7);
+    const dayCols = buildCalendarShell(weekStart);
+    const labels = ['Busy Window', 'Focus Block', 'Meeting', 'Reserved', 'Deep Work', 'Office Hour'];
+
+    container.classList.add('is-loading');
+    currentWeekStart = weekStart;
+    currentDayCols = dayCols;
+
+    dayCols.forEach((col) => {
+      const frag = document.createDocumentFragment();
+      const count = 2 + Math.floor(Math.random() * 3);
+
+      for (let i = 0; i < count; i++) {
+        const maxDuration = Math.max(1, endHour - startHour);
+        const durationHours = 0.75 + Math.random() * 1.5;
+        const startOffset = Math.random() * Math.max(0.5, maxDuration - durationHours);
+        const top = startOffset * slotHeight;
+        const height = Math.max(32, durationHours * slotHeight);
+        const titleText = labels[Math.floor(Math.random() * labels.length)];
+        const startLabelHour = startHour + Math.floor(startOffset);
+        const startLabelMinute = Math.random() > 0.5 ? '30' : '00';
+
+        const block = document.createElement('div');
+        block.className = 'calendar-event calendar-loading-block';
+        block.style.top = `${top}px`;
+        block.style.height = `${height}px`;
+
+        const title = document.createElement('div');
+        title.className = 'event-title';
+        title.textContent = titleText;
+
+        const meta = document.createElement('div');
+        meta.className = 'event-meta';
+        meta.textContent = `${pad(startLabelHour)}:${startLabelMinute} - Loading`;
+
+        block.appendChild(title);
+        block.appendChild(meta);
+        frag.appendChild(block);
+      }
+
+      col.replaceChildren(frag);
+    });
+
+    const overlay = document.createElement('div');
+    overlay.className = 'calendar-loading-overlay';
+    overlay.setAttribute('role', 'status');
+    overlay.setAttribute('aria-live', 'polite');
+
+    const mark = document.createElement('div');
+    mark.className = 'calendar-loading-mark';
+    mark.textContent = 'M';
+
+    const text = document.createElement('div');
+    text.className = 'calendar-loading-text';
+    text.textContent = 'Loading calendar';
+
+    overlay.appendChild(mark);
+    overlay.appendChild(text);
+    container.appendChild(overlay);
+    updatePrevButton(weekStart);
+    updateNextButton(weekStart);
+  }
+
+  function buildMailtoLink(dateObj) {
+    const email = (container.dataset.contactEmail || '').trim();
+    const dateStr = formatDateISO(dateObj);
+    const timeStr = formatTime(dateObj);
+    const tzLabel = timeZone;
+    const subject = `Time request: ${dateStr} ${timeStr} (${tzLabel})`;
+    const body = [
+      'Hello,',
+      '',
+      `I would like to request this time: ${dateStr} ${timeStr} (${tzLabel}).`,
+      '',
+      'Topic:',
+      'Duration:',
+      'Additional notes:',
+      '',
+      'Best,',
+      ''
+    ].join('\n');
+
+    return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+
+  function addClickToEmail(dayCols, weekStart) {
+    if (!(container.dataset.contactEmail || '').trim()) return;
+    dayCols.forEach((col, dayIndex) => {
+      col.addEventListener('click', (e) => {
+        const rect = col.getBoundingClientRect();
+        const y = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
+        const minutesFloat = (y / slotHeight) * 60;
+        const minutesRounded = Math.round(minutesFloat / 30) * 30;
+        const hour = startHour + Math.floor(minutesRounded / 60);
+        const minute = minutesRounded % 60;
+
+        const dateObj = addDays(weekStart, dayIndex);
+        dateObj.setHours(hour, minute, 0, 0);
+
+        const link = buildMailtoLink(dateObj);
+        window.location.href = link;
+      });
+    });
+  }
+
+  function renderEvents(weekStart, dayCols, options) {
+    const showRestBlocks = Boolean(options && options.showRestBlocks);
+    const weekEnd = addDays(weekStart, 7);
+    const weekStartMs = weekStart.getTime();
+    const weekEndMs = weekEnd.getTime();
+    const visible = getEventsInRange(weekStartMs, weekEndMs);
+    const dayBounds = [];
+    const fragments = dayCols.map(() => document.createDocumentFragment());
+
+    for (const ev of visible) {
+      if (ev.isRest && !showRestBlocks) continue;
+
+      for (let i = 0; i < 7; i++) {
+        let bounds = dayBounds[i];
+        if (!bounds) {
+          const dayStart = addDays(weekStart, i);
+          dayStart.setHours(startHour, 0, 0, 0);
+          const dayEnd = addDays(weekStart, i);
+          dayEnd.setHours(endHour, 0, 0, 0);
+          bounds = dayBounds[i] = {
+            startDate: dayStart,
+            startMs: dayStart.getTime(),
+            endMs: dayEnd.getTime()
+          };
+        }
+
+        if (ev.zonedEndMs <= bounds.startMs || ev.zonedStartMs >= bounds.endMs) continue;
+
+        const segStart = new Date(Math.max(ev.zonedStartMs, bounds.startMs));
+        const segEnd = new Date(Math.min(ev.zonedEndMs, bounds.endMs));
+        if (segEnd <= segStart) continue;
+
+        const minutesFromStart = (segStart - bounds.startDate) / 60000;
+        const durationMinutes = (segEnd - segStart) / 60000;
+        const top = (minutesFromStart / 60) * slotHeight;
+        const height = Math.max(18, (durationMinutes / 60) * slotHeight);
+
+        if (ev.isRest) {
+          const restBlock = document.createElement('div');
+          restBlock.className = 'calendar-rest-block';
+          const restLabel = document.createElement('div');
+          restLabel.className = 'rest-label';
+          restLabel.textContent = 'Rest';
+          restBlock.appendChild(restLabel);
+          restBlock.style.top = `${top}px`;
+          restBlock.style.height = `${height}px`;
+          fragments[i].appendChild(restBlock);
+          continue;
+        }
+
+        const card = document.createElement('div');
+        card.className = 'calendar-event';
+        const title = document.createElement('div');
+        title.className = 'event-title';
+        title.textContent = ev.summaryText || 'Untitled';
+
+        const meta = document.createElement('div');
+        meta.className = 'event-meta';
+        meta.textContent = `${formatTime(segStart)}–${formatTime(segEnd)}`;
+
+        card.appendChild(title);
+        card.appendChild(meta);
+        if (ev.location) {
+          const loc = document.createElement('div');
+          loc.className = 'event-location';
+          loc.textContent = ev.location;
+          card.appendChild(loc);
+        }
+        card.style.top = `${top}px`;
+        card.style.height = `${height}px`;
+        fragments[i].appendChild(card);
+      }
+    }
+
+    dayCols.forEach((col, i) => {
+      col.replaceChildren(fragments[i]);
+    });
+  }
+
+  function clearNowIndicators(dayCols) {
+    dayCols.forEach((col) => {
+      const existing = col.querySelectorAll('.calendar-now-line');
+      existing.forEach((el) => el.remove());
+    });
+  }
+
+  function renderNowIndicator(weekStart, dayCols) {
+    clearNowIndicators(dayCols);
+
+    const now = toZonedDate(new Date());
+    const weekEnd = addDays(weekStart, 7);
+    if (now < weekStart || now >= weekEnd) return;
+
+    const dayIndex = Math.floor((now - weekStart) / 86400000);
+    if (dayIndex < 0 || dayIndex > 6) return;
+
+    const dayStart = addDays(weekStart, dayIndex);
+    dayStart.setHours(startHour, 0, 0, 0);
+    const dayEnd = addDays(weekStart, dayIndex);
+    dayEnd.setHours(endHour, 0, 0, 0);
+    if (now < dayStart || now > dayEnd) return;
+
+    const minutesFromStart = (now - dayStart) / 60000;
+    const top = (minutesFromStart / 60) * slotHeight;
+    const line = document.createElement('div');
+    line.className = 'calendar-now-line';
+    line.style.top = `${top}px`;
+    dayCols[dayIndex].appendChild(line);
+  }
+
+  let eventsCache = [];
+  let weekOffset = 0;
+  let currentWeekStart = null;
+  let currentDayCols = null;
+  let initStarted = false;
+  let viewExpanded = false;
+  let useLocalTimeZone = false;
+  let zonedEventsCache = [];
+  let zonedEventsTimeZone = '';
+  let isLoadingCalendar = false;
+
+  function hasEventsInWeek(weekStart) {
+    const weekEnd = addDays(weekStart, 7);
+    return getEventsInRange(weekStart.getTime(), weekEnd.getTime()).length > 0;
+  }
+
+  function updatePrevButton(weekStart) {
+    const prevBtn = document.getElementById('calendarPrevBtn');
+    if (!prevBtn) return;
+    if (isLoadingCalendar) {
+      prevBtn.disabled = true;
+      return;
+    }
+    const prevWeekStart = addDays(weekStart, -7);
+    const hasPrev = hasEventsInWeek(prevWeekStart);
+    prevBtn.disabled = !hasPrev;
+  }
+
+  function updateNextButton(weekStart) {
+    const nextBtn = document.getElementById('calendarNextBtn');
+    if (!nextBtn) return;
+    if (isLoadingCalendar) {
+      nextBtn.disabled = true;
+      return;
+    }
+    const nextWeekStart = addDays(weekStart, 7);
+    const hasNext = hasEventsInWeek(nextWeekStart);
+    nextBtn.disabled = !hasNext;
+  }
+
+  function renderWeek(offset) {
+    weekOffset = offset;
+    const weekStart = addDays(startOfWeek(toZonedDate(new Date())), weekOffset * 7);
+    const dayCols = buildCalendarShell(weekStart);
+    currentWeekStart = weekStart;
+    currentDayCols = dayCols;
+    renderEvents(weekStart, dayCols, { showRestBlocks: viewExpanded });
+    renderNowIndicator(weekStart, dayCols);
+    addClickToEmail(dayCols, weekStart);
+    updatePrevButton(weekStart);
+    updateNextButton(weekStart);
+  }
+
+  function applyTimeConfig() {
+    if (useLocalTimeZone) {
+      const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone || defaultTimeZone;
+      timeZone = localTz;
+    } else {
+      timeZone = defaultTimeZone;
+    }
+    if (zonedEventsTimeZone && zonedEventsTimeZone !== timeZone) {
+      zonedEventsTimeZone = '';
+      zonedEventsCache = [];
+    }
+
+    if (viewExpanded) {
+      startHour = 0;
+      endHour = 24;
+    } else {
+      startHour = defaultStartHour;
+      endHour = defaultEndHour;
+    }
+    container.style.setProperty('--hours', endHour - startHour);
+
+    const tzLabel = document.querySelector('.calendar-tz');
+    if (tzLabel) {
+      tzLabel.textContent = `(${timeZone} time)`;
+    }
+  }
+
+  async function init() {
+    try {
+      const [icsText, resolvedDefaultTz] = await Promise.all([
+        fetch(icsUrl, { cache: 'no-store' }).then((resp) => {
+          if (!resp.ok) throw new Error('ICS fetch failed');
+          return resp.text();
+        }),
+        resolveDefaultTimeZoneFromGithub(githubUser).catch(() => null)
+      ]);
+
+      if (isValidTimeZone(resolvedDefaultTz)) {
+        defaultTimeZone = resolvedDefaultTz;
+      }
+
+      eventsCache = parseIcs(icsText).filter((ev) => ev.start && ev.end);
+      zonedEventsTimeZone = '';
+      zonedEventsCache = [];
+      isLoadingCalendar = false;
+      applyTimeConfig();
+      renderWeek(0);
+    } catch (e) {
+      isLoadingCalendar = false;
+      container.classList.remove('is-loading');
+      container.innerHTML = '';
+      const error = document.createElement('div');
+      error.className = 'calendar-error';
+      error.textContent = 'Calendar unavailable.';
+      container.appendChild(error);
+    }
+  }
+
+  function ensureInit() {
+    if (initStarted) return;
+    initStarted = true;
+    isLoadingCalendar = true;
+    renderLoadingWeek(0);
+    const startInit = () => init();
+    if (typeof requestAnimationFrame === 'function') {
+      requestAnimationFrame(startInit);
+    } else {
+      setTimeout(startInit, 0);
+    }
+  }
+
+  const prevBtn = document.getElementById('calendarPrevBtn');
+  const nextBtn = document.getElementById('calendarNextBtn');
+  const tzToggle = document.getElementById('calendarTzToggle');
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      ensureInit();
+      if (isLoadingCalendar) return;
+      if (prevBtn.disabled) return;
+      renderWeek(weekOffset - 1);
+    });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      ensureInit();
+      if (isLoadingCalendar) return;
+      renderWeek(weekOffset + 1);
+    });
+  }
+
+  if (tzToggle) {
+    tzToggle.addEventListener('change', () => {
+      useLocalTimeZone = tzToggle.checked;
+      ensureInit();
+      applyTimeConfig();
+      renderWeek(weekOffset);
+    });
+  }
+
+  window.initWeeklyCalendar = ensureInit;
+  window.setWeeklyCalendarExpanded = function setWeeklyCalendarExpanded(isExpanded) {
+    viewExpanded = Boolean(isExpanded);
+    applyTimeConfig();
+    if (initStarted) {
+      if (isLoadingCalendar) {
+        renderLoadingWeek(weekOffset);
+      } else {
+        renderWeek(weekOffset);
+      }
+    }
+  };
+
+  setInterval(() => {
+    if (!initStarted || !currentWeekStart || !currentDayCols) return;
+    renderNowIndicator(currentWeekStart, currentDayCols);
+  }, 60000);
+})();
+
+// Calendar expand/collapse
+(function () {
+  const container = document.getElementById('weeklyCalendar');
+  const btn = document.getElementById('calendarToggleBtn');
+  const options = document.getElementById('calendarOptions');
+  if (!container || !btn) return;
+
+  const hiddenClass = 'is-hidden';
+  const expandedClass = 'is-expanded';
+  const collapsedClass = 'is-collapsed';
+  let visible = !container.classList.contains(hiddenClass);
+  let expanded = container.classList.contains(expandedClass);
+
+  function syncText() {
+    if (!visible) {
+      btn.textContent = 'Click to view calendar';
+    } else {
+      btn.textContent = expanded ? 'Collapse calendar' : 'Expand calendar';
+    }
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    if (!visible) {
+      visible = true;
+      expanded = false;
+      container.classList.remove(hiddenClass);
+      container.classList.add(collapsedClass);
+      container.classList.remove(expandedClass);
+      if (options) options.classList.remove(hiddenClass);
+      window.initWeeklyCalendar();
+      if (typeof window.setWeeklyCalendarExpanded === 'function') {
+        window.setWeeklyCalendarExpanded(false);
+      }
+      syncText();
+      return;
+    }
+
+    expanded = !expanded;
+    container.classList.toggle(expandedClass, expanded);
+    container.classList.toggle(collapsedClass, !expanded);
+    if (typeof window.setWeeklyCalendarExpanded === 'function') {
+      window.setWeeklyCalendarExpanded(expanded);
+    }
+    syncText();
+  });
+
+  syncText();
+})();
+
+// Bilibili video switcher (for news pages)
+(function () {
+  function parseVideos(root) {
+    const dataEl = root.querySelector('.video-switcher-data');
+    if (!dataEl) return null;
+    try {
+      const parsed = JSON.parse((dataEl.textContent || '').trim());
+      if (!Array.isArray(parsed) || parsed.length === 0) return null;
+      return parsed;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function initSwitcher(root) {
+    const videos = parseVideos(root);
+    if (!videos) return;
+
+    const iframe = root.querySelector('.video-switcher-iframe');
+    const prevBtn = root.querySelector('.video-switcher-prev');
+    const nextBtn = root.querySelector('.video-switcher-next');
+    const titleEl = root.querySelector('.video-switcher-meta-title');
+    const subtitleEl = root.querySelector('.video-switcher-meta-subtitle');
+    const countEl = root.querySelector('.video-switcher-meta-count');
+
+    let index = Number(root.dataset.initial || 0);
+    if (!Number.isFinite(index) || index < 0) index = 0;
+    index = index % videos.length;
+
+    function render() {
+      const item = videos[index] || {};
+      const src = typeof item.src === 'string' ? item.src.trim() : '';
+      if (iframe && src && iframe.src !== src) iframe.src = src;
+      if (titleEl) titleEl.textContent = (item.title || '').trim();
+      if (subtitleEl) subtitleEl.textContent = (item.subtitle || '').trim();
+      if (countEl) countEl.textContent = `${index + 1} / ${videos.length}`;
+    }
+
+    function step(delta) {
+      index = (index + delta + videos.length) % videos.length;
+      render();
+    }
+
+    const disabled = videos.length <= 1;
+    if (prevBtn) {
+      prevBtn.disabled = disabled;
+      prevBtn.addEventListener('click', () => { if (!disabled) step(-1); });
+    }
+    if (nextBtn) {
+      nextBtn.disabled = disabled;
+      nextBtn.addEventListener('click', () => { if (!disabled) step(1); });
+    }
+
+    render();
+  }
+
+  document.querySelectorAll('.video-switcher').forEach(initSwitcher);
+})();

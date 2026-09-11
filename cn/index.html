@@ -1,0 +1,711 @@
+<!DOCTYPE html><html lang="zh-cn"><head>
+  <meta charset="utf-8">
+  
+  <title>周晗 - MicDZ</title>
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+<link rel="stylesheet" href="/css/normalize.css">
+
+  <style>
+  /* stylelint-disable */
+  a:not(.icon):not(.formula-anchor) {
+    text-decoration-color: #000;
+  }
+  a:hover:not(.icon):not(.formula-anchor),
+  a:focus:not(.icon):not(.formula-anchor) {
+    text-decoration-color: #111;
+  }
+  blockquote {
+    border-left: 8px solid #0FA0CE;
+  }
+  .nanobar .bar {
+    background: #0FA0CE;
+  }
+  /* stylelint-enable */
+</style>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="/img/h.jpeg">
+  
+  
+  
+
+<!-- Prism support ./js/prism.js-->
+  
+<link rel="stylesheet" href="/css/prism.css">
+
+  <script id="origin-public-config" type="application/json">{"photo_map":{"github_user":"MicDZ"},"legacy_map_locations":{"0":{"name":"IMG 7251","lat":36.580894444444446,"lng":-118.7508388888889,"photo_src":"/img/maps/IMG_7251.jpg"}}}</script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="MicDZ's Blog" type="application/atom+xml">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="row">
+
+    <div class="two columns" style="max-width: 50px">
+      <h1 class="mt-2 mode">
+        <div onclick="setDarkMode(true)" id="darkBtn"></div>
+        <div onclick="setDarkMode(false)" id="lightBtn" class="hidden"></div>
+        <script>
+          if (localStorage.getItem('preferredTheme') == 'dark') {
+            setDarkMode(true)
+          }
+          function setDarkMode(isDark) {
+            var darkBtn = document.getElementById('darkBtn')
+            var lightBtn = document.getElementById('lightBtn')
+            if (isDark) {
+              lightBtn.style.display = "block"
+              darkBtn.style.display = "none"
+              localStorage.setItem('preferredTheme', 'dark');
+            } else {
+              lightBtn.style.display = "none"
+              darkBtn.style.display = "block"
+              localStorage.removeItem('preferredTheme');
+            }
+            document.body.classList.toggle("darkmode");
+          }
+        </script>
+      </h1>
+    </div>
+    
+
+
+  </div>
+          <div>
+            <!-- <div class="trans"> -->
+              
+<div class="row">
+    <div class="column">
+      <!-- Main information, edit it on theme/_config.yml -->
+      <div class="column about_brief mb-2">
+        <!-- Main information, edit it on theme/_config.yml -->
+        <!-- <h2 class="mb-2"></h2> -->
+        <!-- <p></p> -->
+        <h1 class="site-title">周 晗</h1> 
+
+      </div>
+      <!-- <p></p> -->
+    </div>
+  </div>
+  <div>
+    <div>
+      
+      <div class="row about_brief mb-2 myavatar" style="width: 20%; max-width: 150px;">
+        <img src="/img/h.jpeg" alt="myavatar" width="150" height="150" decoding="async" fetchpriority="high">
+      </div>
+      
+      <div class="row profile-detail" style="width: 75%;">
+      <p>研究领域：机器学习、计算机视觉、机器人，重点研究多模态和具身智能。</p><p>Email: me at micdz dot cn</p><p>GitHub: <a target="_blank" rel="noopener" href="https://github.com/micdz/">MicDZ</a></p>
+    </div>
+      </div>
+
+    
+<h2>教育经历</h2>
+
+<div class="article-list mb-3">
+  <div class="mr-2 education-logo-frame" style="display: flex; align-items: center; max-width: 60px; max-height: 60px;">
+    <div class="wide-education-mark"><img src="/img/icons/mbzuai.svg" alt="MBZUAI" width="179" height="49" decoding="async" style="border: none; box-shadow: none; background: none;"></div>
+  </div>
+  <div class="education-info"><div class="info"><p>2026 年 8 月 - 至今</p><p class="description">机器人学博士，穆罕默德·本·扎耶德人工智能大学，阿布扎比，阿联酋，导师：<a target="_blank" rel="noopener" href="https://xingxingzuo.github.io">左星星教授</a></p></div></div>
+</div>
+
+<div class="article-list mb-3">
+  <div class="mr-2 education-logo-frame" style="display: flex; align-items: center; max-width: 60px; max-height: 60px;">
+    <div class=""><img src="/img/icons/hust.png" alt="HUST" width="60" height="60" decoding="async" style="border: none; box-shadow: none; background: none;" loading="lazy"></div>
+  </div>
+  <div class="education-info"><div class="info"><p>2022 年 - 2026 年</p><p class="description">通信工程学士，华中科技大学，武汉，湖北，中国</p></div></div>
+</div>
+
+<div class="article-list mb-3">
+  <div class="mr-2 education-logo-frame" style="display: flex; align-items: center; max-width: 60px; max-height: 60px;">
+    <div class=""><img src="/img/icons/ucsb.gif" alt="UCSB" width="60" height="60" decoding="async" style="border: none; box-shadow: none; background: none;" loading="lazy"></div>
+  </div>
+  <div class="education-info"><div class="info"><p>2025 年 - 2026 年</p><p class="description">交换学生，电气与计算机工程，加州大学圣芭芭拉分校，加利福尼亚州，美国</p></div></div>
+</div>
+
+
+
+    <hr>
+<h2>出版物</h2>
+    
+      <div style="margin-bottom: 20px;">
+        
+        <div class="article-list">
+          <div class="publication-text">
+            <p>
+            
+              <b>Traj2Action: A Co-Denoising Framework for Trajectory-Guided Human-to-Robot Skill Transfer</b>
+              
+              <!-- 显示所有的作者 -->
+              
+                <br>
+              <span class="authors">
+              <!-- 添加一个变量 -->
+
+                
+                  
+                  
+                    
+                  
+                  
+                     
+                  
+                  <u>Han Zhou</u><sup>*</sup>,  
+                
+                  
+                  
+                    
+                  
+                  
+                     
+                  
+                  Jinjin Cao<sup>*</sup>,  
+                
+                  
+                  
+                    
+                  
+                  
+                     
+                  
+                  Liyuan Ma<sup>†</sup>,  
+                
+                  
+                  
+                    
+                  
+                  
+                     
+                  
+                  Xueji Fang,  
+                
+                  
+                  
+                    
+                  
+                  
+                  Guo-jun Qi 
+                
+            
+            </span>
+  
+              
+                <br>
+              </p><p>
+                Preprint ArXiv 2510.00491, 
+  
+              
+              
+                    2025 年 09 月
+              </p>
+                
+              <div>
+                <p>
+                  
+                    [<a target="_blank" rel="noopener" href="https://github.com/MicDZ/Traj2Action">GitHub</a>]
+                  
+                  
+                    [<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2510.00491">arXiv</a>]
+                  
+                  
+                    [<a href="https://www.micdz.cn/Traj2Action/">Home Page</a>]
+                  
+                  
+                    [<a target="_blank" rel="noopener" href="https://huggingface.co/Traj2Action">Hugging Face</a>]
+                  
+                </p>
+              </div>
+  
+  
+            </div>
+              <div class="publication-figure">
+              
+                <img src="https://micdz.github.io/Traj2Action/static/images/main.png" alt="publication" loading="lazy" decoding="async" style="max-height: 100%; max-width: 200px;">
+              
+              </div>
+          </div>
+        
+      </div>
+    
+      <div style="margin-bottom: 20px;">
+        
+        <div class="article-list">
+          <div class="publication-text">
+            <p>
+            
+              <b>MANBench: Is Your Multimodal Model Smarter than Human?</b>
+              
+              <!-- 显示所有的作者 -->
+              
+                <br>
+              <span class="authors">
+              <!-- 添加一个变量 -->
+
+                
+                  
+                  
+                    
+                  
+                  
+                     
+                  
+                  <u>Han Zhou</u>,  
+                
+                  
+                  
+                    
+                  
+                  
+                     
+                  
+                  Qitong Xu,  
+                
+                  
+                  
+                    
+                  
+                  
+                     
+                  
+                  Yiheng Dong,  
+                
+                  
+                  
+                    
+                  
+                  
+                  Xin Yang<sup>†</sup> 
+                
+            
+            </span>
+  
+              
+                <br>
+              </p><p>
+                ACL'25 Findings, 
+  
+              
+              
+                    2025 年 02 月
+              </p>
+                
+              <div>
+                <p>
+                  
+                    [<a target="_blank" rel="noopener" href="https://github.com/micdz/MANBench">GitHub</a>]
+                  
+                  
+                    [<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2506.11080">arXiv</a>]
+                  
+                  
+                    [<a href="/MANBench/">Home Page</a>]
+                  
+                  
+                    [<a target="_blank" rel="noopener" href="https://huggingface.co/datasets/MANBench/MANBench">Hugging Face</a>]
+                  
+                </p>
+              </div>
+  
+  
+            </div>
+              <div class="publication-figure">
+              
+                <img src="/MANBench/static/images/teaser.jpg" alt="publication" loading="lazy" decoding="async" style="max-height: 100%; max-width: 200px;">
+              
+              </div>
+          </div>
+        
+      </div>
+    
+    
+<h2>研究与访问经历</h2>
+<div class="scrollableDiv">
+
+<div class="article-list mb-3">
+  <div class="mr-2 org-logo-frame" style="display: flex; align-items: center; max-width: 80px; max-height: 80px;"><img src="/img/icons/rcl-group.png" alt="RCL Group" width="80" height="80" loading="lazy" decoding="async" style="border: none; box-shadow: none; background: none;"></div>
+  <div class="research-info"><p><b>RCL Group，穆罕默德·本·扎耶德人工智能大学</b></p><p class="info left">2026年8月 - 至今，博士研究生</p><p>导师：<a target="_blank" rel="noopener" href="https://xingxingzuo.github.io">左星星教授</a></p></div>
+</div>
+
+<div class="article-list mb-3">
+  <div class="mr-2 org-logo-frame" style="display: flex; align-items: center; max-width: 80px; max-height: 80px;"><img src="/img/icons/maple.png" alt="MAPLE" width="80" height="80" loading="lazy" decoding="async" style="border: none; box-shadow: none; background: none;"></div>
+  <div class="research-info"><p><b>MAPLE，机器感知与学习实验室，西湖大学</b></p><p class="info left">2025年5月 - 至今，访问学生</p><p>导师：<a target="_blank" rel="noopener" href="https://www.westlake.edu.cn/faculty/guojun-qi.html">齐国君教授</a> (Fellow of IEEE &amp; IAPR) 和<a target="_blank" rel="noopener" href="https://mlyarthur.github.io/">麻力元博士</a></p><p>与博士生曹瑾瑾合作</p></div>
+</div>
+
+<div class="article-list mb-3">
+  <div class="mr-2 org-logo-frame" style="display: flex; align-items: center; max-width: 80px; max-height: 80px;"><img src="/img/icons/eic.png" alt="EIC" width="80" height="80" loading="lazy" decoding="async" style="border: none; box-shadow: none; background: none;"></div>
+  <div class="research-info"><p><b>医学图像分析与增强现实组，华中科技大学</b></p><p class="info left">2024年6月 - 2025年5月，实习研究员</p><p>导师：杨欣教授</p></div>
+</div>
+
+<div class="article-list mb-3">
+  <div class="mr-2 org-logo-frame" style="display: flex; align-items: center; max-width: 80px; max-height: 80px;"><img src="/img/icons/langya.png" alt="LangYa" width="80" height="80" loading="lazy" decoding="async" style="border: none; box-shadow: none; background: none;"></div>
+  <div class="research-info"><p><b>狼牙，华中科技大学RoboMaster战队</b></p><p class="info left">2022年10月 - 2024年9月，视觉组成员</p><p>导师：曾喻江博士</p></div>
+</div>
+
+</div>
+
+
+    <hr>
+<h2>获奖</h2>
+    <div id="selectedAwards">
+      
+      <div class="article-list mb-2 spacing">
+        
+          <p class="info left date">2025 年 08 月</p>
+          <p class="line">
+              
+              全国大学生集成电路创新创业大赛
+              <span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
+              <b>全国一等奖、人民币3000元</b></p>
+        
+      </div>
+      
+      <div class="article-list mb-2 spacing">
+        
+          <p class="info left date">2024 年 09 月</p>
+          <p class="line">
+          <a href="/cn/news/qs.html">
+              
+              嵌入式芯片与系统设计大赛
+              
+          </a><span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
+          <b>全国一等奖、人民币5000元</b>
+          </p>
+        
+      </div>
+      
+      <div class="article-list mb-2 spacing">
+        
+          <p class="info left date">2024 年 09 月</p>
+          <p class="line">
+          <a href="/cn/news/rm.html">
+              
+              RoboMaster 机甲大师超级对抗赛
+              
+          </a><span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
+          <b>全国二等奖</b>
+          </p>
+        
+      </div>
+      
+      <div class="article-list mb-2 spacing">
+        
+          <p class="info left date">2023 年 10 月</p>
+          <p class="line">
+              
+              全球校园人工智能算法精英赛
+              <span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
+              <b>全国一等奖</b></p>
+        
+      </div>
+      
+      
+
+      </div>
+            <div class="scrollableDiv" id="expandDiv" style="display: none;">
+       
+      <div class="article-list mb-2 spacing">
+        
+          <p class="info left date">2025 年 08 月</p>
+          <p class="line">
+              
+              全国大学生集成电路创新创业大赛
+              <span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
+              <b>全国一等奖、人民币3000元</b></p>
+        
+      </div>
+      
+      <div class="article-list mb-2 spacing">
+        
+         <p class="info left date">2024 年 09 月</p>
+          <p class="line">
+         <a href="/cn/news/qs.html">
+              
+              嵌入式芯片与系统设计大赛
+              </a><span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
+          <b>全国一等奖、人民币5000元</b>
+          </p>
+        
+      </div>
+      
+      <div class="article-list mb-2 spacing">
+        
+         <p class="info left date">2024 年 09 月</p>
+          <p class="line">
+         <a href="/cn/news/rm.html">
+              
+              RoboMaster 机甲大师超级对抗赛
+              </a><span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
+          <b>全国二等奖</b>
+          </p>
+        
+      </div>
+      
+      <div class="article-list mb-2 spacing">
+        
+          <p class="info left date">2023 年 10 月</p>
+          <p class="line">
+              
+              全球校园人工智能算法精英赛
+              <span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
+              <b>全国一等奖</b></p>
+        
+      </div>
+      
+      
+      <div class="article-list mb-2 spacing">
+        
+         <p class="info left date">2024 年 08 月</p> 
+          <p class="line">
+          <a href="/cn/news/rm3.html">
+              
+              RoboMaster 开源奖
+              
+          </a><span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
+          <b>优秀奖、人民币3000元</b>
+          </p>
+        
+      </div>
+      
+      <div class="article-list mb-2 spacing">
+        
+          <p class="info left date spacing">2024 年 08 月</p>
+          <p class="line">
+              
+              RoboCom 机器人开发者大赛
+              <span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
+              <b>全国二等奖</b></p>
+        
+      </div>
+      
+      <div class="article-list mb-2 spacing">
+        
+         <p class="info left date">2024 年 05 月</p> 
+          <p class="line">
+          <a href="/cn/news/rm2.html">
+              
+              RoboMaster 机甲大师超级对抗赛 区域赛
+              
+          </a><span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
+          <b>一等奖（殿军）</b>
+          </p>
+        
+      </div>
+      
+      <div class="article-list mb-2 spacing">
+        
+          <p class="info left date spacing">2024 年 04 月</p>
+          <p class="line">
+              
+              RoboMaster 高校联盟赛
+              <span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span>
+              <b>全国二等奖</b></p>
+        
+      </div>
+       
+      </div>
+      
+        <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 20px;">
+
+        <a id="toggleBtn" class="toggle-link">点击展开</a>
+      </div>
+           <script>
+    const btn = document.getElementById('toggleBtn');
+    const expandDiv = document.getElementById('expandDiv');
+    const selectedAwards = document.getElementById('selectedAwards');
+    let expanded = false;
+
+    btn.onclick = function() {
+      expanded = !expanded;
+      expandDiv.style.display = expanded ? 'block' : 'none';
+      selectedAwards.style.display = expanded ? 'none' : 'block';
+      btn.textContent = expanded ? '收起' : '点击展开';
+    }
+    // 初始化隐藏
+    expandDiv.style.display = 'none';
+  </script>
+   
+
+    <h2>荣誉</h2>
+      <div id="selectedHonors">
+<div class="article-list mb-2 spacing">
+  <p class="info left date">2024 年 10 月</p>
+  <p class="line">本科生国家奖学金<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b class="description"><i>人民币 10000</i></b></p>
+</div>
+
+<div class="article-list mb-2 spacing">
+  <p class="info left date">2024 年 10 月</p>
+  <p class="line">校三好学生<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b class="description"><i>人民币 2000</i></b></p>
+</div>
+
+</div>
+    <div id="allHonors" style="display: none;" class="scrollableDiv">
+<div class="article-list mb-2 spacing">
+  <p class="info left date">2024 年 10 月</p>
+  <p class="line">本科生国家奖学金<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b class="description"><i>人民币 10000</i></b></p>
+</div>
+
+<div class="article-list mb-2 spacing">
+  <p class="info left date">2024 年 10 月</p>
+  <p class="line">校三好学生<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b class="description"><i>人民币 2000</i></b></p>
+</div>
+
+<div class="article-list mb-2 spacing">
+  <p class="info left date">2023 年 10 月</p>
+  <p class="line">校三好学生<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b class="description"><i>人民币 2000</i></b></p>
+</div>
+
+<div class="article-list mb-2 spacing">
+  <p class="info left date">2022 年 5 月</p>
+  <p class="line">学习优秀奖学金<span class="d-none d-sm-inline ml-2 mr-2 separate">&nbsp;|&nbsp;</span><b class="description"><i>人民币 800</i></b></p>
+</div>
+
+</div>
+  <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 20px;">
+
+  <a id="toggleHonorsBtn" class="toggle-link">点击展开</a>
+      </div>
+      <script>
+          const honorsBtn = document.getElementById('toggleHonorsBtn');
+          const allHonors = document.getElementById('allHonors');
+          const selectedHonors = document.getElementById('selectedHonors');
+          let expandedHonors = false;
+
+          honorsBtn.onclick = function() {
+            expandedHonors = !expandedHonors;
+            allHonors.style.display = expandedHonors ? 'block' : 'none';
+            selectedHonors.style.display = expandedHonors ? 'none' : 'block';
+            honorsBtn.textContent = expandedHonors ? '收起' : '点击展开';
+          }
+          // 初始化隐藏
+          allHonors.style.display = 'none';
+      </script>
+
+
+    <hr>
+
+    <h2>博文</h2>
+    
+    <!-- 如果是index不显示 -->
+    
+    
+    
+    <!-- 如果是index不显示 -->
+    
+    <div class="article-list mb-2 spacing">
+        <p class="info left date">2025 年 01 月08日</p>
+        <a href="/cn/GEB-Chp12.html">
+            
+            《G.E.B》第一、二章读书笔记——形式系统
+            
+        </a>
+    </div>
+    
+    
+    <!-- 如果是index不显示 -->
+    
+    <div class="article-list mb-2 spacing">
+        <p class="info left date">2024 年 12 月28日</p>
+        <a href="/cn/Guide-to-Godel%E2%80%99s-Incompleteness-Theorems.html">
+            
+            哥德尔不完备定理指南
+            
+        </a>
+    </div>
+    
+    
+    <!-- 如果是index不显示 -->
+    
+    <div class="article-list mb-2 spacing">
+        <p class="info left date">2024 年 03 月05日</p>
+        <a href="/cn/posesolver.html">
+            
+            姿态解算常用知识
+            
+        </a>
+    </div>
+    
+    
+    <!-- 如果是index不显示 -->
+    
+    <div class="article-list mb-2 spacing">
+        <p class="info left date">2024 年 01 月15日</p>
+        <a href="/cn/Republic-Chp2.html">
+            
+            《理想国》第二章读书笔记——正义的两个极端
+            
+        </a>
+    </div>
+    
+    
+    <!-- 如果是index不显示 -->
+    
+    <div class="article-list mb-2 spacing">
+        <p class="info left date">2024 年 01 月11日</p>
+        <a href="/cn/Republic-Chp1.html">
+            
+            《理想国》第一章读书笔记——何为正义？
+            
+        </a>
+    </div>
+    
+    
+    <!-- 如果是index不显示 -->
+    
+    
+    
+    <!-- 如果是index不显示 -->
+    
+    
+    
+  </div>
+  
+  
+  <h4 class="right"> <a href="/cn/archives.html">所有文章</a></h4>
+
+            <!-- </div> -->
+            <div class="row mt-2">
+    
+    <p id="copyright">
+        
+        除非另有声明，本博客所有内容均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议
+        <span class="d-none d-sm-inline"> | </span>
+                
+        <a href="/atom.xml" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm">RSS 订阅</a> <span class="d-none d-sm-inline"> | </span>
+        <a href="/friends">友链</a>
+        <br>
+
+        <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">鄂ICP备2025091178号</a> <span class="d-none d-sm-inline"> | </span>
+        
+
+
+        
+
+
+    
+        <a href="/">English</a>
+    
+
+    </p>
+
+    
+</div>
+ 
+          </div>
+    
+        </div>
+    
+      </div>
+  
+<script src="/js/main.js"></script>
+
+
+
+
+</body></html>
