@@ -542,7 +542,7 @@
             max-width: min(92vw, 1020px);
             max-height: 72vh;
             height: auto;
-            margin: 0;
+            margin: 0 auto;
             border-radius: 0;
             object-fit: contain;
         }

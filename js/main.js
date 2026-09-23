@@ -1,3 +1,26 @@
+// 伪代码兜底渲染：文章里的内联 pseudocode.renderElement(...) 若因故未执行
+// (脚本加载失败、getElementById 取错元素、抛错等)，这里统一补渲染。
+// pseudocode.renderElement 会把 <pre> 整体替换掉，因此残留的 pre.pseudocode
+// 就是尚未渲染成功的块。
+(function () {
+  function renderPseudocodeBlocks() {
+    if (typeof window.pseudocode === 'undefined' || !window.pseudocode.renderElement) return;
+    document.querySelectorAll('pre.pseudocode').forEach(function (el) {
+      try {
+        window.pseudocode.renderElement(el);
+      } catch (err) {
+        console.error('[pseudocode] 渲染失败，保留原始 LaTeX：', err, el);
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderPseudocodeBlocks);
+  } else {
+    renderPseudocodeBlocks();
+  }
+})();
+
 // Accessibility fixes for third-party controls rendered after page load.
 (function () {
   function labelBlueprintIconButtons(root) {
