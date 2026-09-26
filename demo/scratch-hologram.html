@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scratch Hologram — Local Geometry</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #controls {
+            background: rgba(22, 27, 34, 1);
+            padding: 10px 25px;
+            border-bottom: 1px solid #30363d;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            text-align: center;
+            flex-shrink: 0;
+            z-index: 10;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .controls-content {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h2 { margin: 0 0 8px 0; font-size: 1.1rem; }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 6px 14px;
+            cursor: pointer;
+            background: #21262d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        button:hover { background: #30363d; }
+
+        button.active {
+            background: #1f6feb;
+            color: white;
+            border-color: #1f6feb;
+        }
+
+        .sliders {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 18px;
+            justify-content: center;
+            font-size: 0.78rem;
+            color: #8b949e;
+            margin-bottom: 6px;
+        }
+
+        .sliders label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sliders input[type=range] { width: 110px; }
+        .sliders .val { color: #58a6ff; min-width: 46px; display: inline-block; text-align: left; }
+
+        #math-display {
+            font-family: 'Courier New', monospace;
+            color: #58a6ff;
+            font-size: 0.85rem;
+            min-height: 20px;
+        }
+
+        .legend {
+            font-size: 0.78rem;
+            color: #8b949e;
+            margin-top: 4px;
+        }
+
+        #stage {
+            flex-grow: 1;
+            display: flex;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #topView { flex: 1.55; height: 100%; }
+        #rightCol {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid #30363d;
+        }
+        #sideView { height: 50%; border-bottom: 1px solid #30363d; }
+        #grooveView { height: 50%; }
+
+        canvas { display: block; width: 100%; }
+    </style>
+</head>
+<body>
+
+    <div id="controls">
+        <div class="controls-content">
+            <h2>Scratch Hologram — Why a Circular Scratch Produces Depth</h2>
+            <div class="btn-group">
+                <button id="btn-virtual" class="active" onclick="setMode('virtual')">Virtual image (above plate)</button>
+                <button id="btn-conjugate" onclick="setMode('conjugate')">Conjugate image (below plate)</button>
+                <button id="btn-zone" class="active" onclick="toggleZone()">Zone-plate overlay: ON</button>
+            </div>
+            <div class="sliders">
+                <label>arc radius R <input type="range" id="sl-R" min="2" max="16" step="0.1" value="8"><span class="val" id="v-R"></span></label>
+                <label>viewer distance &rho; <input type="range" id="sl-rho" min="20" max="90" step="1" value="45"><span class="val" id="v-rho"></span></label>
+                <label>eye height h <input type="range" id="sl-h" min="10" max="60" step="1" value="25"><span class="val" id="v-h"></span></label>
+                <label>light azimuth &phi; <input type="range" id="sl-az" min="-60" max="60" step="1" value="0"><span class="val" id="v-az"></span></label>
+                <label>light elevation <input type="range" id="sl-el" min="30" max="89" step="1" value="72"><span class="val" id="v-el"></span></label>
+            </div>
+            <div id="math-display"></div>
+            <div class="legend">
+                <span style="color: #58a6ff;">&#9679; scratch (circle of radius R)</span> &nbsp;|&nbsp;
+                <span style="color: #ffd866;">&#9679; light</span> &nbsp;|&nbsp;
+                <span style="color: #d2a8ff;">&#9679; eyes E&#8321;, E&#8322;</span> &nbsp;|&nbsp;
+                <span style="color: #ff7b72;">&#9679; highlights P&#8321;, P&#8322;</span> &nbsp;|&nbsp;
+                <span style="color: #3fb950;">&#9679; sightlines</span> &nbsp;|&nbsp;
+                <span style="color: #ff9e64;">&#9679; triangulated image point O</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="stage">
+        <canvas id="topView"></canvas>
+        <div id="rightCol">
+            <canvas id="sideView"></canvas>
+            <canvas id="grooveView"></canvas>
+        </div>
+    </div>
+
+    <script>
+    // ---------------- state ----------------
+    const S = {
+        R: 8,        // scratch radius
+        rho: 45,     // viewer horizontal distance from circle center
+        h: 25,       // eye height above plate
+        az: 0,       // light azimuth (deg), 0 = behind viewer
+        el: 72,      // light elevation (deg)
+        mode: 'virtual',   // 'virtual' (far-side highlight) | 'conjugate' (near-side)
+        zone: true,
+        eyeHalf: 3.25,     // half interpupillary distance
+        lightDist: 60
+    };
+
+    const cvTop = document.getElementById('topView');
+    const cvSide = document.getElementById('sideView');
+    const cvGroove = document.getElementById('grooveView');
+    const mathDisplay = document.getElementById('math-display');
+
+    function setMode(m) {
+        S.mode = m;
+        document.getElementById('btn-virtual').classList.toggle('active', m === 'virtual');
+        document.getElementById('btn-conjugate').classList.toggle('active', m === 'conjugate');
+        draw();
+    }
+
+    function toggleZone() {
+        S.zone = !S.zone;
+        const b = document.getElementById('btn-zone');
+        b.classList.toggle('active', S.zone);
+        b.textContent = 'Zone-plate overlay: ' + (S.zone ? 'ON' : 'OFF');
+        draw();
+    }
+
+    ['R','rho','h','az','el'].forEach(k => {
+        const sl = document.getElementById('sl-' + k);
+        sl.addEventListener('input', () => { S[k] = parseFloat(sl.value); draw(); });
+    });
+
+    // ---------------- geometry ----------------
+    const sub = (a,b) => [a[0]-b[0], a[1]-b[1], a[2]-b[2]];
+    const dot = (a,b) => a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+    const norm = a => { const l = Math.hypot(a[0],a[1],a[2]); return [a[0]/l, a[1]/l, a[2]/l]; };
+
+    function scene() {
+        const C = [0,0,0];
+        const E1 = [-S.eyeHalf, S.rho, S.h];
+        const E2 = [ S.eyeHalf, S.rho, S.h];
+        const az = S.az * Math.PI/180, el = S.el * Math.PI/180, L = S.lightDist;
+        const Lsrc = [L*Math.cos(el)*Math.sin(az), L*Math.cos(el)*Math.cos(az), L*Math.sin(el)];
+
+        // highlight condition on circle: (d_i - d_o) . t_hat = 0
+        function g(theta, E) {
+            const P = [S.R*Math.cos(theta), S.R*Math.sin(theta), 0];
+            const t = [-Math.sin(theta), Math.cos(theta), 0];
+            const di = norm(sub(P, Lsrc));   // incident propagation direction
+            const dout = norm(sub(E, P));    // outgoing direction toward eye
+            return dot([di[0]-dout[0], di[1]-dout[1], di[2]-dout[2]], t);
+        }
+
+        function roots(E) {
+            const found = [];
+            const N = 1440;
+            let prevT = 0, prevG = g(0, E);
+            for (let i = 1; i <= N; i++) {
+                const t = i/N * 2*Math.PI;
+                const gv = g(t, E);
+                if (gv * prevG < 0) {
+                    let a = prevT, b = t, fa = prevG;
+                    for (let k = 0; k < 40; k++) {
+                        const m = 0.5*(a+b), fm = g(m, E);
+                        if (fa * fm <= 0) { b = m; } else { a = m; fa = fm; }
+                    }
+                    found.push(0.5*(a+b));
+                }
+                prevT = t; prevG = gv;
+            }
+            return found.map(t => {
+                const tt = ((t % (2*Math.PI)) + 2*Math.PI) % (2*Math.PI);
+                return { theta: tt, P: [S.R*Math.cos(tt), S.R*Math.sin(tt), 0] };
+            });
+        }
+
+        function pick(E) {
+            const rs = roots(E);
+            if (!rs.length) return null;
+            if (S.mode === 'virtual')      // far side from viewer (viewer at +y)
+                return rs.reduce((a,b) => a.P[1] < b.P[1] ? a : b);
+            else                           // near side
+                return rs.reduce((a,b) => a.P[1] > b.P[1] ? a : b);
+        }
+
+        const h1 = pick(E1), h2 = pick(E2);
+        let O = null;
+        if (h1 && h2) {
+            // closest point between sightlines E1+s*(P1-E1), E2+t*(P2-E2)
+            const v1 = sub(h1.P, E1), v2 = sub(h2.P, E2), w0 = sub(E1, E2);
+            const a = dot(v1,v1), b = dot(v1,v2), c = dot(v2,v2), d = dot(v1,w0), e = dot(v2,w0);
+            const den = a*c - b*b;
+            if (Math.abs(den) > 1e-9) {
+                const s = (b*e - c*d)/den, t = (a*e - b*d)/den;
+                const q1 = [E1[0]+s*v1[0], E1[1]+s*v1[1], E1[2]+s*v1[2]];
+                const q2 = [E2[0]+t*v2[0], E2[1]+t*v2[1], E2[2]+t*v2[2]];
+                O = [(q1[0]+q2[0])/2, (q1[1]+q2[1])/2, (q1[2]+q2[2])/2];
+            }
+        }
+        return { C, E1, E2, Lsrc, h1, h2, O };
+    }
+
+    // ---------------- drawing helpers ----------------
+    function setupCtx(cv) {
+        const dpr = window.devicePixelRatio || 1;
+        const w = cv.clientWidth, h = cv.clientHeight;
+        cv.width = w * dpr; cv.height = h * dpr;
+        const ctx = cv.getContext('2d');
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, w, h);
+        return { ctx, w, h };
+    }
+
+    function line(ctx, x1, y1, x2, y2, color, width, dash) {
+        ctx.strokeStyle = color; ctx.lineWidth = width || 1;
+        ctx.setLineDash(dash || []);
+        ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+        ctx.setLineDash([]);
+    }
+
+    function dot2(ctx, x, y, r, color, glow) {
+        if (glow) {
+            const gr = ctx.createRadialGradient(x, y, 0, x, y, r*3);
+            gr.addColorStop(0, color); gr.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = gr;
+            ctx.beginPath(); ctx.arc(x, y, r*3, 0, 2*Math.PI); ctx.fill();
+        }
+        ctx.fillStyle = color;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, 2*Math.PI); ctx.fill();
+    }
+
+    function label(ctx, x, y, text, color, size, align) {
+        ctx.fillStyle = color || '#8b949e';
+        ctx.font = (size || 11) + 'px Segoe UI, sans-serif';
+        ctx.textAlign = align || 'left';
+        ctx.fillText(text, x, y);
+    }
+
+    // ---------------- top view ----------------
+    function drawTop(sc) {
+        const { ctx, w, h } = setupCtx(cvTop);
+        // world window: x in [-45,45], y in [-28, 72]
+        const x0 = -45, x1 = 45, y0 = -28, y1 = 72;
+        const k = Math.min(w/(x1-x0), h/(y1-y0));
+        const cx = w/2 - k*(x0+x1)/2, cy = h/2 + k*(y0+y1)/2;
+        const X = x => cx + k*x, Y = y => cy - k*y;
+
+        // plate region
+        ctx.fillStyle = 'rgba(48,54,61,0.35)';
+        ctx.fillRect(X(-32), Y(30), k*64, k*50);
+        line(ctx, X(-32), Y(-20), X(32), Y(-20), '#30363d', 1);
+        line(ctx, X(-32), Y(30), X(32), Y(30), '#30363d', 1);
+        line(ctx, X(-32), Y(-20), X(-32), Y(30), '#30363d', 1);
+        line(ctx, X(32), Y(-20), X(32), Y(30), '#30363d', 1);
+        label(ctx, X(-31), Y(-21.5), 'reflective plate (z = 0), top view', '#6e7681', 11);
+
+        // zone-plate overlay: fringes of the triangulated point O
+        if (S.zone && sc.O && Math.abs(sc.O[2]) > 0.2) {
+            const lam = 0.5, z = Math.abs(sc.O[2]);
+            ctx.strokeStyle = 'rgba(88,166,255,0.16)';
+            ctx.lineWidth = 1;
+            for (let n = 1; n < 60; n++) {
+                const r = Math.sqrt(2*n*lam*z + n*n*lam*lam);
+                if (k*r > Math.max(w,h)) break;
+                ctx.beginPath(); ctx.arc(X(sc.O[0]), Y(sc.O[1]), k*r, 0, 2*Math.PI); ctx.stroke();
+            }
+            label(ctx, X(-31), Y(-24), 'holographic fringes of O (zone plate, exaggerated wavelength)', 'rgba(88,166,255,0.55)', 10);
+        }
+
+        // scratch circle
+        ctx.strokeStyle = 'rgba(88,166,255,0.85)';
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(X(0), Y(0), k*S.R, 0, 2*Math.PI); ctx.stroke();
+        // radius annotation
+        line(ctx, X(0), Y(0), X(S.R*Math.cos(0.6)), Y(S.R*Math.sin(0.6)), 'rgba(88,166,255,0.6)', 1);
+        label(ctx, X(S.R*0.55), Y(S.R*0.72), 'R', '#58a6ff', 12);
+        label(ctx, X(0)+4, Y(0)+12, 'C', '#58a6ff', 11);
+        dot2(ctx, X(0), Y(0), 2, '#58a6ff');
+
+        // light: marker at edge in the direction of the light projection
+        const lp = [sc.Lsrc[0], sc.Lsrc[1]];
+        const ll = Math.hypot(lp[0], lp[1]) || 1;
+        const lx = lp[0]/ll*41, ly = lp[1]/ll*41;
+        dot2(ctx, X(lx), Y(ly), 5, '#ffd866', true);
+        label(ctx, X(lx)+8, Y(ly)+4, 'light (proj.)', '#ffd866', 11);
+
+        // light rays to highlights
+        if (sc.h1) line(ctx, X(lp[0]/ll*40), Y(lp[1]/ll*40), X(sc.h1.P[0]), Y(sc.h1.P[1]), 'rgba(255,216,102,0.35)', 1, [4,4]);
+        if (sc.h2) line(ctx, X(lp[0]/ll*40), Y(lp[1]/ll*40), X(sc.h2.P[0]), Y(sc.h2.P[1]), 'rgba(255,216,102,0.35)', 1, [4,4]);
+
+        // eyes
+        dot2(ctx, X(sc.E1[0]), Y(sc.E1[1]), 5, '#d2a8ff');
+        dot2(ctx, X(sc.E2[0]), Y(sc.E2[1]), 5, '#d2a8ff');
+        label(ctx, X(sc.E1[0])-6, Y(sc.E1[1])+16, 'E\u2081', '#d2a8ff', 12);
+        label(ctx, X(sc.E2[0])+2, Y(sc.E2[1])+16, 'E\u2082', '#d2a8ff', 12);
+
+        // sightlines and highlights
+        if (sc.h1) {
+            const P = sc.h1.P;
+            line(ctx, X(sc.E1[0]), Y(sc.E1[1]), X(P[0]), Y(P[1]), '#3fb950', 1.5);
+            dot2(ctx, X(P[0]), Y(P[1]), 4, '#ff7b72', true);
+            label(ctx, X(P[0])+7, Y(P[1])-6, 'P\u2081', '#ff7b72', 12);
+        }
+        if (sc.h2) {
+            const P = sc.h2.P;
+            line(ctx, X(sc.E2[0]), Y(sc.E2[1]), X(P[0]), Y(P[1]), '#3fb950', 1.5);
+            dot2(ctx, X(P[0]), Y(P[1]), 4, '#ff7b72', true);
+            label(ctx, X(P[0])+7, Y(P[1])-6, 'P\u2082', '#ff7b72', 12);
+        }
+
+        // triangulated point projection
+        if (sc.O) {
+            const ox = X(sc.O[0]), oy = Y(sc.O[1]);
+            ctx.strokeStyle = '#ff9e64'; ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.arc(ox, oy, 6, 0, 2*Math.PI); ctx.stroke();
+            line(ctx, ox-9, oy, ox+9, oy, '#ff9e64', 1);
+            line(ctx, ox, oy-9, ox, oy+9, '#ff9e64', 1);
+            label(ctx, ox+10, oy+4, "O' (proj. of image point)", '#ff9e64', 11);
+            if (sc.h1) line(ctx, X(sc.E1[0]), Y(sc.E1[1]), ox, oy, 'rgba(63,185,80,0.35)', 1, [2,4]);
+            if (sc.h2) line(ctx, X(sc.E2[0]), Y(sc.E2[1]), ox, oy, 'rgba(63,185,80,0.35)', 1, [2,4]);
+        }
+    }
+
+    // ---------------- side view (x-z plane) ----------------
+    function drawSide(sc) {
+        const { ctx, w, h } = setupCtx(cvSide);
+        const x0 = -32, x1 = 32, z0 = -18, z1 = 42;
+        const k = Math.min(w/(x1-x0), h/(z1-z0));
+        const cx = w/2 - k*(x0+x1)/2, cy = h/2 + k*(z0+z1)/2;
+        const X = x => cx + k*x, Z = z => cy - k*z;
+
+        label(ctx, 10, 16, 'side view (x-z plane): binocular triangulation', '#6e7681', 11);
+
+        // plate
+        ctx.fillStyle = 'rgba(48,54,61,0.5)';
+        ctx.fillRect(X(x0), Z(0), w - X(x0), h - Z(0));
+        line(ctx, X(x0), Z(0), X(x1), Z(0), '#8b949e', 2);
+        label(ctx, X(x1)-70, Z(0)+14, 'plate z = 0', '#6e7681', 10);
+
+        // eyes
+        dot2(ctx, X(sc.E1[0]), Z(sc.E1[2]), 4, '#d2a8ff');
+        dot2(ctx, X(sc.E2[0]), Z(sc.E2[2]), 4, '#d2a8ff');
+        label(ctx, X(sc.E1[0])-8, Z(sc.E1[2])-8, 'E\u2081', '#d2a8ff', 11);
+        label(ctx, X(sc.E2[0])+6, Z(sc.E2[2])-8, 'E\u2082', '#d2a8ff', 11);
+
+        // eye height annotation
+        line(ctx, X(28), Z(0), X(28), Z(S.h), '#6e7681', 1);
+        label(ctx, X(28)+3, Z(S.h/2), 'h', '#8b949e', 11);
+
+        if (sc.h1) {
+            const P = sc.h1.P;
+            line(ctx, X(sc.E1[0]), Z(sc.E1[2]), X(P[0]), Z(0), '#3fb950', 1.5);
+            dot2(ctx, X(P[0]), Z(0), 3.5, '#ff7b72', true);
+        }
+        if (sc.h2) {
+            const P = sc.h2.P;
+            line(ctx, X(sc.E2[0]), Z(sc.E2[2]), X(P[0]), Z(0), '#3fb950', 1.5);
+            dot2(ctx, X(P[0]), Z(0), 3.5, '#ff7b72', true);
+        }
+
+        if (sc.O) {
+            const ox = sc.O[0], oz = sc.O[2];
+            // extend sightlines to O
+            if (sc.h1) line(ctx, X(sc.E1[0]), Z(sc.E1[2]), X(ox), Z(oz), 'rgba(63,185,80,0.45)', 1, [3,3]);
+            if (sc.h2) line(ctx, X(sc.E2[0]), Z(sc.E2[2]), X(ox), Z(oz), 'rgba(63,185,80,0.45)', 1, [3,3]);
+            dot2(ctx, X(ox), Z(oz), 4.5, '#ff9e64', true);
+            line(ctx, X(ox), Z(0), X(ox), Z(oz), '#ff9e64', 1, [2,3]);
+            label(ctx, X(ox)+8, Z(oz)+4, 'O: z\u2080 = ' + oz.toFixed(1), '#ff9e64', 11);
+        }
+    }
+
+    // ---------------- groove cross-section at P1 ----------------
+    function drawGroove(sc) {
+        const { ctx, w, h } = setupCtx(cvGroove);
+        label(ctx, 10, 16, 'local view: groove cross-section \u22a5 tangent at P\u2081', '#6e7681', 11);
+
+        if (!sc.h1) {
+            label(ctx, w/2 - 90, h/2, 'no highlight for this geometry', '#ff7b72', 12);
+            return;
+        }
+
+        const P = sc.h1.P;
+        const th = sc.h1.theta;
+        const t = [-Math.sin(th), Math.cos(th), 0];   // groove tangent
+        const m = [-t[1], t[0], 0];                   // in-plate perpendicular: z cross t
+
+        const di = norm(sub(P, sc.Lsrc));
+        const dout = norm(sub(sc.E1, P));
+        const di2 = [dot(di, m), di[2]];
+        const do2 = [dot(dout, m), dout[2]];
+        if (Math.hypot(di2[0], di2[1]) < 1e-3) {
+            label(ctx, w/2 - 120, h/2, 'light direction parallel to groove tangent', '#ff7b72', 12);
+            return;
+        }
+
+        const cx = w/2, cy = h*0.58, L = Math.min(w, h)*0.36;
+        const px = v => cx + v[0]*L, py = v => cy - v[1]*L;
+
+        // plate surface
+        line(ctx, 12, cy, w-12, cy, '#30363d', 5);
+        label(ctx, 12, cy+16, 'plate surface', '#6e7681', 10);
+
+        // facet normal: bisector of -di2 and do2
+        const ni = norm([-di2[0], -di2[1], 0]);
+        const bis = norm([ni[0]+do2[0], ni[1]+do2[1], 0]);
+        let n2 = [bis[0], bis[1]];
+        if (n2[1] < 0) n2 = [-n2[0], -n2[1]];
+        // facet line perpendicular to normal
+        const f = [-n2[1], n2[0]];
+        line(ctx, px([-f[0]*0.55, -f[1]*0.55]), py([-f[0]*0.55, -f[1]*0.55]),
+             px([f[0]*0.55, f[1]*0.55]), py([f[0]*0.55, f[1]*0.55]), '#56d4dd', 4);
+        label(ctx, px([f[0]*0.62, f[1]*0.62]), py([f[0]*0.62, f[1]*0.62]), 'groove facet', '#56d4dd', 10);
+
+        // normal (dashed)
+        line(ctx, px([-n2[0]*0.9, -n2[1]*0.9]), py([-n2[0]*0.9, -n2[1]*0.9]),
+             px([n2[0]*1.05, n2[1]*1.05]), py([n2[0]*1.05, n2[1]*1.05]), '#8b949e', 1, [4,4]);
+        label(ctx, px([n2[0]*1.08, n2[1]*1.08]), py([n2[0]*1.08, n2[1]*1.08]), 'n (bisector)', '#8b949e', 10);
+
+        // incident ray (arrives along di2)
+        const aIn = [-di2[0], -di2[1]];
+        line(ctx, px([aIn[0]*1.05, aIn[1]*1.05]), py([aIn[0]*1.05, aIn[1]*1.05]), cx, cy, '#ffd866', 2);
+        dot2(ctx, px([aIn[0]*1.05, aIn[1]*1.05]), py([aIn[0]*1.05, aIn[1]*1.05]), 3, '#ffd866');
+        label(ctx, px([aIn[0]*1.02, aIn[1]*1.02]) + 6, py([aIn[0]*1.02, aIn[1]*1.02]), 'from light', '#ffd866', 10);
+
+        // reflected ray
+        line(ctx, cx, cy, px([do2[0]*1.05, do2[1]*1.05]), py([do2[0]*1.05, do2[1]*1.05]), '#3fb950', 2);
+        dot2(ctx, px([do2[0]*1.05, do2[1]*1.05]), py([do2[0]*1.05, do2[1]*1.05]), 3, '#3fb950');
+        label(ctx, px([do2[0]*1.02, do2[1]*1.02]) + 6, py([do2[0]*1.02, do2[1]*1.02]), 'to eye E\u2081', '#3fb950', 10);
+
+        // equal angle arcs
+        function angleOf(v) { return Math.atan2(v[1], v[0]); }
+        const r = L*0.34;
+        const a1 = angleOf(aIn), an = angleOf(n2), a2 = angleOf(do2);
+        ctx.strokeStyle = 'rgba(201,209,217,0.6)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(cx, cy, r, -Math.max(a1, an), -Math.min(a1, an)); ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx, cy, r, -Math.max(an, a2), -Math.min(an, a2)); ctx.stroke();
+        label(ctx, cx + r*0.75, cy - r*0.55, '\u03b8', '#c9d1d9', 12);
+        label(ctx, cx - r*1.05, cy - r*0.55, '\u03b8', '#c9d1d9', 12);
+
+        // the scratch point
+        dot2(ctx, cx, cy, 3.5, '#ff7b72', true);
+
+        label(ctx, 10, h-30, 'axis conservation:  d_o \u00b7 t = d_i \u00b7 t   (groove = cylindrical mirror)', '#58a6ff', 11);
+        label(ctx, 10, h-14, 'in this plane: ordinary mirror law, equal angles about the facet normal', '#58a6ff', 11);
+    }
+
+    // ---------------- readout ----------------
+    function drawReadout(sc) {
+        if (!sc.h1 || !sc.h2) {
+            mathDisplay.textContent = 'No highlight on the arc for this geometry - move the light or the viewer.';
+            return;
+        }
+        const t1 = (sc.h1.theta*180/Math.PI).toFixed(1);
+        const t2 = (sc.h2.theta*180/Math.PI).toFixed(1);
+        const disp = Math.abs(sc.h1.P[0] - sc.h2.P[0]).toFixed(2);
+        let zTxt = 'n/a';
+        if (sc.O) zTxt = (sc.O[2] >= 0 ? '+' : '') + sc.O[2].toFixed(2);
+        const est = S.mode === 'virtual'
+            ? S.h*S.R/(S.rho + S.R)
+            : -S.h*S.R/Math.max(S.rho - S.R, 0.5);
+        mathDisplay.textContent =
+            'highlights at \u03b8\u2081 = ' + t1 + '\u00b0, \u03b8\u2082 = ' + t2 + '\u00b0   |   disparity \u0394x = ' + disp +
+            '   |   z\u2080 (triangulated) = ' + zTxt +
+            '   |   paraxial estimate \u00b1hR/(\u03c1\u2213R) = ' + (est >= 0 ? '+' : '') + est.toFixed(2);
+    }
+
+    function draw() {
+        ['R','rho','h','az','el'].forEach(k => {
+            const v = document.getElementById('v-' + k);
+            v.textContent = (k === 'az' || k === 'el') ? S[k].toFixed(0) + '\u00b0' : S[k].toFixed(1);
+        });
+        const sc = scene();
+        drawTop(sc);
+        drawSide(sc);
+        drawGroove(sc);
+        drawReadout(sc);
+    }
+
+    window.addEventListener('resize', draw);
+    draw();
+    </script>
+</body>
+</html>
