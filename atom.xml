@@ -3,11 +3,11 @@
   <title>MicDZ&#39;s Blog</title>
   
   <subtitle>记录我的学习和生活</subtitle>
-  <link href="https://www.micdz.cn/atom.xml" rel="self"/>
+  <link href="https://hanzhou.dev/atom.xml" rel="self"/>
   
-  <link href="https://www.micdz.cn/"/>
+  <link href="https://hanzhou.dev/"/>
   <updated>2026-09-11T05:51:50.679Z</updated>
-  <id>https://www.micdz.cn/</id>
+  <id>https://hanzhou.dev/</id>
   
   <author>
     <name>MicDZ</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Echoes and Gradients: The Hidden Unity Between Radar Imaging and Deep Learning</title>
-    <link href="https://www.micdz.cn/article/Echoes-and-Gradients-The-Hidden-Unity-Between-Radar-Imaging-and-Deep-Learning/"/>
-    <id>https://www.micdz.cn/article/Echoes-and-Gradients-The-Hidden-Unity-Between-Radar-Imaging-and-Deep-Learning/</id>
+    <link href="https://hanzhou.dev/article/Echoes-and-Gradients-The-Hidden-Unity-Between-Radar-Imaging-and-Deep-Learning/"/>
+    <id>https://hanzhou.dev/article/Echoes-and-Gradients-The-Hidden-Unity-Between-Radar-Imaging-and-Deep-Learning/</id>
     <published>2025-12-19T19:29:29.000Z</published>
     <updated>2026-09-11T05:51:50.679Z</updated>
     
@@ -34,16 +34,16 @@
     
     
     
-    <category term="Imaging" scheme="https://www.micdz.cn/tags/Imaging/"/>
+    <category term="Imaging" scheme="https://hanzhou.dev/tags/Imaging/"/>
     
-    <category term="Deep Learning" scheme="https://www.micdz.cn/tags/Deep-Learning/"/>
+    <category term="Deep Learning" scheme="https://hanzhou.dev/tags/Deep-Learning/"/>
     
   </entry>
   
   <entry>
     <title>From DDPM to DDIM — Accelerate Sampling without Extra Training</title>
-    <link href="https://www.micdz.cn/article/From-DDPM-to-DDIM-Accelerate-Sampling-without-Extra-Training/"/>
-    <id>https://www.micdz.cn/article/From-DDPM-to-DDIM-Accelerate-Sampling-without-Extra-Training/</id>
+    <link href="https://hanzhou.dev/article/From-DDPM-to-DDIM-Accelerate-Sampling-without-Extra-Training/"/>
+    <id>https://hanzhou.dev/article/From-DDPM-to-DDIM-Accelerate-Sampling-without-Extra-Training/</id>
     <published>2025-10-28T13:36:41.000Z</published>
     <updated>2026-09-11T05:51:50.679Z</updated>
     
@@ -59,20 +59,20 @@
     
     
     
-    <category term="Diffusion Models" scheme="https://www.micdz.cn/tags/Diffusion-Models/"/>
+    <category term="Diffusion Models" scheme="https://hanzhou.dev/tags/Diffusion-Models/"/>
     
-    <category term="DDIM" scheme="https://www.micdz.cn/tags/DDIM/"/>
+    <category term="DDIM" scheme="https://hanzhou.dev/tags/DDIM/"/>
     
-    <category term="DDPM" scheme="https://www.micdz.cn/tags/DDPM/"/>
+    <category term="DDPM" scheme="https://hanzhou.dev/tags/DDPM/"/>
     
-    <category term="Generative Models" scheme="https://www.micdz.cn/tags/Generative-Models/"/>
+    <category term="Generative Models" scheme="https://hanzhou.dev/tags/Generative-Models/"/>
     
   </entry>
   
   <entry>
     <title>Guide to Diffusion Denoising Probabilistic Models (DDPM)</title>
-    <link href="https://www.micdz.cn/article/Guide-to-DDPM/"/>
-    <id>https://www.micdz.cn/article/Guide-to-DDPM/</id>
+    <link href="https://hanzhou.dev/article/Guide-to-DDPM/"/>
+    <id>https://hanzhou.dev/article/Guide-to-DDPM/</id>
     <published>2025-10-24T07:35:14.000Z</published>
     <updated>2026-09-11T05:51:50.679Z</updated>
     
@@ -88,18 +88,18 @@
     
     
     
-    <category term="Machine Learning" scheme="https://www.micdz.cn/tags/Machine-Learning/"/>
+    <category term="Machine Learning" scheme="https://hanzhou.dev/tags/Machine-Learning/"/>
     
-    <category term="Diffusion Models" scheme="https://www.micdz.cn/tags/Diffusion-Models/"/>
+    <category term="Diffusion Models" scheme="https://hanzhou.dev/tags/Diffusion-Models/"/>
     
-    <category term="Generative Models" scheme="https://www.micdz.cn/tags/Generative-Models/"/>
+    <category term="Generative Models" scheme="https://hanzhou.dev/tags/Generative-Models/"/>
     
   </entry>
   
   <entry>
     <title>Waves, Phasors, and Signals — The Math of Interference and Diffraction</title>
-    <link href="https://www.micdz.cn/article/Waves-Phasors-and-Signals-The-Math-of-Interference-and-Diffraction/"/>
-    <id>https://www.micdz.cn/article/Waves-Phasors-and-Signals-The-Math-of-Interference-and-Diffraction/</id>
+    <link href="https://hanzhou.dev/article/Waves-Phasors-and-Signals-The-Math-of-Interference-and-Diffraction/"/>
+    <id>https://hanzhou.dev/article/Waves-Phasors-and-Signals-The-Math-of-Interference-and-Diffraction/</id>
     <published>2025-10-20T20:48:42.000Z</published>
     <updated>2026-09-11T05:51:50.680Z</updated>
     
@@ -115,18 +115,18 @@
     
     
     
-    <category term="Signal Processing" scheme="https://www.micdz.cn/tags/Signal-Processing/"/>
+    <category term="Signal Processing" scheme="https://hanzhou.dev/tags/Signal-Processing/"/>
     
-    <category term="Waves" scheme="https://www.micdz.cn/tags/Waves/"/>
+    <category term="Waves" scheme="https://hanzhou.dev/tags/Waves/"/>
     
-    <category term="Physics" scheme="https://www.micdz.cn/tags/Physics/"/>
+    <category term="Physics" scheme="https://hanzhou.dev/tags/Physics/"/>
     
   </entry>
   
   <entry>
     <title>The Magic of Holography — from a Signal Processing Perspective</title>
-    <link href="https://www.micdz.cn/article/Holography-From-Signal-Processing-View/"/>
-    <id>https://www.micdz.cn/article/Holography-From-Signal-Processing-View/</id>
+    <link href="https://hanzhou.dev/article/Holography-From-Signal-Processing-View/"/>
+    <id>https://hanzhou.dev/article/Holography-From-Signal-Processing-View/</id>
     <published>2025-10-20T17:09:44.000Z</published>
     <updated>2026-09-11T05:51:50.680Z</updated>
     
@@ -142,18 +142,18 @@
     
     
     
-    <category term="Imaging" scheme="https://www.micdz.cn/tags/Imaging/"/>
+    <category term="Imaging" scheme="https://hanzhou.dev/tags/Imaging/"/>
     
-    <category term="Holography" scheme="https://www.micdz.cn/tags/Holography/"/>
+    <category term="Holography" scheme="https://hanzhou.dev/tags/Holography/"/>
     
-    <category term="Signal Processing" scheme="https://www.micdz.cn/tags/Signal-Processing/"/>
+    <category term="Signal Processing" scheme="https://hanzhou.dev/tags/Signal-Processing/"/>
     
   </entry>
   
   <entry>
     <title>Flow Matching and Diffusion Models</title>
-    <link href="https://www.micdz.cn/article/Flow-Matching-and-Diffusion-Models/"/>
-    <id>https://www.micdz.cn/article/Flow-Matching-and-Diffusion-Models/</id>
+    <link href="https://hanzhou.dev/article/Flow-Matching-and-Diffusion-Models/"/>
+    <id>https://hanzhou.dev/article/Flow-Matching-and-Diffusion-Models/</id>
     <published>2025-08-07T10:48:39.000Z</published>
     <updated>2026-09-23T11:42:07.969Z</updated>
     
@@ -169,18 +169,18 @@
     
     
     
-    <category term="Mathematics" scheme="https://www.micdz.cn/tags/Mathematics/"/>
+    <category term="Mathematics" scheme="https://hanzhou.dev/tags/Mathematics/"/>
     
-    <category term="Machine Learning" scheme="https://www.micdz.cn/tags/Machine-Learning/"/>
+    <category term="Machine Learning" scheme="https://hanzhou.dev/tags/Machine-Learning/"/>
     
-    <category term="Diffusion Models" scheme="https://www.micdz.cn/tags/Diffusion-Models/"/>
+    <category term="Diffusion Models" scheme="https://hanzhou.dev/tags/Diffusion-Models/"/>
     
   </entry>
   
   <entry>
     <title>Figure and Ground — &lt;i&gt;G.E.B&lt;/i&gt; Review of Chapter 3</title>
-    <link href="https://www.micdz.cn/article/GEB-Chp3/"/>
-    <id>https://www.micdz.cn/article/GEB-Chp3/</id>
+    <link href="https://hanzhou.dev/article/GEB-Chp3/"/>
+    <id>https://hanzhou.dev/article/GEB-Chp3/</id>
     <published>2025-02-21T16:18:46.000Z</published>
     <updated>2026-09-11T05:51:50.679Z</updated>
     
@@ -196,18 +196,18 @@
     
     
     
-    <category term="Mathematics" scheme="https://www.micdz.cn/tags/Mathematics/"/>
+    <category term="Mathematics" scheme="https://hanzhou.dev/tags/Mathematics/"/>
     
-    <category term="Philosophy" scheme="https://www.micdz.cn/tags/Philosophy/"/>
+    <category term="Philosophy" scheme="https://hanzhou.dev/tags/Philosophy/"/>
     
-    <category term="Book Review" scheme="https://www.micdz.cn/tags/Book-Review/"/>
+    <category term="Book Review" scheme="https://hanzhou.dev/tags/Book-Review/"/>
     
   </entry>
   
   <entry>
     <title>Formal System – &lt;i&gt;G.E.B&lt;/i&gt; Review of Chapter 1,2</title>
-    <link href="https://www.micdz.cn/article/GEB-Chp12/"/>
-    <id>https://www.micdz.cn/article/GEB-Chp12/</id>
+    <link href="https://hanzhou.dev/article/GEB-Chp12/"/>
+    <id>https://hanzhou.dev/article/GEB-Chp12/</id>
     <published>2025-01-08T08:15:52.000Z</published>
     <updated>2026-09-11T05:51:50.679Z</updated>
     
@@ -222,18 +222,18 @@
     
     
     
-    <category term="Mathematics" scheme="https://www.micdz.cn/tags/Mathematics/"/>
+    <category term="Mathematics" scheme="https://hanzhou.dev/tags/Mathematics/"/>
     
-    <category term="Philosophy" scheme="https://www.micdz.cn/tags/Philosophy/"/>
+    <category term="Philosophy" scheme="https://hanzhou.dev/tags/Philosophy/"/>
     
-    <category term="Book Review" scheme="https://www.micdz.cn/tags/Book-Review/"/>
+    <category term="Book Review" scheme="https://hanzhou.dev/tags/Book-Review/"/>
     
   </entry>
   
   <entry>
     <title>Guide to Gödel’s Incompleteness Theorems</title>
-    <link href="https://www.micdz.cn/article/Guide-to-Godel%E2%80%99s-Incompleteness-Theorems/"/>
-    <id>https://www.micdz.cn/article/Guide-to-Godel%E2%80%99s-Incompleteness-Theorems/</id>
+    <link href="https://hanzhou.dev/article/Guide-to-Godel%E2%80%99s-Incompleteness-Theorems/"/>
+    <id>https://hanzhou.dev/article/Guide-to-Godel%E2%80%99s-Incompleteness-Theorems/</id>
     <published>2024-12-27T21:21:29.000Z</published>
     <updated>2026-09-23T11:42:07.969Z</updated>
     
@@ -249,16 +249,16 @@
     
     
     
-    <category term="Mathematics" scheme="https://www.micdz.cn/tags/Mathematics/"/>
+    <category term="Mathematics" scheme="https://hanzhou.dev/tags/Mathematics/"/>
     
-    <category term="Philosophy" scheme="https://www.micdz.cn/tags/Philosophy/"/>
+    <category term="Philosophy" scheme="https://hanzhou.dev/tags/Philosophy/"/>
     
   </entry>
   
   <entry>
     <title>Common Knowledge in Pose Estimation</title>
-    <link href="https://www.micdz.cn/article/posesolver/"/>
-    <id>https://www.micdz.cn/article/posesolver/</id>
+    <link href="https://hanzhou.dev/article/posesolver/"/>
+    <id>https://hanzhou.dev/article/posesolver/</id>
     <published>2024-03-05T18:17:36.000Z</published>
     <updated>2026-09-11T05:51:50.681Z</updated>
     
@@ -274,14 +274,14 @@
     
     
     
-    <category term="PNP" scheme="https://www.micdz.cn/tags/PNP/"/>
+    <category term="PNP" scheme="https://hanzhou.dev/tags/PNP/"/>
     
   </entry>
   
   <entry>
     <title>The Two Extremes of Justice — &lt;i&gt;The Republic&lt;/i&gt; Review of Chapter 2</title>
-    <link href="https://www.micdz.cn/article/Republic-Chp2/"/>
-    <id>https://www.micdz.cn/article/Republic-Chp2/</id>
+    <link href="https://hanzhou.dev/article/Republic-Chp2/"/>
+    <id>https://hanzhou.dev/article/Republic-Chp2/</id>
     <published>2024-01-14T20:39:46.000Z</published>
     <updated>2026-09-11T05:51:50.680Z</updated>
     
@@ -297,14 +297,14 @@
     
     
     
-    <category term="Philosophy" scheme="https://www.micdz.cn/tags/Philosophy/"/>
+    <category term="Philosophy" scheme="https://hanzhou.dev/tags/Philosophy/"/>
     
   </entry>
   
   <entry>
     <title>What is Justice? — &lt;i&gt;The Republic&lt;/i&gt; Review of Chapter 1</title>
-    <link href="https://www.micdz.cn/article/Republic-Chp1/"/>
-    <id>https://www.micdz.cn/article/Republic-Chp1/</id>
+    <link href="https://hanzhou.dev/article/Republic-Chp1/"/>
+    <id>https://hanzhou.dev/article/Republic-Chp1/</id>
     <published>2024-01-11T12:36:49.000Z</published>
     <updated>2026-09-11T05:51:50.680Z</updated>
     
@@ -319,7 +319,7 @@
     
     
     
-    <category term="Philosophy" scheme="https://www.micdz.cn/tags/Philosophy/"/>
+    <category term="Philosophy" scheme="https://hanzhou.dev/tags/Philosophy/"/>
     
   </entry>
   
