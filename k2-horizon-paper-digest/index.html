@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Letting K2 Horizon read arXiv for me: four weeks of a daily dexterous-manipulation digest · Han Zhou</title>
+<meta name="description" content="A daily workflow in which K2 Horizon screens new arXiv papers on dexterous manipulation, ranks them for me, and writes quote-checked reading notes. Results after four weeks, and what went wrong.">
+<meta property="og:title" content="Letting K2 Horizon read arXiv for me">
+<meta property="og:description" content="Four weeks of a daily dexterous-manipulation paper digest built on K2 Horizon: numbers, failures and lessons.">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://hanzhou.dev/k2-horizon-paper-digest/">
+<style>
+  :root { --ink:#1b1f27; --muted:#5f6878; --line:#e4e7ee; --bg:#fbfbfd; --accent:#1f5fbf; --soft:#eef3fc; --warn:#a15c00; --warnbg:#fff6e6; --code:#f4f5f8; }
+  * { box-sizing:border-box; }
+  html { font-size:17px; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Charter","Iowan Old Style","Georgia",serif; line-height:1.65; }
+  main { max-width:760px; margin:0 auto; padding:56px 22px 80px; }
+  header.post { margin-bottom:36px; }
+  .kicker { font:600 13px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); }
+  h1 { font-size:2.1rem; line-height:1.2; margin:.35em 0 .4em; letter-spacing:-.01em; }
+  .meta { font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--muted); }
+  .meta a { color:var(--muted); }
+  h2 { font-size:1.35rem; margin:2.2em 0 .6em; padding-top:.2em; border-top:1px solid var(--line); padding-top:1.2em; }
+  h3 { font-size:1.05rem; margin:1.6em 0 .4em; }
+  p, li { font-size:1rem; }
+  a { color:var(--accent); }
+  code { font-family:ui-monospace,"SF Mono",Menlo,monospace; font-size:.86em; background:var(--code); padding:.1em .35em; border-radius:4px; }
+  .lede { font-size:1.12rem; color:#2c3340; }
+  .tldr { background:var(--soft); border-radius:10px; padding:16px 20px; margin:26px 0; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; font-size:15px; line-height:1.55; }
+  .tldr b { color:var(--accent); }
+  .tldr ul { margin:.4em 0 0; padding-left:1.2em; }
+  .pipeline { display:grid; grid-template-columns:repeat(6, 1fr); gap:8px; margin:22px 0 8px; font:13px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  .pipeline div { background:#fff; border:1px solid var(--line); border-radius:8px; padding:10px 9px; position:relative; }
+  .pipeline div b { display:block; font-size:13px; margin-bottom:3px; }
+  .pipeline div.k2 { border-color:var(--accent); background:var(--soft); }
+  .pipeline div span { color:var(--muted); }
+  .caption { font:13px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--muted); margin:6px 0 22px; }
+  table { width:100%; border-collapse:collapse; margin:16px 0 8px; font:14.5px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
+  td.n { text-align:right; font-variant-numeric:tabular-nums; font-weight:600; white-space:nowrap; }
+  .sample { background:#fff; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:6px; padding:14px 18px; margin:16px 0; font:14.5px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  .sample .t { font-weight:700; }
+  .sample .m { color:var(--muted); font-size:13px; }
+  .sample blockquote { margin:8px 0; padding-left:12px; border-left:3px solid var(--line); color:#3b4352; font-style:italic; }
+  .flag { color:var(--warn); background:var(--warnbg); border-radius:4px; padding:1px 6px; font-size:13px; font-style:normal; }
+  .fail { background:#fff; border:1px solid var(--line); border-radius:10px; padding:4px 20px 8px; margin:14px 0; }
+  .fail h3 { margin-top:14px; }
+  .fail h3::before { content:"✗ "; color:#c2410c; }
+  .quote-user { background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 18px; margin:14px 0; font-style:italic; color:#333b48; }
+  ol.lessons li, ul.tight li { margin-bottom:.5em; }
+  footer { margin-top:48px; padding-top:18px; border-top:1px solid var(--line); font:14px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--muted); }
+  @media (max-width:680px) { html { font-size:16px; } .pipeline { grid-template-columns:1fr 1fr; } h1 { font-size:1.7rem; } main { padding-top:32px; } }
+  @media print { body { background:#fff; } main { padding:0; max-width:none; } a { color:var(--ink); } .pipeline div, .sample, .fail, .quote-user { break-inside:avoid; } }
+</style>
+</head>
+<body>
+<main>
+<article>
+<header class="post">
+  <div class="kicker">K2 Horizon workflow · research tooling</div>
+  <h1>Letting K2 Horizon read arXiv for me: four weeks of a daily dexterous-manipulation digest</h1>
+  <div class="meta">Han Zhou · PhD student, Robotics, MBZUAI · 23 November 2026 · <a href="https://hanzhou.dev/">hanzhou.dev</a></div>
+</header>
+
+<p class="lede">I work on dexterous manipulation: multi-fingered hands, in-hand manipulation, tactile sensing. Keeping up means skimming dozens of new arXiv papers every day, many of which only matched a keyword. For the past four weeks a script has done that skim for me every morning, with <b>K2 Horizon</b> (<code>IFM/K2-Horizon-375B-A23B</code>) doing the reading. This post describes that one workflow: what it does, what the numbers look like after a month, and the things that went wrong along the way.</p>
+
+<div class="tldr">
+  <b>TL;DR</b>
+  <ul>
+    <li>Since 26 Oct, K2 Horizon has scored <b>833</b> new papers against my research profile. <b>156</b> of them (about 19%) made the "Read today" list. It has also written <b>31</b> full-text reading notes.</li>
+    <li>Whenever the model states a fact, a script checks it: numbers in a takeaway must appear in the abstract, and quotes in a note must appear in the paper. <b>116 of 128</b> quotes were found verbatim; the other 12 are flagged in the note.</li>
+    <li>What went wrong: my own profile was wrong (I don't do hardware), my first fix over-corrected, arXiv's indexing lag silently hid 33 papers, and the arXiv API was down on 6 mornings.</li>
+  </ul>
+</div>
+
+<h2>The workflow</h2>
+<p>A cron job runs every day at 08:00 (Dubai time), after arXiv's daily announcement:</p>
+
+<div class="pipeline" role="list">
+  <div role="listitem"><b>1. Fetch</b><span>arXiv API: cs.RO + manipulation keywords, cs.LG/AI/CV + dexterous keywords, last 7 days</span></div>
+  <div role="listitem"><b>2. Dedupe</b><span>skip anything shown in an earlier digest</span></div>
+  <div role="listitem"><b>3. Filter</b><span>local keyword check; drops "on the other hand", "hand-crafted"…</span></div>
+  <div role="listitem" class="k2"><b>4. Score (K2)</b><span>title + abstract, batches of 15 → score 0–10, takeaway, "why for you", tags</span></div>
+  <div role="listitem"><b>5. Check</b><span>every number in a takeaway must appear in the abstract, else ⚠️</span></div>
+  <div role="listitem" class="k2"><b>6. Deep read (K2)</b><span>full PDF text of up to 3 papers ≥7 → note with verbatim quotes, quote-checked</span></div>
+</div>
+<p class="caption">Steps 4 and 6 run on K2 Horizon through its OpenAI-compatible API. The others are plain Python. Output: one Markdown file per day, with a "Read today" section (score ≥ 8), a table of the rest, and links to the day's reading notes.</p>
+
+<p>The profile K2 scores against is a short text file: my interests (dexterous and in-hand manipulation, tactile sensing, dexterous data collection and retargeting, learning methods for hands) and what is <em>less</em> relevant to me. Each "Read today" entry looks like this; this one is from this morning's digest:</p>
+
+<div class="sample">
+  <div class="t">TouchBench: Can Vision-Language Models Feel Invisible Physical Properties? — 9/10</div>
+  <div class="m">cs.CV · 2026-11-19 · arXiv:2611.26883</div>
+  <p><b>Takeaway:</b> TouchBench pairs egocentric video with 137-channel whole-hand tactile sensing across 900 clips, showing VLMs drop to near-chance (49.8%) on touch-only physical questions, while the Tactile-as-Prompt method raises Tier B accuracy to 62.9% zero-shot and 73.1% after fine-tuning.</p>
+  <p><b>Why for you:</b> This directly addresses tactile perception for manipulation and language interfaces to tactile sensing, a core interest of the reader.</p>
+</div>
+
+<p>For the top papers, K2 reads the full text and writes a note: the problem, the method, key results with verbatim quotes, limitations, and what I could reuse. A script then searches the paper's text for each quote. Here is a real result from today's note on FORTH (arXiv:2611.26744), including a flag:</p>
+
+<div class="sample">
+  <div class="t">Key result: SlipGuard prevents structural crush on an elasto-plastic shell, peaking at 0.77 N versus 22.43 N for a hand-tuned reflex ramp.</div>
+  <blockquote>The reflex ramp drives the hollow shell past its first plastic sample at 2.8 N into permanent crush, peaking at 22.43 N, while SlipGuard keeps the same box elastic with a 0.77 N peak: a 29× force separation</blockquote>
+  <span class="flag">⚠️ quote not found verbatim in the paper text; check before relying on it</span>
+</div>
+
+<h2>Results after four weeks</h2>
+
+<table>
+  <tr><th>What</th><th style="text-align:right">Count</th></tr>
+  <tr><td>Daily runs, 26 Oct – 23 Nov (4 backfill runs + unattended cron)</td><td class="n">27</td></tr>
+  <tr><td>Mornings with no digest because the arXiv API was unreachable</td><td class="n">6</td></tr>
+  <tr><td>New papers scored by K2 Horizon</td><td class="n">833</td></tr>
+  <tr><td>Papers in "Read today" (score ≥ 8)</td><td class="n">156</td></tr>
+  <tr><td>Full-text reading notes</td><td class="n">31</td></tr>
+  <tr><td>Quotes in those notes found verbatim in the paper</td><td class="n">116 / 128</td></tr>
+  <tr><td>K2 Horizon API calls, including re-scoring and translation</td><td class="n">115</td></tr>
+  <tr><td>Tokens (prompt / completion)</td><td class="n">0.80 M / 0.41 M</td></tr>
+</table>
+
+<p>A typical day goes like this: around 200 papers fetched over the 7-day window, a few dozen of them new, 2–16 in "Read today", and at most about five minutes of runtime. When I checked the first three digests by hand, 19 of the 22 "Read today" papers were clearly on target. The other three were generic manipulation or vision-language-action papers that scored 8, where 6–7 would have fit my focus. That pattern has persisted, and it is the main remaining weakness (see below).</p>
+
+<p>On the day I reviewed it in detail (5 Nov, 16 "Read today" papers), my verdict was (translated from my Chinese notes):</p>
+<div class="quote-user">"OmniPiano and DexHOT I will read. LumiTac's score isn't right: it is mainly a hardware paper and I don't do hardware, so it could be lower. No papers were missed. This saves a lot of time, and I'm willing to use it every day."</div>
+
+<h2>What didn't work</h2>
+
+<div class="fail">
+<h3>The profile was wrong, and K2 followed it faithfully</h3>
+<p>LumiTac, an optical tactile <em>sensor</em>, scored 8/10. That wasn't K2's mistake: when the profile was set up, "hand hardware and design" had been listed as one of my interests. It was an assumption I never corrected. K2 scored exactly what it was told. <b>Lesson: with an LLM ranker, the profile is the model of you. Audit it before you blame the model.</b></p>
+</div>
+
+<div class="fail">
+<h3>The first fix over-corrected</h3>
+<p>The first replacement rule said "score at most 6 unless the main contribution is a learning or control method". When I re-scored the same day's papers, LumiTac dropped to 5 as intended. But <b>OmniPiano</b>, one of the two papers I actually wanted to read, also fell from 9 to 6: it is a benchmark, and the rule didn't say benchmarks were fine. The rule that was adopted names physical hardware only (mechanical design, actuation, sensor fabrication) and explicitly keeps benchmarks, datasets and learning methods that use sensors. After that change, OmniPiano scored 8, DexHOT 9, LumiTac 5 and a tendon-actuation design paper 4. One possible side effect: an egocentric hand-scene reconstruction paper also dropped to 5, and it is relevant to dexterous data collection. <b>Lesson: re-score a fixed set of past papers after every prompt change, especially the ones you know you want.</b></p>
+</div>
+
+<div class="fail">
+<h3>arXiv's indexing lag silently hid 33 papers</h3>
+<p>The first version queried a 3-day submission window. But new submissions show up in the API one to three days late, so whole days slipped through without any error. A re-query on 4 Nov found 33 relevant papers that never reached a digest. The window is now 7 days. Deduplication keeps repeats out, so K2 cost didn't change, and the next run picked up all 33. <b>Lesson: "no error" isn't "no gap". Re-query the past now and then and compare.</b></p>
+</div>
+
+<div class="fail">
+<h3>The arXiv API went down, and the script crashed</h3>
+<p>On 31 Oct and 2 Nov the arXiv API was unreachable at 08:00, and the script died with a traceback, leaving no digest and no log. It now retries 7 times over about 16 minutes. If arXiv still doesn't answer, it writes a "no digest today" note and exits cleanly. That has happened on 4 more mornings since (7, 8, 9 and 16 Nov), and each time the 7-day window caught up the next day.</p>
+</div>
+
+<div class="fail">
+<h3>Fact checks: first too strict, now with known limits</h3>
+<p>The first version of the number check flagged <code>89.90\%</code> against "89.90 percent", and 76 against 76.0. All 4 flags in the first run were false alarms. It now compares numeric values, accepting LaTeX and rounding. In the reading notes, 12 of 128 quotes are not found verbatim. The first six flags were inspected: in each case, PDF-to-text extraction had broken a table or a line, and the text wasn't invented. But the check can't tell the two apart, so a ⚠️ means "go and look", not "K2 made it up".</p>
+</div>
+
+<div class="fail">
+<h3>Still open: generic VLA papers score one point too high</h3>
+<p>Vision-language-action and generic policy papers often get an 8, when 7 would be fairer for my work. I haven't fixed this yet. Each fix I've tried pushes relevant hand-learning papers down too.</p>
+</div>
+
+<h2>Lessons</h2>
+<ol class="lessons">
+  <li><b>Constrain the output, then check it in code.</b> K2 returns JSON (IDs, score 0–10, takeaway, reason, tags), and anything malformed is retried. Every number and quote it produces is matched against the source text by a script, not by a second LLM call.</li>
+  <li><b>The profile matters more than the prompt.</b> My worst error was a sentence about my own interests.</li>
+  <li><b>Keep a fixed re-scoring set.</b> It caught the over-correction before it cost me a paper I wanted.</li>
+  <li><b>Design for the boring failures.</b> Indexing lag and API outages caused more lost digests than the model ever did.</li>
+  <li><b>Reasoning models need room.</b> K2 Horizon thinks before it answers, so output limits have to cover the reasoning as well as the JSON. I use 32K or more tokens per call.</li>
+</ol>
+
+<h2>Limitations</h2>
+<ul class="tight">
+  <li>Scoring uses title and abstract only. A paper with a weak abstract can be under-ranked, and only the top 3 per day get a full-text read.</li>
+  <li>"No papers were missed" is my judgement on one day, not a recall measurement.</li>
+  <li>The ranking reflects one researcher's profile. It is a filter for me, not a quality score for the papers.</li>
+</ul>
+
+<footer>
+  <p>Built for the <b>K2 Horizon Ascent Challenge</b> (MBZUAI Institute of Foundation Models). All scoring, takeaways, translations and reading notes are produced by K2 Horizon (<code>IFM/K2-Horizon-375B-A23B</code>); I wrote the pipeline with help from an AI coding assistant. Numbers in this post are taken from the workflow's own run logs as of 23 November 2026.</p>
+  <p>Permalink: <a href="https://hanzhou.dev/k2-horizon-paper-digest/">https://hanzhou.dev/k2-horizon-paper-digest/</a></p>
+</footer>
+</article>
+</main>
+</body>
+</html>
