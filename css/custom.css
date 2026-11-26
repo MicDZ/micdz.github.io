@@ -357,6 +357,7 @@
             padding: 16px 16px 12px;
             max-width: min(94vw, 1240px);
             max-height: 80vh;
+            max-height: 80dvh;
             overflow: auto;
         }
 
@@ -541,6 +542,7 @@
             width: auto;
             max-width: min(92vw, 1020px);
             max-height: 72vh;
+            max-height: 72dvh;
             height: auto;
             margin: 0 auto;
             border-radius: 0;
@@ -684,6 +686,7 @@
             border-radius: 8px;
             max-width: min(95vw, 1100px);
             max-height: 92vh;
+            max-height: 92dvh;
             overflow: auto;
             padding: 14px;
         }
@@ -709,6 +712,7 @@
             display: block;
             max-width: min(92vw, 1020px);
             max-height: 72vh;
+            max-height: 72dvh;
             width: auto;
             height: auto;
             margin: 0 auto 10px;
@@ -759,6 +763,7 @@
             .photo-map-frame.photo-map-frame-card .photo-map-img {
                 max-width: 88vw;
                 max-height: 66vh;
+                max-height: 66dvh;
             }
 
             .ref-hover-popup.photo-map-popup .photo-map-cluster,
@@ -1425,7 +1430,13 @@
     padding: 0 0.5em;
     }
 
-    /* Scroll bar */
+    /* Scroll bar：标准属性优先（Chrome 121+/Firefox），旧版 WebKit 回退到下方伪元素 */
+    @supports (scrollbar-color: auto) {
+        html, body, .scrollableDiv {
+            scrollbar-width: thin;
+            scrollbar-color: rgb(128 128 128 / 70%) transparent;
+        }
+    }
     ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -1491,12 +1502,14 @@
     /* padding: 5px; */
     overflow-y: scroll;
     overflow-x: hidden;
-    transition: all 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
     }
 
     body.darkmode {
     background: rgb(34, 34, 38);
     color: rgb(230, 230, 230);
+    /* 让原生滚动条、表单控件也跟随暗色 */
+    color-scheme: dark;
     }
 
     .trans {
@@ -1517,6 +1530,41 @@
 
     .hidden {
     display: none;
+    }
+
+    .mode-btn {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    line-height: inherit;
+    text-transform: none;
+    letter-spacing: normal;
+    cursor: pointer;
+    }
+    .mode-btn.hidden {
+    display: none;
+    }
+
+    /* 尊重系统“减少动态效果”设置 */
+    @media (prefers-reduced-motion: reduce) {
+        html, body {
+            scroll-behavior: auto;
+        }
+        body {
+            transition: none;
+        }
+        .trans {
+            animation: none;
+        }
+        .svg-hov,
+        .svg-hov:hover {
+            transform: none;
+            transition: none;
+        }
     }
 
     #comments {

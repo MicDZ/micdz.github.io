@@ -1,5 +1,6 @@
 <!DOCTYPE html><html lang="en"><head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <title>Posts Related to Signal Processing</title>
 
@@ -30,7 +31,6 @@
   /* stylelint-enable */
 </style>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="/img/h.jpeg">
   
   
@@ -40,39 +40,90 @@
   
 <link rel="stylesheet" href="/css/prism.css">
 
+  <!-- Speculation Rules：同源站内链接悬停时预取、按下时预渲染（不支持的浏览器会忽略） -->
+  <script type="speculationrules">
+  {
+    "prefetch": [{
+      "where": { "and": [
+        { "href_matches": "/*" },
+        { "not": { "href_matches": ["/*.xml", "/*.pdf", "/*.bib", "/*.zip", "/demo/*", "/rmdatabase/*", "/MANBench/*"] } },
+        { "not": { "selector_matches": "[rel~=nofollow], [download], [target=_blank]" } }
+      ] },
+      "eagerness": "moderate"
+    }],
+    "prerender": [{
+      "where": { "and": [
+        { "href_matches": "/*" },
+        { "not": { "href_matches": ["/*.xml", "/*.pdf", "/*.bib", "/*.zip", "/demo/*", "/rmdatabase/*", "/MANBench/*"] } },
+        { "not": { "selector_matches": "[rel~=nofollow], [download], [target=_blank]" } }
+      ] },
+      "eagerness": "conservative"
+    }]
+  }
+  </script>
   <script id="origin-public-config" type="application/json">{"photo_map":{"github_user":"MicDZ"},"legacy_map_locations":{"0":{"name":"IMG 7251","lat":36.580894444444446,"lng":-118.7508388888889,"photo_src":"/img/maps/IMG_7251.jpg"}}}</script>
 <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="MicDZ's Blog" type="application/atom+xml">
 </head>
 
 <body>
+  <script>
+    // 在首帧渲染前确定主题，避免先白后黑的闪烁：
+    // 用户手动选择过（preferredTheme = dark/light）则以其为准，否则跟随系统设置。
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem('preferredTheme'); } catch (e) {}
+      var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (stored !== 'light' && systemDark)) document.body.classList.add('darkmode');
+    })();
+  </script>
     <div class="container">
         <div class="row">
             <div class="row">
 
     <div class="two columns" style="max-width: 50px">
-      <h1 class="mt-2 mode">
-        <div onclick="setDarkMode(true)" id="darkBtn"></div>
-        <div onclick="setDarkMode(false)" id="lightBtn" class="hidden"></div>
+      <div class="mt-2 mode">
+        
         <script>
-          if (localStorage.getItem('preferredTheme') == 'dark') {
-            setDarkMode(true)
+          var systemDarkQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+          function systemPrefersDark() { return !!(systemDarkQuery && systemDarkQuery.matches); }
+          function readStoredTheme() {
+            try { return localStorage.getItem('preferredTheme'); } catch (e) { return null; }
           }
+          function applyTheme() {
+            var stored = readStoredTheme();
+            var isDark = stored === 'dark' || (stored !== 'light' && systemPrefersDark());
+            document.body.classList.toggle('darkmode', isDark);
+            syncModeButtons();
+          }
+          // 手动切换：与系统设置一致时清除记录，恢复“跟随系统”；否则记住用户的选择
           function setDarkMode(isDark) {
-            var darkBtn = document.getElementById('darkBtn')
-            var lightBtn = document.getElementById('lightBtn')
-            if (isDark) {
-              lightBtn.style.display = "block"
-              darkBtn.style.display = "none"
-              localStorage.setItem('preferredTheme', 'dark');
-            } else {
-              lightBtn.style.display = "none"
-              darkBtn.style.display = "block"
-              localStorage.removeItem('preferredTheme');
-            }
-            document.body.classList.toggle("darkmode");
+            try {
+              if (isDark === systemPrefersDark()) localStorage.removeItem('preferredTheme');
+              else localStorage.setItem('preferredTheme', isDark ? 'dark' : 'light');
+            } catch (e) {}
+            document.body.classList.toggle('darkmode', isDark);
+            syncModeButtons();
           }
+          function syncModeButtons() {
+            var isDark = document.body.classList.contains('darkmode');
+            var darkBtn = document.getElementById('darkBtn');
+            var lightBtn = document.getElementById('lightBtn');
+            if (darkBtn) darkBtn.classList.toggle('hidden', isDark);
+            if (lightBtn) lightBtn.classList.toggle('hidden', !isDark);
+          }
+          syncModeButtons();
+          // 系统主题变化时（且用户未手动选择）实时跟随
+          if (systemDarkQuery) {
+            var onSystemChange = function () { if (!readStoredTheme()) applyTheme(); };
+            if (systemDarkQuery.addEventListener) systemDarkQuery.addEventListener('change', onSystemChange);
+            else if (systemDarkQuery.addListener) systemDarkQuery.addListener(onSystemChange);
+          }
+          // 多标签页之间同步主题
+          window.addEventListener('storage', function (e) {
+            if (e.key === 'preferredTheme') applyTheme();
+          });
         </script>
-      </h1>
+      </div>
     </div>
      
     <div class="six columns ml-1">

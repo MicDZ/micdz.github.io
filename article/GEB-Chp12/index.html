@@ -1,5 +1,6 @@
 <!DOCTYPE html><html lang="en"><head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <title>Formal System – &lt;i&gt;G.E.B&lt;/i&gt; Review of Chapter 1,2</title>
 
@@ -30,7 +31,6 @@
   /* stylelint-enable */
 </style>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="/img/h.jpeg">
   
   
@@ -43,39 +43,90 @@
   
 <link rel="stylesheet" href="/css/prism.css">
 
+  <!-- Speculation Rules：同源站内链接悬停时预取、按下时预渲染（不支持的浏览器会忽略） -->
+  <script type="speculationrules">
+  {
+    "prefetch": [{
+      "where": { "and": [
+        { "href_matches": "/*" },
+        { "not": { "href_matches": ["/*.xml", "/*.pdf", "/*.bib", "/*.zip", "/demo/*", "/rmdatabase/*", "/MANBench/*"] } },
+        { "not": { "selector_matches": "[rel~=nofollow], [download], [target=_blank]" } }
+      ] },
+      "eagerness": "moderate"
+    }],
+    "prerender": [{
+      "where": { "and": [
+        { "href_matches": "/*" },
+        { "not": { "href_matches": ["/*.xml", "/*.pdf", "/*.bib", "/*.zip", "/demo/*", "/rmdatabase/*", "/MANBench/*"] } },
+        { "not": { "selector_matches": "[rel~=nofollow], [download], [target=_blank]" } }
+      ] },
+      "eagerness": "conservative"
+    }]
+  }
+  </script>
   <script id="origin-public-config" type="application/json">{"photo_map":{"github_user":"MicDZ"},"legacy_map_locations":{"0":{"name":"IMG 7251","lat":36.580894444444446,"lng":-118.7508388888889,"photo_src":"/img/maps/IMG_7251.jpg"}}}</script>
 <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="MicDZ's Blog" type="application/atom+xml">
 </head>
 
 <body>
+  <script>
+    // 在首帧渲染前确定主题，避免先白后黑的闪烁：
+    // 用户手动选择过（preferredTheme = dark/light）则以其为准，否则跟随系统设置。
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem('preferredTheme'); } catch (e) {}
+      var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (stored !== 'light' && systemDark)) document.body.classList.add('darkmode');
+    })();
+  </script>
     <div class="container">
         <div class="row">
             <div class="row">
 
     <div class="two columns" style="max-width: 50px">
-      <h1 class="mt-2 mode">
-        <div onclick="setDarkMode(true)" id="darkBtn"></div>
-        <div onclick="setDarkMode(false)" id="lightBtn" class="hidden"></div>
+      <div class="mt-2 mode">
+        
         <script>
-          if (localStorage.getItem('preferredTheme') == 'dark') {
-            setDarkMode(true)
+          var systemDarkQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+          function systemPrefersDark() { return !!(systemDarkQuery && systemDarkQuery.matches); }
+          function readStoredTheme() {
+            try { return localStorage.getItem('preferredTheme'); } catch (e) { return null; }
           }
+          function applyTheme() {
+            var stored = readStoredTheme();
+            var isDark = stored === 'dark' || (stored !== 'light' && systemPrefersDark());
+            document.body.classList.toggle('darkmode', isDark);
+            syncModeButtons();
+          }
+          // 手动切换：与系统设置一致时清除记录，恢复“跟随系统”；否则记住用户的选择
           function setDarkMode(isDark) {
-            var darkBtn = document.getElementById('darkBtn')
-            var lightBtn = document.getElementById('lightBtn')
-            if (isDark) {
-              lightBtn.style.display = "block"
-              darkBtn.style.display = "none"
-              localStorage.setItem('preferredTheme', 'dark');
-            } else {
-              lightBtn.style.display = "none"
-              darkBtn.style.display = "block"
-              localStorage.removeItem('preferredTheme');
-            }
-            document.body.classList.toggle("darkmode");
+            try {
+              if (isDark === systemPrefersDark()) localStorage.removeItem('preferredTheme');
+              else localStorage.setItem('preferredTheme', isDark ? 'dark' : 'light');
+            } catch (e) {}
+            document.body.classList.toggle('darkmode', isDark);
+            syncModeButtons();
           }
+          function syncModeButtons() {
+            var isDark = document.body.classList.contains('darkmode');
+            var darkBtn = document.getElementById('darkBtn');
+            var lightBtn = document.getElementById('lightBtn');
+            if (darkBtn) darkBtn.classList.toggle('hidden', isDark);
+            if (lightBtn) lightBtn.classList.toggle('hidden', !isDark);
+          }
+          syncModeButtons();
+          // 系统主题变化时（且用户未手动选择）实时跟随
+          if (systemDarkQuery) {
+            var onSystemChange = function () { if (!readStoredTheme()) applyTheme(); };
+            if (systemDarkQuery.addEventListener) systemDarkQuery.addEventListener('change', onSystemChange);
+            else if (systemDarkQuery.addListener) systemDarkQuery.addListener(onSystemChange);
+          }
+          // 多标签页之间同步主题
+          window.addEventListener('storage', function (e) {
+            if (e.key === 'preferredTheme') applyTheme();
+          });
         </script>
-      </h1>
+      </div>
     </div>
      
     <div class="six columns ml-1">
@@ -175,7 +226,7 @@
 </ul>
 </li>
 </ul>
-<p><figure class="image-container" id="1_yeejmcz9oiw0wcts4hlgqgpng"><img src="https://s2.loli.net/2025/01/08/9DzIx2POcjFKfnY.png" alt="1_yeEjmcZ9Oiw0wcTS4HlGqg.png" decoding="async"><figcaption class="image-caption"><a class="formula-anchor" href="#Figure1-1_yeejmcz9oiw0wcts4hlgqgpng" id="Figure1-1_yeejmcz9oiw0wcts4hlgqgpng"></a><span class="caption-prefix">Figure 1:</span> 1_yeEjmcZ9Oiw0wcTS4HlGqg.png</figcaption></figure></p>
+<p></p><figure class="image-container" id="1_yeejmcz9oiw0wcts4hlgqgpng"><img src="https://s2.loli.net/2025/01/08/9DzIx2POcjFKfnY.png" alt="1_yeEjmcZ9Oiw0wcTS4HlGqg.png" decoding="async"><figcaption class="image-caption"><a class="formula-anchor" href="#Figure1-1_yeejmcz9oiw0wcts4hlgqgpng" id="Figure1-1_yeejmcz9oiw0wcts4hlgqgpng"></a><span class="caption-prefix">Figure 1:</span> 1_yeEjmcZ9Oiw0wcTS4HlGqg.png</figcaption></figure><p></p>
 <p>It’s noticable that the Chinese version of MU-puzzle uses “WJU” three letters instead of “MIU”. I will explain the reason in the later section.</p>
 <h2 id="is-mu-a-theorem">2.&nbsp;<a class="markdownIt-Anchor" href="#is-mu-a-theorem"></a> Is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>U</mi></mrow><annotation encoding="application/x-tex">MU</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span></span></span></span> a theorem?</h2>
 <p>It’s obvious that all the theorems in the MU-puzzle are of the form <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">Mx</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal">x</span></span></span></span>, where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> is a string of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi></mrow><annotation encoding="application/x-tex">I</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi></mrow><annotation encoding="application/x-tex">U</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span></span></span></span>. The reson is, none of the reference rules can add an <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span> to the theorem or remove <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span>.</p>
@@ -226,8 +277,8 @@
 <p>People enjoy inventing slogans which violate basic arithmetic but which illustrate “deeper” truths, such as “1+1=1 (for lovers)”, or “1+1+1=1 (the Trinity)” … Two raindrops running down a windowpane merge; A cloud breaks up into two clouds.If you think about the quesion, you will probably come up with some criterion involving separation of the objects in space, and making sure each one is clearly sidtinguishable from all the others.</p>
 </blockquote>
 <p>Numbers as realites misbehave. However, there is an ancient and innate sense in people that numbers ought not to misbehave.</p>
-<p><figure class="image-container" id="liberationjpglargejpg"><img src="https://s2.loli.net/2025/01/08/6tBvfQGH59yzexr.jpg" alt="liberation.jpg!Large.jpg" decoding="async"><figcaption class="image-caption"><a class="formula-anchor" href="#Figure2-liberationjpglargejpg" id="Figure2-liberationjpglargejpg"></a><span class="caption-prefix">Figure 2:</span> liberation.jpg!Large.jpg</figcaption></figure><br>
-Liberation, by M.C. Escher</p>
+<p></p><figure class="image-container" id="liberationjpglargejpg"><img src="https://s2.loli.net/2025/01/08/6tBvfQGH59yzexr.jpg" alt="liberation.jpg!Large.jpg" decoding="async"><figcaption class="image-caption"><a class="formula-anchor" href="#Figure2-liberationjpglargejpg" id="Figure2-liberationjpglargejpg"></a><span class="caption-prefix">Figure 2:</span> liberation.jpg!Large.jpg</figcaption></figure><br>
+Liberation, by M.C. Escher<p></p>
 <p>One misbehaviour of numbers could be the infinite series. Take the example the <strong>Euclid’s theorem</strong>, which states that there are infinitely many prime numbers.</p>
 <p>The proof of the theorem is to tell people, no matter how big the number you pich, there is always a bigger prime number. Let’s pick the number <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>. We can construct a new number <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo stretchy="false">!</mo><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N!+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">!</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>. And this new number can not be divided by any number from <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span> to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>. In another word, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo stretchy="false">!</mo><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N!+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">!</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> can only possibly be divided by a number bigger than <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>. So either it is itself prime or prime disvisors are greater than <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>.</p>
 <p>The way we get around infinite is to use the concept of “potential infinity”. We use the statement “all” in a few ways which are defined by the thought processs of reasoning.</p>
@@ -350,9 +401,10 @@ Liberation, by M.C. Escher</p>
     // 更新：滚动目标元素到视口（或容器）正中
     function smoothScrollToCenter(el) {
       if (!el) return;
+      const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
       // 优先使用原生 scrollIntoView，能自动滚动最近可滚动容器
       try {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+        el.scrollIntoView({ behavior, block: 'center', inline: 'nearest' });
         return;
       } catch (e) {
         // ignore, 使用回退
@@ -364,7 +416,7 @@ Liberation, by M.C. Escher</p>
         const cRect = container.getBoundingClientRect();
         const current = container.scrollTop;
         const target = current + (elRect.top - cRect.top) - Math.max(0, (container.clientHeight - elRect.height) / 2);
-        container.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+        container.scrollTo({ top: Math.max(0, target), behavior });
       } else {
         const rect = el.getBoundingClientRect();
         const vh = window.innerHeight || document.documentElement.clientHeight;
@@ -373,7 +425,7 @@ Liberation, by M.C. Escher</p>
         const scrollTop = window.pageYOffset || doc.scrollTop || body.scrollTop || 0;
         const target = scrollTop + rect.top - Math.max(0, (vh - rect.height) / 2);
         const maxScroll = Math.max(0, (Math.max(doc.scrollHeight, body.scrollHeight) - vh));
-        window.scrollTo({ top: Math.min(Math.max(0, target), maxScroll), behavior: 'smooth' });
+        window.scrollTo({ top: Math.min(Math.max(0, target), maxScroll), behavior });
       }
     }
 

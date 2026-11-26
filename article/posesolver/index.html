@@ -1,5 +1,6 @@
 <!DOCTYPE html><html lang="en"><head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <title>Common Knowledge in Pose Estimation</title>
 
@@ -30,7 +31,6 @@
   /* stylelint-enable */
 </style>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="/img/h.jpeg">
   
   
@@ -43,39 +43,90 @@
   
 <link rel="stylesheet" href="/css/prism.css">
 
+  <!-- Speculation Rules：同源站内链接悬停时预取、按下时预渲染（不支持的浏览器会忽略） -->
+  <script type="speculationrules">
+  {
+    "prefetch": [{
+      "where": { "and": [
+        { "href_matches": "/*" },
+        { "not": { "href_matches": ["/*.xml", "/*.pdf", "/*.bib", "/*.zip", "/demo/*", "/rmdatabase/*", "/MANBench/*"] } },
+        { "not": { "selector_matches": "[rel~=nofollow], [download], [target=_blank]" } }
+      ] },
+      "eagerness": "moderate"
+    }],
+    "prerender": [{
+      "where": { "and": [
+        { "href_matches": "/*" },
+        { "not": { "href_matches": ["/*.xml", "/*.pdf", "/*.bib", "/*.zip", "/demo/*", "/rmdatabase/*", "/MANBench/*"] } },
+        { "not": { "selector_matches": "[rel~=nofollow], [download], [target=_blank]" } }
+      ] },
+      "eagerness": "conservative"
+    }]
+  }
+  </script>
   <script id="origin-public-config" type="application/json">{"photo_map":{"github_user":"MicDZ"},"legacy_map_locations":{"0":{"name":"IMG 7251","lat":36.580894444444446,"lng":-118.7508388888889,"photo_src":"/img/maps/IMG_7251.jpg"}}}</script>
 <meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="MicDZ's Blog" type="application/atom+xml">
 </head>
 
 <body>
+  <script>
+    // 在首帧渲染前确定主题，避免先白后黑的闪烁：
+    // 用户手动选择过（preferredTheme = dark/light）则以其为准，否则跟随系统设置。
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem('preferredTheme'); } catch (e) {}
+      var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (stored !== 'light' && systemDark)) document.body.classList.add('darkmode');
+    })();
+  </script>
     <div class="container">
         <div class="row">
             <div class="row">
 
     <div class="two columns" style="max-width: 50px">
-      <h1 class="mt-2 mode">
-        <div onclick="setDarkMode(true)" id="darkBtn"></div>
-        <div onclick="setDarkMode(false)" id="lightBtn" class="hidden"></div>
+      <div class="mt-2 mode">
+        
         <script>
-          if (localStorage.getItem('preferredTheme') == 'dark') {
-            setDarkMode(true)
+          var systemDarkQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+          function systemPrefersDark() { return !!(systemDarkQuery && systemDarkQuery.matches); }
+          function readStoredTheme() {
+            try { return localStorage.getItem('preferredTheme'); } catch (e) { return null; }
           }
+          function applyTheme() {
+            var stored = readStoredTheme();
+            var isDark = stored === 'dark' || (stored !== 'light' && systemPrefersDark());
+            document.body.classList.toggle('darkmode', isDark);
+            syncModeButtons();
+          }
+          // 手动切换：与系统设置一致时清除记录，恢复“跟随系统”；否则记住用户的选择
           function setDarkMode(isDark) {
-            var darkBtn = document.getElementById('darkBtn')
-            var lightBtn = document.getElementById('lightBtn')
-            if (isDark) {
-              lightBtn.style.display = "block"
-              darkBtn.style.display = "none"
-              localStorage.setItem('preferredTheme', 'dark');
-            } else {
-              lightBtn.style.display = "none"
-              darkBtn.style.display = "block"
-              localStorage.removeItem('preferredTheme');
-            }
-            document.body.classList.toggle("darkmode");
+            try {
+              if (isDark === systemPrefersDark()) localStorage.removeItem('preferredTheme');
+              else localStorage.setItem('preferredTheme', isDark ? 'dark' : 'light');
+            } catch (e) {}
+            document.body.classList.toggle('darkmode', isDark);
+            syncModeButtons();
           }
+          function syncModeButtons() {
+            var isDark = document.body.classList.contains('darkmode');
+            var darkBtn = document.getElementById('darkBtn');
+            var lightBtn = document.getElementById('lightBtn');
+            if (darkBtn) darkBtn.classList.toggle('hidden', isDark);
+            if (lightBtn) lightBtn.classList.toggle('hidden', !isDark);
+          }
+          syncModeButtons();
+          // 系统主题变化时（且用户未手动选择）实时跟随
+          if (systemDarkQuery) {
+            var onSystemChange = function () { if (!readStoredTheme()) applyTheme(); };
+            if (systemDarkQuery.addEventListener) systemDarkQuery.addEventListener('change', onSystemChange);
+            else if (systemDarkQuery.addListener) systemDarkQuery.addListener(onSystemChange);
+          }
+          // 多标签页之间同步主题
+          window.addEventListener('storage', function (e) {
+            if (e.key === 'preferredTheme') applyTheme();
+          });
         </script>
-      </h1>
+      </div>
     </div>
      
     <div class="six columns ml-1">
@@ -366,7 +417,7 @@ M347 1759 V0 H263 V1759 v0 v1759 h84z"></path></svg></span></span></span><span c
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9722em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">P</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.9722em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">T</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span><span class="mord mathnormal mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">P</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span><a class="formula-anchor" href="#formula16" id="formula16"><span class="formula-number">(16)</span></a></span></span></span></p>
 <p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="bold-italic">T</mi><mrow><mi>g</mi><mi>c</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\boldsymbol T_{gc}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9722em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.15972em;">T</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">g</span><span class="mord mathnormal mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> can also be decomposed into a rotation matrix and a translation vector. Let’s consider how to determine the rotation matrix and translation vector.</p>
 <p>We start with a simpler problem. Assume that in the mechanical design, the camera and the gun barrel have a pitch angle rotation <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span></span></span></span> and a translation <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span> along the z-axis. <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span> are defined in the turret coordinate system, and in <a href="#Figure1-camera-to-turret-coordinate-system-simple-model">Figure 1</a>, they should be negative values.<br>
-<figure class="image-container" id="camera-to-turret-coordinate-system-simple-model"><img src="/img/post/posesolver/demo.svg" alt="Camera to Turret Coordinate System Simple Model" decoding="async"><figcaption class="image-caption"><a class="formula-anchor" href="#Figure1-camera-to-turret-coordinate-system-simple-model" id="Figure1-camera-to-turret-coordinate-system-simple-model"></a><span class="caption-prefix">Figure 1:</span> Camera to Turret Coordinate System Simple Model</figcaption></figure></p>
+</p><figure class="image-container" id="camera-to-turret-coordinate-system-simple-model"><img src="/img/post/posesolver/demo.svg" alt="Camera to Turret Coordinate System Simple Model" decoding="async"><figcaption class="image-caption"><a class="formula-anchor" href="#Figure1-camera-to-turret-coordinate-system-simple-model" id="Figure1-camera-to-turret-coordinate-system-simple-model"></a><span class="caption-prefix">Figure 1:</span> Camera to Turret Coordinate System Simple Model</figcaption></figure><p></p>
 <p>We now need to determine the transformation matrix for this process. An intuitive method is to assume a vector <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mtext>&nbsp;</mtext><mn>1</mn><mtext>&nbsp;</mtext><mn>0</mn><msup><mo stretchy="false">]</mo><mtext>T</mtext></msup></mrow><annotation encoding="application/x-tex">[1\ 1\ 0]^\text T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0913em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mspace">&nbsp;</span><span class="mord">1</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">T</span></span></span></span></span></span></span></span></span></span></span></span> in the camera coordinate system. According to our earlier definition, this vector points directly forward from the camera. To represent the same vector in the turret coordinate system, we need to rotate this vector downward by the pitch angle. The rotation matrix is given by Rodrigues’ formula, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">R</mi><mo>=</mo><msub><mi mathvariant="bold-italic">R</mi><mi>y</mi></msub><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\boldsymbol R=\boldsymbol R_y(\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6861em;"></span><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.00421em;">R</span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord"><span class="mord"><span class="mord boldsymbol" style="margin-right:0.00421em;">R</span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>.</p>
 <p>To represent the point <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mtext>&nbsp;</mtext><mn>0</mn><mtext>&nbsp;</mtext><mn>0</mn><msup><mo stretchy="false">]</mo><mtext>T</mtext></msup></mrow><annotation encoding="application/x-tex">[1\ 0\ 0]^\text T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0913em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">T</span></span></span></span></span></span></span></span></span></span></span></span> in the camera coordinate system, we also need to translate it. The translation vector is the vector from the turret coordinate system origin to the camera coordinate system origin. Since we rotate first and then translate, this vector needs to be expressed in the turret coordinate system. The translation vector is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mtext>&nbsp;</mtext><mn>0</mn><mtext>&nbsp;</mtext><mi>t</mi><msup><mo stretchy="false">]</mo><mtext>T</mtext></msup></mrow><annotation encoding="application/x-tex">[0\ 0\ t]^\text T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0913em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord mathnormal">t</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">T</span></span></span></span></span></span></span></span></span></span></span></span>.</p>
 <p>Combining these two steps, the representation of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mtext>&nbsp;</mtext><mn>0</mn><mtext>&nbsp;</mtext><mn>0</mn><msup><mo stretchy="false">]</mo><mtext>T</mtext></msup></mrow><annotation encoding="application/x-tex">[1\ 0\ 0]^\text T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0913em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">T</span></span></span></span></span></span></span></span></span></span></span></span> in the camera coordinate system in the turret coordinate system is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>y</mi></msub><mo stretchy="false">(</mo><mi>θ</mi><mo stretchy="false">)</mo><mo stretchy="false">[</mo><mn>1</mn><mtext>&nbsp;</mtext><mn>0</mn><mtext>&nbsp;</mtext><mn>0</mn><msup><mo stretchy="false">]</mo><mtext>T</mtext></msup><mo>+</mo><mo stretchy="false">[</mo><mn>0</mn><mtext>&nbsp;</mtext><mn>0</mn><mtext>&nbsp;</mtext><mi>t</mi><msup><mo stretchy="false">]</mo><mtext>T</mtext></msup></mrow><annotation encoding="application/x-tex">R_y(\theta)[1\ 0\ 0]^\text T+[0\ 0\ t]^\text T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1274em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span><span class="mopen">[</span><span class="mord">1</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">T</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0913em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord">0</span><span class="mspace">&nbsp;</span><span class="mord mathnormal">t</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord text mtight"><span class="mord mtight">T</span></span></span></span></span></span></span></span></span></span></span></span>.</p>
@@ -520,9 +571,10 @@ M347 1759 V0 H263 V1759 v0 v1759 h84z"></path></svg></span></span></span><span c
     // 更新：滚动目标元素到视口（或容器）正中
     function smoothScrollToCenter(el) {
       if (!el) return;
+      const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
       // 优先使用原生 scrollIntoView，能自动滚动最近可滚动容器
       try {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+        el.scrollIntoView({ behavior, block: 'center', inline: 'nearest' });
         return;
       } catch (e) {
         // ignore, 使用回退
@@ -534,7 +586,7 @@ M347 1759 V0 H263 V1759 v0 v1759 h84z"></path></svg></span></span></span><span c
         const cRect = container.getBoundingClientRect();
         const current = container.scrollTop;
         const target = current + (elRect.top - cRect.top) - Math.max(0, (container.clientHeight - elRect.height) / 2);
-        container.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+        container.scrollTo({ top: Math.max(0, target), behavior });
       } else {
         const rect = el.getBoundingClientRect();
         const vh = window.innerHeight || document.documentElement.clientHeight;
@@ -543,7 +595,7 @@ M347 1759 V0 H263 V1759 v0 v1759 h84z"></path></svg></span></span></span><span c
         const scrollTop = window.pageYOffset || doc.scrollTop || body.scrollTop || 0;
         const target = scrollTop + rect.top - Math.max(0, (vh - rect.height) / 2);
         const maxScroll = Math.max(0, (Math.max(doc.scrollHeight, body.scrollHeight) - vh));
-        window.scrollTo({ top: Math.min(Math.max(0, target), maxScroll), behavior: 'smooth' });
+        window.scrollTo({ top: Math.min(Math.max(0, target), maxScroll), behavior });
       }
     }
 
